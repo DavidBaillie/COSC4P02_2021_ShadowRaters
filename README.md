@@ -4,7 +4,7 @@
 Name | e-mail | Role
 ------------ | ------------- | -------------
 Liam Baillie		 |  lb14eg@brocku.ca	  |	Team Leader and Systems Administrator <br>
-Rodrigo Vega     |  rv16fn@brocku.ca	  |	Web Developer <br>
+Rodrigo Vega Jimenez    |  rv16fn@brocku.ca	  |	Web Developer <br>
 Tianci Yang		   |  ty17ds@brocku.ca   |		Web Developer <br>
 Jake Varga 		   |  jv17kb@brocku.ca 	|	Web/API Developer <br>
 Shunhua Wu 		   |  sw15gb@brocku.ca 	|	Database Administrator <br>
