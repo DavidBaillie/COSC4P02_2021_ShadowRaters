@@ -1,0 +1,42 @@
+# See http://help.github.com/ignore-files/ for more about ignoring files.
+
+# compiled output
+material-angular-dashboard/dist
+material-angular-dashboard/tmp
+material-angular-dashboard/out-tsc
+
+# dependencies
+material-angular-dashboard/node_modules
+
+# IDEs and editors
+material-angular-dashboard/.idea
+material-angular-dashboard/.project
+material-angular-dashboard/.classpath
+material-angular-dashboard/.c9/
+material-angular-dashboard/*.launch
+material-angular-dashboard/.settings/
+material-angular-dashboard/*.sublime-workspace
+
+# IDE - VSCode
+material-angular-dashboard/.vscode/*
+material-angular-dashboard/!.vscode/settings.json
+material-angular-dashboard/!.vscode/tasks.json
+material-angular-dashboard/!.vscode/launch.json
+material-angular-dashboard/!.vscode/extensions.json
+
+# misc
+material-angular-dashboard/.sass-cache
+material-angular-dashboard/connect.lock
+material-angular-dashboard/coverage
+material-angular-dashboard/libpeerconnection.log
+material-angular-dashboard/npm-debug.log
+material-angular-dashboard/testem.log
+material-angular-dashboard/typings
+
+# e2e
+material-angular-dashboard/e2e/*.js
+material-angular-dashboard/e2e/*.map
+
+# System Files
+material-angular-dashboard/.DS_Store
+material-angular-dashboard/Thumbs.db
