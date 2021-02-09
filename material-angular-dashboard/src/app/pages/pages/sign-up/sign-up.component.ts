@@ -50,7 +50,7 @@ export class SignUpComponent extends BlankLayoutCardComponent implements OnInit 
     this.error = null;
     if (this.signupForm.valid) {
       this.authService.signup(this.signupForm.getRawValue())
-        .subscribe(res => this.router.navigate(['/app/dashboard']),
+        .subscribe(res => this.router.navigate(['/app/home']),
                    error => this.error = error.message);
     }
   }
