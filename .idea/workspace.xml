@@ -1,7 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="19606eca-cadb-478f-9749-a4ae7d5636a0" name="Default Changelist" comment="" />
+    <list default="true" id="19606eca-cadb-478f-9749-a4ae7d5636a0" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/COSC4P02_2021_ShadowRaters.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/COSC4P02_2021_ShadowRaters.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/flask_api/app.py" beforeDir="false" afterPath="$PROJECT_DIR$/flask_api/app.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/flask_api/venv/Scripts/Activate.ps1" beforeDir="false" afterPath="$PROJECT_DIR$/flask_api/venv/Scripts/Activate.ps1" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/flask_api/venv/Scripts/activate" beforeDir="false" afterPath="$PROJECT_DIR$/flask_api/venv/Scripts/activate" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/flask_api/venv/pyvenv.cfg" beforeDir="false" afterPath="$PROJECT_DIR$/flask_api/venv/pyvenv.cfg" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -18,7 +26,10 @@
   </component>
   <component name="PropertiesComponent">
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
   </component>
   <component name="RunManager">
     <configuration name="COSC4P02_2021_ShadowRaters" type="PythonConfigurationType" factoryName="Python">
@@ -55,11 +66,5 @@
       <workItem from="1613417726655" duration="34000" />
     </task>
     <servers />
-  </component>
-  <component name="WindowStateProjectService">
-    <state x="447" y="266" key="FileChooserDialogImpl" timestamp="1613417754846">
-      <screen x="0" y="0" width="1920" height="1040" />
-    </state>
-    <state x="447" y="266" key="FileChooserDialogImpl/0.0.1920.1040@0.0.1920.1040" timestamp="1613417754846" />
   </component>
 </project>

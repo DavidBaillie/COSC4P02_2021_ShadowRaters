@@ -27,7 +27,7 @@ function global:deactivate ([switch]$NonDestructive) {
 
 deactivate -nondestructive
 
-$env:VIRTUAL_ENV="D:\github\COSC4P02\COSC4P02_2021_ShadowRaters\flask_api\venv"
+$env:VIRTUAL_ENV="C:\Users\Jake\Desktop\4P02\COSC4P02_2021_ShadowRaters\flask_api\venv"
 
 if (! $env:VIRTUAL_ENV_DISABLE_PROMPT) {
     # Set the prompt to include the env name
