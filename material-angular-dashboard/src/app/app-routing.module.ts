@@ -25,6 +25,7 @@ import { Dashboard2Component } from './pages/dashboard2';
           { path: 'about', component: ComponentsComponent, pathMatch: 'full' },
           { path: '**', redirectTo: '/ypages/404' },
         ] }, // add 'canActivate: AuthGuard' for catching unauth users
+        { path: 'pages', loadChildren: () => import('./pages/pages/pages.module').then(m => m.PagesModule) }, //This allows requests for visiting child pages under this path.(short url + auto mapping)
         { path: '**', redirectTo: '/pages/404' },
       ],
       { useHash: true },

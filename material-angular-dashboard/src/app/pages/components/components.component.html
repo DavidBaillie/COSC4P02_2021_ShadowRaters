@@ -1,4 +1,4 @@
-<div class="mdl-cell mdl-cell--4-col-desktop mdl-cell--6-col-tablet mdl-cell--4-col-phone">
+<!-- <div class="mdl-cell mdl-cell--4-col-desktop mdl-cell--6-col-tablet mdl-cell--4-col-phone">
   <app-toggles></app-toggles>
 </div>
 
@@ -96,26 +96,34 @@
       </ul>
     </base-card-body>
   </base-card>
-</div>
+</div> -->
 
-<div class="mdl-cell mdl-cell--3-col-desktop mdl-cell--6-col-tablet mdl-cell--4-col-phone mdl-cell--top">
+<div class="mdl-cell mdl-cell--12-col mdl-cell--16-col-tablet mdl-cell--8-col-phone mdl-cell--top">
   <base-card>
     <base-card-title>
-      <h1 class="mdl-card__title-text">Two lines list</h1>
+      <h1 class="mdl-card__title-text">Search by institutions</h1>
     </base-card-title>
     <base-card-body>
+
+    <div class="search-card mdl-card mdl-shadow--2dp">
+      <div class="mdl-textfield mdl-js-textfield">
+        <i class="material-icons">search</i>
+        <input class="mdl-textfield__input" type="text" id="search_institution" />
+      </div>
+    </div>
+
       <ul class="mdl-list">
-        <li *ngFor="let item of data; let i = index" class="mdl-list__item mdl-list__item--two-line">
+        <li *ngFor="let item of data; let i = index" class="mdl-list__item mdl-list__item--two-line" routerLink="/app/home">
           <span class="mdl-list__item-primary-content">
             <div class="mdl-list__item-avatar">
               <img width="100%" src="assets/images/{{ item.image }}">
             </div>
-            <span>{{ item.name }}</span>
+            <a href="#/app/home">{{ item.name }}</a>
             <span class="mdl-list__item-sub-title">{{ item.description }}</span>
           </span>
           <span class="mdl-list__item-secondary-content">
-            <span *ngIf="i === 0" class="mdl-list__item-secondary-info">Star</span>
-            <a class="mdl-list__item-secondary-action" href="#"><i class="material-icons">star</i></a>
+            <!-- <span *ngIf="i === 0" class="mdl-list__item-secondary-info">Star</span> -->
+            <!-- <a class="mdl-list__item-secondary-action" href="#"><i class="material-icons">circle</i></a> -->
           </span>
         </li>
       </ul>

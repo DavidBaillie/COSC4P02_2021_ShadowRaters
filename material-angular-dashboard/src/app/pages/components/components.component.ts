@@ -1,6 +1,6 @@
 import { Component, HostBinding } from '@angular/core';
-
 import { UpgradableComponent } from 'theme/components/upgradable';
+
 
 @Component({
   selector: 'app-components',
@@ -13,19 +13,80 @@ export class ComponentsComponent extends UpgradableComponent {
 
   public data = [
     {
-      name: 'Nathan Fillion',
-      description: 'Malcolm “Mal” Reynolds',
-      image: 'nathan-fillion.png',
+      name: 'Brock University',
+      description: 'Brock University',
+      image: 'brock.jpg',
     },
     {
-      name: 'Gina Torres',
-      description: 'Zoe Alleyne Washburne',
-      image: 'gina-torres.png',
+      name: 'Brock University',
+      description: 'Brock University',
+      image: 'brock.jpg',
     },
     {
-      name: 'Alan Tudyk',
-      description: 'Hoban “Wash” Washburne',
-      image: 'tudyk.png',
+      name: 'Brock University',
+      description: 'Brock University',
+      image: 'brock.jpg',
+    },
+    {
+      name: 'Brock University',
+      description: 'Brock University',
+      image: 'brock.jpg',
+    },
+    {
+      name: 'Brock University',
+      description: 'Brock University',
+      image: 'brock.jpg',
+    },
+    {
+      name: 'Brock University',
+      description: 'Brock University',
+      image: 'brock.jpg',
+    },
+    {
+      name: 'Brock University',
+      description: 'Brock University',
+      image: 'brock.jpg',
+    },
+    {
+      name: 'Brock University',
+      description: 'Brock University',
+      image: 'brock.jpg',
+    },
+    {
+      name: 'Brock University',
+      description: 'Brock University',
+      image: 'brock.jpg',
+    },
+    {
+      name: 'Brock University',
+      description: 'Brock University',
+      image: 'brock.jpg',
+    },
+    {
+      name: 'Brock University',
+      description: 'Brock University',
+      image: 'brock.jpg',
+    },
+    {
+      name: 'Brock University',
+      description: 'Brock University',
+      image: 'brock.jpg',
+    },
+    {
+      name: 'Brock University',
+      description: 'Brock University',
+      image: 'brock.jpg',
+    },
+    {
+      name: 'Brock University',
+      description: 'Brock University',
+      image: 'brock.jpg',
+    },
+    {
+      name: 'Brock University',
+      description: 'Brock University',
+      image: 'brock.jpg',
     },
   ];
+
 }

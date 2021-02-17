@@ -55,7 +55,9 @@ export class CommonLayoutComponent implements OnInit {
     const signInUpTag = document.createElement("div");
     const signIn = document.createElement("button");
     signIn.className = "mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect";
-    signIn.onclick = () => this.router.navigate(['/pages/login']);
+    // signIn.onclick = () => this.router.navigate(['/pages/login']);
+    signIn.onclick = () => this.router.navigateByUrl("/pages/login");
+
     signIn.innerText = "Sign in";
     signInUpTag.append(signIn);
     this.userSpace.append(signInUpTag);

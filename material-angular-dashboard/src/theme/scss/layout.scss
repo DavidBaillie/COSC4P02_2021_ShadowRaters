@@ -11,8 +11,9 @@ html {
 }
 
 main {
-  background: url("#{$image-path}/Dark_background_1920x1080.png") center top no-repeat;
-  background-size: cover;
+  // background: url("#{$image-path}/Dark_background_1920x1080.png") center top no-repeat;
+  background: url("#{$image-path}/1.jpg") center top no-repeat;
+  // background-size: cover;
 }
 
 .mdl-layout__header {

@@ -10,4 +10,85 @@ import { UpgradableComponent } from 'theme/components/upgradable';
 export class ChartsComponent extends UpgradableComponent {
   @HostBinding('class.mdl-grid') public readonly mdlGrid = true;
   @HostBinding('class.charts') public readonly charts = true;
+
+  public data = [
+    {
+      name: 'Brock University',
+      description: 'Brock University',
+      image: 'brock.jpg',
+    },
+    {
+      name: 'Brock University',
+      description: 'Brock University',
+      image: 'brock.jpg',
+    },
+    {
+      name: 'Brock University',
+      description: 'Brock University',
+      image: 'brock.jpg',
+    },
+    {
+      name: 'Brock University',
+      description: 'Brock University',
+      image: 'brock.jpg',
+    },
+    {
+      name: 'Brock University',
+      description: 'Brock University',
+      image: 'brock.jpg',
+    },
+    {
+      name: 'Brock University',
+      description: 'Brock University',
+      image: 'brock.jpg',
+    },
+    {
+      name: 'Brock University',
+      description: 'Brock University',
+      image: 'brock.jpg',
+    },
+    {
+      name: 'Brock University',
+      description: 'Brock University',
+      image: 'brock.jpg',
+    },
+    {
+      name: 'Brock University',
+      description: 'Brock University',
+      image: 'brock.jpg',
+    },
+    {
+      name: 'Brock University',
+      description: 'Brock University',
+      image: 'brock.jpg',
+    },
+    {
+      name: 'Brock University',
+      description: 'Brock University',
+      image: 'brock.jpg',
+    },
+    {
+      name: 'Brock University',
+      description: 'Brock University',
+      image: 'brock.jpg',
+    },
+    {
+      name: 'Brock University',
+      description: 'Brock University',
+      image: 'brock.jpg',
+    },
+    {
+      name: 'Brock University',
+      description: 'Brock University',
+      image: 'brock.jpg',
+    },
+    {
+      name: 'Brock University',
+      description: 'Brock University',
+      image: 'brock.jpg',
+    },
+  ];
+
+
+
 }
