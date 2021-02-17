@@ -26,7 +26,6 @@ print("database connected")
 
 @app.route('/')
 def hello_world():
-
     return "hello world"
 
 @app.route("/sign_up",methods=["POST"])
@@ -54,6 +53,35 @@ def createNewUser():
     #print(curs.fetchall())
     conn.commit()
     return jsonify(msg="sign up success")
+
+@app.route("/sign_in",methods=["POST"])
+def sign_in():
+    userData = request.get_json()
+    username = userData.get("username")
+    password = userData.get("password")
+    if not all([username,password]):
+        return jsonify(msg="missing username or password")
+    curs.execute("select password from \"user\" where username = '%s'" % username)
+    p = curs.fetchone()
+    if p is None:
+        return jsonify(msg="username not exist")
+    if p[0] == password:
+        session["username"] = username
+        return jsonify(msg="success")
+    else:
+        return jsonify(msg="wrong password")
+@app.route("/sign_out",methods=["GET"])
+def sign_out():
+    session.clear()
+    return jsonify(msg="success")
+
+@app.route("/session",methods=["GET"])
+def check_session():
+    username = session.get("username")
+    if username is not None:
+        return jsonify(username=username)
+    else:
+        return jsonify(msg="not yet sign in")
 
 @app.route("/Professors",methods=["GET"])
 def getProfessorsInfo():
