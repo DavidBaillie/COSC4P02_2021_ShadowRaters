@@ -1,8 +1,9 @@
-from flask import Flask,jsonify,request
+from flask import Flask,jsonify,request,session
 from sshtunnel import SSHTunnelForwarder
 import psycopg2
 import os,binascii
 app = Flask(__name__)
+app.secret_key = "adaslccadw"
 
 server = SSHTunnelForwarder(
     ('51.222.151.27',22),
@@ -23,13 +24,10 @@ conn = psycopg2.connect(
 curs = conn.cursor()
 print("database connected")
 
-
 @app.route('/')
 def hello_world():
-    curs.execute("select version()")
-    data = curs.fetchone()
-    print(data)
-    return "%s" % data
+
+    return "hello world"
 
 @app.route("/sign_up",methods=["POST"])
 def createNewUser():
@@ -43,35 +41,194 @@ def createNewUser():
     salt = "ABCDEFGHIJ"
     school = newUser.get("school")
     program = newUser.get("program")
-    if(admin is None or username is None or password is None):
-        return jsonify(code=400,msg="missing admin, username or password")
+    if not all([admin,username,password]):
+        return jsonify(msg="missing admin, username or password")
     curs.execute("select * from \"user\" where username = '%s'" % username)
     data = curs.fetchall()
     #print(data)
     if(data is not None):
-        return jsonify(code=400,msg="username already exist")
+        return jsonify(msg="username already exist")
     curs.execute("insert into \"user\" "
                  "values('%s','%s','%s','%s','%s','%s','%s','%s')" % (uuid,admin,username,email,password,salt,school,program))
-    curs.execute("select * from \"user\"")
+    #curs.execute("select * from \"user\"")
     #print(curs.fetchall())
     conn.commit()
-    return jsonify(code=200,msg="sign up success")
+    return jsonify(msg="sign up success")
 
 @app.route("/Professors",methods=["GET"])
 def getProfessorsInfo():
     curs.execute("select * from professor")
     info = curs.fetchall()
     if info is None:
-        return jsonify(code=400,msg="empty table")
-    data = []
-    content = {}
+        return jsonify(msg="empty table")
+    professors = []
     for i in info:
         content = {'pid':i[0],'uid':i[1],'did':i[2],'name':i[3],'info':i[4]}
-        data.append(content)
-        content={}
+        professors.append(content)
+    data = {'msg':"success",'professors':professors}
     return jsonify(data)
 
+# @app.route("/Courses",methods=["GET"])
+# def getCoursesInfo():
+#     curs.execute("select * from course")
+#     info = curs.fetchall()
+#     if info is None:
+#         return jsonify(msg="empty table")
+#     courses = []
+#     for i in info:
+#         content = {'cid':i[0],'pid':i[1],'uid':i[2],'did':i[3],'name':i[4],'info':i[5]}
+#         courses.append(content)
+#     data = {'msg':"success",'courses':courses}
+#     return jsonify(data)
+#
+# @app.route("/Departments",methods=["GET"])
+# def getDepartmentsInfo():
+#     curs.execute("select * from department")
+#     info = curs.fetchall()
+#     if info is None:
+#         return jsonify(msg="empty table")
+#     departments = []
+#     for i in info:
+#         content = {'did':i[0],'uid':i[1],'name':i[2],'info':i[3],'equipement':i[4],'education_support':i[5]}
+#         departments.append(content)
+#     data = {'msg':"success",'departments':departments}
+#     return jsonify(data)
 
+@app.route("/reviews/professors",methods=["GET","POST"])
+def professorReviews():
+    if request.method == 'POST':
+        newReview = request.get_json()
+        rpid = binascii.b2a_hex(os.urandom(15))
+        rpid = str(rpid,encoding="utf-8")
+        uuid = newReview.get('uuid')
+        pid = newReview.get('pid')
+        curs.execute("select * from rating_professor where uuid = '%s' and pid = '%s'" % (uuid,pid))
+        info = curs.fetchall()
+        if info is not None:
+            return jsonify(msg="already rated")
+        score = newReview.get('score')
+        comment = newReview.get('comment')
+        num_agree = 0
+        num_disagree = 0
+        if not all([uuid,pid,score]):
+            return jsonify(msg="not enough data")
+        curs.execute("insert into rating_professor "
+                     "values('%s','%s','%s','%s','%s','%s','%s')" % (rpid,uuid,pid,score,comment,num_agree,num_disagree))
+        conn.commit()
+        return jsonify(msg="success")
+    else:
+        curs.execute("select * from rating_professor")
+        info = curs.fetchall()
+        if info is None:
+            return jsonify(msg="empty table")
+        reviews=[]
+        for i in info:
+            content = {'rpid':i[0],'uuid':i[1],'pid':i[2],'score':i[3],'comment':i[4],'num_agree':i[5],'num_disagree':i[6]}
+            reviews.append(content)
+        data = {'msg':"success",'reviews':reviews}
+        return jsonify(data)
+
+@app.route("/reviews/courses",methods=["GET","POST"])
+def courseReviews():
+    if request.method == 'POST':
+        newReview = request.get_json()
+        rcid = binascii.b2a_hex(os.urandom(15))
+        rcid = str(rcid,encoding="utf-8")
+        uuid = newReview.get('uuid')
+        cid = newReview.get('cid')
+        curs.execute("select * from rating_professor where uuid = '%s' and cid = '%s'" % (uuid, cid))
+        info = curs.fetchall()
+        if info is not None:
+            return jsonify(msg="already rated")
+        score = newReview.get('score')
+        duration = newReview.get('duration')
+        comment = newReview.get('comment')
+        num_agree = 0
+        num_disagree = 0
+        if not all([uuid,cid,score]):
+            return jsonify(msg="not enough data")
+        curs.execute("insert into rating_course "
+                     "values('%s','%s','%s','%s','%s','%s','%s','%s')" % (rcid,uuid,cid,score,duration,comment,num_agree,num_disagree))
+        conn.commit()
+        return jsonify(msg="success")
+    else:
+        curs.execute("select * from rating_course")
+        info = curs.fetchall()
+        if info is None:
+            return jsonify(msg="empty table")
+        reviews=[]
+        for i in info:
+            content = {'rpid':i[0],'uuid':i[1],'pid':i[2],'score':i[3],'duration':i[4],'comment':i[5],'num_agree':i[6],'num_disagree':i[7]}
+            reviews.append(content)
+        data = {'msg':"success",'reviews':reviews}
+        return jsonify(data)
+@app.route("/review/department",methods=["GET","POST"])
+def DepartmentReviews():
+    if request.method == 'POST':
+        newReview = request.get_json()
+        rdid = binascii.b2a_hex(os.urandom(15))
+        rdid = str(rdid,encoding="utf-8")
+        uuid = newReview.get('uuid')
+        did = newReview.get('did')
+        curs.execute("select * from rating_department where uuid = '%s' and did = '%s'" % (uuid, did))
+        info = curs.fetchall()
+        if info is not None:
+            return jsonify(msg="already rated")
+        score = newReview.get('score')
+        comment = newReview.get('comment')
+        num_agree = 0
+        num_disagree = 0
+        if not all([uuid,did,score]):
+            return jsonify(msg="not enough data")
+        curs.execute("insert into rating_department "
+                     "values('%s','%s','%s','%s','%s','%s','%s')" % (rdid,uuid,did,score,comment,num_agree,num_disagree))
+        conn.commit()
+        return jsonify(msg="success")
+    else:
+        curs.execute("select * from rating_department")
+        info = curs.fetchall()
+        if info is None:
+            return jsonify(msg="empty table")
+        reviews=[]
+        for i in info:
+            content = {'rpid':i[0],'uuid':i[1],'pid':i[2],'score':i[3],'comment':i[4],'num_agree':i[5],'num_disagree':i[6]}
+            reviews.append(content)
+        data = {'msg':"success",'reviews':reviews}
+        return jsonify(data)
+
+@app.route("/review/university",methods=["GET","POST"])
+def SchoolReviews():
+    if request.method == 'POST':
+        newReview = request.get_json()
+        ruid = binascii.b2a_hex(os.urandom(15))
+        ruid = str(ruid,encoding="utf-8")
+        uuid = newReview.get('uuid')
+        uid = newReview.get('uid')
+        curs.execute("select * from rating_university where uuid = '%s' and uid = '%s'" % (uuid, uid))
+        info = curs.fetchall()
+        if info is not None:
+            return jsonify(msg="already rated")
+        score = newReview.get('score')
+        comment = newReview.get('comment')
+        num_agree = 0
+        num_disagree = 0
+        if not all([uuid,uid,score]):
+            return jsonify(msg="not enough data")
+        curs.execute("insert into rating_university "
+                     "values('%s','%s','%s','%s','%s','%s','%s')" % (ruid,uuid,uid,score,comment,num_agree,num_disagree))
+        conn.commit()
+        return jsonify(msg="success")
+    else:
+        curs.execute("select * from rating_university")
+        info = curs.fetchall()
+        if info is None:
+            return jsonify(msg="empty table")
+        reviews=[]
+        for i in info:
+            content = {'rpid':i[0],'uuid':i[1],'uid':i[2],'score':i[3],'comment':i[4],'num_agree':i[5],'num_disagree':i[6]}
+            reviews.append(content)
+        data = {'msg':"success",'reviews':reviews}
+        return jsonify(data)
 
 if __name__ == '__main__':
     app.run()
