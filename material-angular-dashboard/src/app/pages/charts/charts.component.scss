@@ -126,7 +126,28 @@
 //   }
 // }
 
+
+.sort_div{
+  display: inline-block;
+  margin-left: 20px;
+}
+
+.sort_div h5 {
+  display: inline-block;
+  margin-right: 20px;
+}
+
+.sort_div option {
+ color: gray;
+}
+
 :host ::ng-deep {
+
+  .links{
+    font-size: 23px !important;
+    font-weight: bold !important;
+  }
+
   .mdl-card {
     height: 100%;
   }

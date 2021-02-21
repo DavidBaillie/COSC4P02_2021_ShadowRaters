@@ -2,6 +2,7 @@
 
 .mdl-card__title {
   background-color: $card-title-background-color;
+    border-radius: 20px;
 }
 
 .mdl-card__supporting-text {
@@ -17,4 +18,6 @@
 .mdl-card {
   height: 100%;
   overflow: visible;
+  background-color: rgba(97, 97, 97, 0.6);
+  border-radius: 20px;
 }

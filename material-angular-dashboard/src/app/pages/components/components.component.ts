@@ -11,6 +11,8 @@ export class ComponentsComponent extends UpgradableComponent {
   @HostBinding('class.mdl-grid') public readonly mdlGrid = true;
   @HostBinding('class.ui-components') public readonly uiComponents = true;
 
+
+  //temp data
   public data = [
     {
       name: 'Brock University',

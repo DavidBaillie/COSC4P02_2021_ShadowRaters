@@ -8,6 +8,8 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { ChartsModule } from './pages/charts';
 import { ComponentsModule } from './pages/components';
+import { InstitutionDetailsModule } from './pages/institutionDetails';
+
 import { DashboardModule } from './pages/dashboard';
 import { Dashboard2Module } from './pages/dashboard2';
 import { FormsModule } from './pages/forms';
