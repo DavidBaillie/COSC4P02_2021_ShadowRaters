@@ -13,11 +13,28 @@ export class InstitutionDetailsComponent extends UpgradableComponent {
 
   public data = [
     {
-      name: 'institution test',
-      description: 'Brock University',
-      image: 'brock.jpg',
+      name: 'Brock University',
+      rating: '4.8',
     },
   ];
 
+
+  public data_comments = [
+    {
+      userID:'Mathieu Cote',
+      comment:'I think we did a Pretty Good job so far!',
+      rating:'4.5',
+    },
+    {
+      userID:'Spongebob',
+      comment:'Always follow your heart – unless your heart is bad with directions!',
+      rating:'5.0',
+    },
+    {
+      userID:'Squidward',
+      comment:"It would be if I didn't have to go to work.",
+      rating:'3.8',
+    },
+  ];
 
 }

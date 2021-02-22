@@ -6,8 +6,8 @@ import { AuthInterceptor, AuthService, FakeBackendInterceptor } from '@services/
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { ChartsModule } from './pages/charts';
-import { ComponentsModule } from './pages/institutions';
+import { DepartmentsModule } from './pages/departments';
+import { InstitutionsModule } from './pages/institutions';
 import { InstitutionDetailsModule } from './pages/institutionDetails';
 
 import { DashboardModule } from './pages/dashboard';
@@ -19,11 +19,11 @@ import { FormsModule } from './pages/forms';
   imports: [
     BrowserModule,
     AppRoutingModule,
-    ComponentsModule,
+    InstitutionsModule,
     DashboardModule,
     Dashboard2Module,
     FormsModule,
-    ChartsModule,
+    DepartmentsModule,
     HttpClientModule,
   ],
   providers: [

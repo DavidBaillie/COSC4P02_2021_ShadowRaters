@@ -78,40 +78,49 @@
     </base-card-title>
 
     <base-card-body>
-     <form>
-      <div class="search-card mdl-card mdl-shadow--2dp">
-        <div class="mdl-textfield mdl-js-textfield">
-          <i class="material-icons">search</i>
-          <input class="mdl-textfield__input" type="text" id="search_department" />
+      <form>
+        <div class="search-card mdl-card mdl-shadow--2dp">
+          <div class="mdl-textfield mdl-js-textfield">
+            <i class="material-icons">search</i>
+            <input class="mdl-textfield__input" type="text" id="search_department" placeholder="Type in keywords..."/>
+          </div>
         </div>
-      </div>
-      <div class="sort_div">
-        <h5>Sorted by:</h5>
-        <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-         <select class="mdl-textfield__input" id="sorting" name="sorting">
-          <option></option>
-           <option value="1">Letter Ascending </option>
-            <option value="2">Letter Descending</option>
-            <option value="3">Rating Ascending</option>
-            <option value="4">Rating Descending</option>
-         </select>
-        <label class="mdl-textfield__label" for="sorting">Sort</label>
+        <div class="sort_div">
+          <h5>Sorted by:</h5>
+          <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+            <select class="mdl-textfield__input" id="sorting" name="sorting">
+              <option></option>
+              <option value="1">Letter Ascending</option>
+              <option value="2">Letter Descending</option>
+              <option value="3">Rating Ascending</option>
+              <option value="4">Rating Descending</option>
+            </select>
+            <label class="mdl-textfield__label" for="sorting">Sort</label>
+          </div>
         </div>
-      </div>
-     </form>
+      </form>
 
       <ul class="mdl-list">
-        <li *ngFor="let item of data; let i = index" class="mdl-list__item mdl-list__item--two-line" routerLink="/app/home">
+        <li *ngFor="let item of data; let i = index" class="mdl-list__item mdl-list__item--two-line">
           <span class="mdl-list__item-primary-content">
-            <div class="mdl-list__item-avatar">
-              <img width="100%" src="assets/images/{{ item.image }}">
-            </div>
             <a class='links' href="#/app/home">{{ item.name }}</a>
             <span class="mdl-list__item-sub-title">{{ item.description }}</span>
           </span>
           <span class="mdl-list__item-secondary-content">
             <!-- <span *ngIf="i === 0" class="mdl-list__item-secondary-info">Star</span> -->
-            <a class="mdl-list__item-secondary-action" href="#"><i class="material-icons">circle</i></a>
+              <div class="rate">
+                 <span class="general_rating">Rating: {{item.rating}}</span>
+                 <input type="radio" id="star5" value="5" disabled/>
+                 <label for="star5" title="text">5 stars</label>
+                 <input type="radio" id="star4" value="4" disabled checked/>
+                 <label for="star4" title="text">4 stars</label>
+                 <input type="radio" id="star3" value="3" disabled/>
+                 <label for="star3" title="text">3 stars</label>
+                 <input type="radio" id="star2" value="2" disabled/>
+                 <label for="star2" title="text">2 stars</label>
+                <input type="radio" id="star1" value="1" disabled/>
+                <label for="star1" title="text">1 star</label>
+              </div>
           </span>
         </li>
       </ul>

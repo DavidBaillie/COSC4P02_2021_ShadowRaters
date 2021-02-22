@@ -4,8 +4,8 @@ import { UpgradableComponent } from 'theme/components/upgradable';
 
 @Component({
   selector: 'app-components',
-  templateUrl: './components.component.html',
-  styleUrls: ['./components.component.scss'],
+  templateUrl: './institutions.component.html',
+  styleUrls: ['./institutions.component.scss'],
 })
 export class ComponentsComponent extends UpgradableComponent {
   @HostBinding('class.mdl-grid') public readonly mdlGrid = true;
@@ -17,77 +17,77 @@ export class ComponentsComponent extends UpgradableComponent {
     {
       name: 'Brock University',
       description: 'Brock University',
-      image: 'brock.jpg',
+      rating: '4.8',
     },
     {
       name: 'Brock University',
       description: 'Brock University',
-      image: 'brock.jpg',
+      rating: '4.8',
     },
     {
       name: 'Brock University',
       description: 'Brock University',
-      image: 'brock.jpg',
+      rating: '4.8',
     },
     {
       name: 'Brock University',
       description: 'Brock University',
-      image: 'brock.jpg',
+      rating: '4.8',
     },
     {
       name: 'Brock University',
       description: 'Brock University',
-      image: 'brock.jpg',
+      rating: '4.8',
     },
     {
       name: 'Brock University',
       description: 'Brock University',
-      image: 'brock.jpg',
+      rating: '4.8',
     },
     {
       name: 'Brock University',
       description: 'Brock University',
-      image: 'brock.jpg',
+      rating: '4.8',
     },
     {
       name: 'Brock University',
       description: 'Brock University',
-      image: 'brock.jpg',
+      rating: '4.8',
     },
     {
       name: 'Brock University',
       description: 'Brock University',
-      image: 'brock.jpg',
+      rating: '4.8',
     },
     {
       name: 'Brock University',
       description: 'Brock University',
-      image: 'brock.jpg',
+      rating: '4.8',
     },
     {
       name: 'Brock University',
       description: 'Brock University',
-      image: 'brock.jpg',
+      rating: '4.8',
     },
     {
       name: 'Brock University',
       description: 'Brock University',
-      image: 'brock.jpg',
+      rating: '4.8',
     },
     {
       name: 'Brock University',
       description: 'Brock University',
-      image: 'brock.jpg',
+      rating: '4.8',
     },
     {
       name: 'Brock University',
       description: 'Brock University',
-      image: 'brock.jpg',
+      rating: '4.8',
     },
     {
       name: 'Brock University',
       description: 'Brock University',
-      image: 'brock.jpg',
+      rating: '4.8',
     },
   ];
 

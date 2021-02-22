@@ -5,7 +5,7 @@ import { FormsModule } from '@angular/forms';
 import { ThemeModule } from 'theme';
 
 import { BrowserStatisticsChartComponent } from './browser-statistics-chart';
-import { ChartsComponent } from './charts.component';
+import { DepartmentsComponent } from './departments.component';
 import { CountryStatisticsChartComponent } from './country-statistics-chart';
 import { DiscreteBarChartComponent } from './discrete-bar-chart';
 import { LineChart1Component } from './line-chart-1';
@@ -20,7 +20,7 @@ import { StackedBarChartComponent } from './stacked-bar-chart';
     FormsModule,
   ],
   declarations: [
-    ChartsComponent,
+    DepartmentsComponent,
     BrowserStatisticsChartComponent,
     LineChart1Component,
     LineChart2Component,
@@ -33,4 +33,4 @@ import { StackedBarChartComponent } from './stacked-bar-chart';
     CountryStatisticsChartComponent,
   ],
 })
-export class ChartsModule { }
+export class DepartmentsModule { }

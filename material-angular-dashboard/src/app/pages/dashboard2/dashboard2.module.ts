@@ -5,7 +5,7 @@ import { FormsModule } from '@angular/forms';
 import { MaterialAngularSelectModule } from 'material-angular-select';
 import { ThemeModule } from 'theme';
 
-import { ChartsModule } from '../charts/charts.module';
+import { DepartmentsModule } from '../departments/departments.module';
 import { DashboardModule } from '../dashboard/dashboard.module';
 import { MapsModule } from '../maps/maps.module';
 import { Dashboard2Component } from './dashboard2.component';
@@ -18,7 +18,7 @@ import { FiltersComponent } from './filters/filters.component';
     FormsModule,
     DashboardModule,
     MapsModule,
-    ChartsModule,
+    DepartmentsModule,
     MaterialAngularSelectModule,
   ],
   declarations: [

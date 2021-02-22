@@ -6,7 +6,7 @@ import { ThemeModule } from 'theme';
 
 import { BadgesComponent } from './badges';
 import { ChipsComponent } from './chips';
-import { ComponentsComponent } from './components.component';
+import { ComponentsComponent } from './institutions.component';
 import { ProgressBarsComponent } from './progress-bars';
 import { SlidersComponent } from './sliders';
 import { TogglesComponent } from './toggles';
@@ -31,4 +31,4 @@ import { TooltipsComponent } from './tooltips';
     BadgesComponent,
   ],
 })
-export class ComponentsModule { }
+export class InstitutionsModule { }
