@@ -43,7 +43,7 @@ def createNewUser():
     if not all([admin,username,password]):
         return jsonify(msg="missing admin, username or password")
     curs.execute("select * from \"user\" where username = '%s'" % username)
-    data = curs.fetchall()
+    data = curs.fetchone()
     #print(data)
     if(data is not None):
         return jsonify(msg="username already exist")
@@ -70,6 +70,7 @@ def sign_in():
         return jsonify(msg="success")
     else:
         return jsonify(msg="wrong password")
+
 @app.route("/sign_out",methods=["GET"])
 def sign_out():
     session.clear()
@@ -96,31 +97,31 @@ def getProfessorsInfo():
     data = {'msg':"success",'professors':professors}
     return jsonify(data)
 
-# @app.route("/Courses",methods=["GET"])
-# def getCoursesInfo():
-#     curs.execute("select * from course")
-#     info = curs.fetchall()
-#     if info is None:
-#         return jsonify(msg="empty table")
-#     courses = []
-#     for i in info:
-#         content = {'cid':i[0],'pid':i[1],'uid':i[2],'did':i[3],'name':i[4],'info':i[5]}
-#         courses.append(content)
-#     data = {'msg':"success",'courses':courses}
-#     return jsonify(data)
-#
-# @app.route("/Departments",methods=["GET"])
-# def getDepartmentsInfo():
-#     curs.execute("select * from department")
-#     info = curs.fetchall()
-#     if info is None:
-#         return jsonify(msg="empty table")
-#     departments = []
-#     for i in info:
-#         content = {'did':i[0],'uid':i[1],'name':i[2],'info':i[3],'equipement':i[4],'education_support':i[5]}
-#         departments.append(content)
-#     data = {'msg':"success",'departments':departments}
-#     return jsonify(data)
+@app.route("/Courses",methods=["GET"])
+def getCoursesInfo():
+    curs.execute("select * from course")
+    info = curs.fetchall()
+    if info is None:
+        return jsonify(msg="empty table")
+    courses = []
+    for i in info:
+        content = {'cid':i[0],'pid':i[1],'uid':i[2],'did':i[3],'name':i[4],'info':i[5]}
+        courses.append(content)
+    data = {'msg':"success",'courses':courses}
+    return jsonify(data)
+
+@app.route("/Departments",methods=["GET"])
+def getDepartmentsInfo():
+    curs.execute("select * from department")
+    info = curs.fetchall()
+    if info is None:
+        return jsonify(msg="empty table")
+    departments = []
+    for i in info:
+        content = {'did':i[0],'uid':i[1],'name':i[2],'info':i[3],'equipement':i[4],'education_support':i[5]}
+        departments.append(content)
+    data = {'msg':"success",'departments':departments}
+    return jsonify(data)
 
 @app.route("/reviews/professors",methods=["GET","POST"])
 def professorReviews():
@@ -131,7 +132,8 @@ def professorReviews():
         uuid = newReview.get('uuid')
         pid = newReview.get('pid')
         curs.execute("select * from rating_professor where uuid = '%s' and pid = '%s'" % (uuid,pid))
-        info = curs.fetchall()
+        info = curs.fetchone()
+        print(info)
         if info is not None:
             return jsonify(msg="already rated")
         score = newReview.get('score')
@@ -190,6 +192,7 @@ def courseReviews():
             reviews.append(content)
         data = {'msg':"success",'reviews':reviews}
         return jsonify(data)
+
 @app.route("/review/department",methods=["GET","POST"])
 def DepartmentReviews():
     if request.method == 'POST':
