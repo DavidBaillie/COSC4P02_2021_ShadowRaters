@@ -2,6 +2,8 @@ from flask import Flask,jsonify,request,session
 from sshtunnel import SSHTunnelForwarder
 import psycopg2
 import os,binascii
+from hashlib import sha256
+import random, string
 app = Flask(__name__)
 app.secret_key = "adaslccadw"
 
@@ -37,7 +39,8 @@ def createNewUser():
     username = newUser.get("username")
     email = newUser.get("email")
     password = newUser.get("password")
-    salt = "ABCDEFGHIJ"
+    salt = ''.join(random.sample(string.ascii_letters + string.digits,10))
+    password = sha256(salt.encode()+password.encode()).hexdigest()
     school = newUser.get("school")
     program = newUser.get("program")
     if not all([admin,username,password]):
@@ -49,8 +52,6 @@ def createNewUser():
         return jsonify(msg="username already exist")
     curs.execute("insert into \"user\" "
                  "values('%s','%s','%s','%s','%s','%s','%s','%s')" % (uuid,admin,username,email,password,salt,school,program))
-    #curs.execute("select * from \"user\"")
-    #print(curs.fetchall())
     conn.commit()
     return jsonify(msg="sign up success")
 
@@ -59,13 +60,16 @@ def sign_in():
     userData = request.get_json()
     username = userData.get("username")
     password = userData.get("password")
+    salt = userData.get("salt")
     if not all([username,password]):
         return jsonify(msg="missing username or password")
     curs.execute("select password from \"user\" where username = '%s'" % username)
     p = curs.fetchone()
+    curs.execute("select salt from \"user\" where username = '%s'" % username)
+    salt = curs.fetchone()[0]
     if p is None:
         return jsonify(msg="username not exist")
-    if p[0] == password:
+    if p[0] == sha256(salt.encode()+password.encode()).hexdigest():
         session["username"] = username
         return jsonify(msg="success")
     else:
