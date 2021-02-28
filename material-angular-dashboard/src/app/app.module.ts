@@ -9,7 +9,7 @@ import { AppComponent } from './app.component';
 import { ChartsModule } from './pages/charts';
 import { ComponentsModule } from './pages/components';
 import { DashboardModule } from './pages/dashboard';
-import { Dashboard2Module } from './pages/dashboard2';
+import { SearchProfessorModule } from './pages/search-professor';
 import { FormsModule } from './pages/forms';
 
 @NgModule({
@@ -19,7 +19,7 @@ import { FormsModule } from './pages/forms';
     AppRoutingModule,
     ComponentsModule,
     DashboardModule,
-    Dashboard2Module,
+    SearchProfessorModule,
     FormsModule,
     ChartsModule,
     HttpClientModule,

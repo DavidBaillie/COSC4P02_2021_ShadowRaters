@@ -6,7 +6,8 @@ import { CommonLayoutComponent } from './layouts/common-layout';
 import { ChartsComponent } from './pages/charts';
 import { ComponentsComponent } from './pages/components';
 import { DashboardComponent } from './pages/dashboard';
-import { Dashboard2Component } from './pages/dashboard2';
+import { SearchProfessor } from './pages/search-professor';
+import { ProfessorComponent } from './pages/search-professor/professor';
 
 // @ts-ignore
 // @ts-ignore
@@ -18,7 +19,8 @@ import { Dashboard2Component } from './pages/dashboard2';
         { path: '', redirectTo: 'app/home', pathMatch: 'full' },
         { path: 'app', component: CommonLayoutComponent, children: [
           { path: 'home', component: DashboardComponent, pathMatch: 'full' },
-          { path: 'professors', component: Dashboard2Component, pathMatch: 'full' },
+          { path: 'professors', component: SearchProfessor, pathMatch: 'full' },
+          { path: 'professorX', component: ProfessorComponent, pathMatch: 'full' },
           { path: 'departments', component: ChartsComponent, pathMatch: 'full'},
           { path: 'courses', component: ChartsComponent, pathMatch: 'full'},
           { path: 'institutions', component: ComponentsComponent, pathMatch: 'full' },
