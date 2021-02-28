@@ -7,8 +7,9 @@ import {DepartmentsComponent} from './pages/departments';
 import {ComponentsComponent} from './pages/institutions';
 import {InstitutionDetailsComponent} from './pages/institutionDetails';
 import {DashboardComponent} from './pages/dashboard';
-import {Dashboard2Component} from './pages/dashboard2';
 import {FormsComponent} from "./pages/forms";
+import { SearchProfessor } from './pages/search-professor';
+import { ProfessorComponent } from './pages/search-professor/professor';
 
 // @ts-ignore
 // @ts-ignore
@@ -21,7 +22,8 @@ import {FormsComponent} from "./pages/forms";
         {
           path: 'app', component: CommonLayoutComponent, children: [
             {path: 'home', component: DashboardComponent, pathMatch: 'full'},
-            {path: 'professors', component: Dashboard2Component, pathMatch: 'full'},
+            {path: 'professors', component: SearchProfessor, pathMatch: 'full'},
+            { path: 'professorX', component: InstitutionDetailsComponent, pathMatch: 'full' },
             {path: 'departments', component: DepartmentsComponent, pathMatch: 'full'},
             {path: 'courses', component: DepartmentsComponent, pathMatch: 'full'},
             {path: 'institutions', component: ComponentsComponent, pathMatch: 'full'},

@@ -7,9 +7,10 @@ import { ThemeModule } from 'theme';
 
 import { DepartmentsModule } from '../departments/departments.module';
 import { DashboardModule } from '../dashboard/dashboard.module';
-import { MapsModule } from '../maps/maps.module';
-import { Dashboard2Component } from './dashboard2.component';
-import { FiltersComponent } from './filters/filters.component';
+import { RouterModule } from '@angular/router';
+
+import { SearchProfessor } from './search-professor.component';
+// import { FiltersComponent } from './filters/filters.component';
 
 @NgModule({
   imports: [
@@ -17,13 +18,13 @@ import { FiltersComponent } from './filters/filters.component';
     ThemeModule,
     FormsModule,
     DashboardModule,
-    MapsModule,
     DepartmentsModule,
     MaterialAngularSelectModule,
+    RouterModule,
   ],
   declarations: [
-    Dashboard2Component,
-    FiltersComponent,
+    SearchProfessor,
+    // FiltersComponent,
   ],
 })
-export class Dashboard2Module {}
+export class SearchProfessorModule {}
