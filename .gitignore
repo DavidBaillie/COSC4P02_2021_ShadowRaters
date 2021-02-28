@@ -9,6 +9,8 @@ material-angular-dashboard/out-tsc
 material-angular-dashboard/node_modules
 
 # IDEs and editors
+/.idea
+/demo.iml
 material-angular-dashboard/.idea
 material-angular-dashboard/.project
 material-angular-dashboard/.classpath
