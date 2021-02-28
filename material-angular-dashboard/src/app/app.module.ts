@@ -11,7 +11,7 @@ import { InstitutionsModule } from './pages/institutions';
 import { InstitutionDetailsModule } from './pages/institutionDetails';
 
 import { DashboardModule } from './pages/dashboard';
-import { Dashboard2Module } from './pages/dashboard2';
+import { SearchProfessorModule } from './pages/search-professor';
 import { FormsModule } from './pages/forms';
 
 @NgModule({
@@ -21,7 +21,7 @@ import { FormsModule } from './pages/forms';
     AppRoutingModule,
     InstitutionsModule,
     DashboardModule,
-    Dashboard2Module,
+    SearchProfessorModule,
     FormsModule,
     DepartmentsModule,
     HttpClientModule,
