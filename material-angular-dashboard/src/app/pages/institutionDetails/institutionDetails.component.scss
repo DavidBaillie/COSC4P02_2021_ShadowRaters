@@ -27,11 +27,45 @@
 }
 
 
-.base-card-body-top,.base-card-body-middle,.base-card-body-bottom{
+.base-card-body-top{
   height: 200px;
 }
+
+.base-card-body-middle{
+
+}
+
+.base-card-body-bottom{
+  height: 100px;
+
+}
+
 .general_rating{
+  float: left;
   font-size: 25px;
+  font-weight: bolder;
+  color: rgb(183,183,183);
+}
+
+
+.userId,.userComment,.userRating{
+  float: left;
+  width: 100%;
+}
+
+.userId{
+  font-size: 18px;
+  color: #00bcd4;
+}
+
+.userComment{
+  font-size: 16px;
+  font-style: italic;
+  color: rgb(224, 224, 224);
+}
+
+.userRating{
+  font-size: 15px;
   font-weight: bolder;
   color: rgb(183,183,183);
 }

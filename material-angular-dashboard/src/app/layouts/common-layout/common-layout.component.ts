@@ -18,10 +18,10 @@ export class CommonLayoutComponent implements OnInit {
   public ngOnInit() {
     this.userSpace = document.getElementById('user-space');
     this.authService.userData.subscribe(user => this.user = user ? user : {
-      username: 'Luke',
-      email: 'Luke@skywalker.com',
+      username: 'TestUSer',
+      email: 'testing@test.com',
     });
-    if (!this.authService.isLoggedIn) 
+    if (!this.authService.isLoggedIn)
       this.createSignIn();
     else
       this.createUserIcon();

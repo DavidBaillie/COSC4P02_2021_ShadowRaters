@@ -8,6 +8,7 @@ import {ComponentsComponent} from './pages/institutions';
 import {InstitutionDetailsComponent} from './pages/institutionDetails';
 import {DashboardComponent} from './pages/dashboard';
 import {Dashboard2Component} from './pages/dashboard2';
+import {FormsComponent} from "./pages/forms";
 
 // @ts-ignore
 // @ts-ignore
@@ -26,6 +27,8 @@ import {Dashboard2Component} from './pages/dashboard2';
             {path: 'institutions', component: ComponentsComponent, pathMatch: 'full'},
             {path: 'institutionDetails', component: InstitutionDetailsComponent, pathMatch: 'full'},
             {path: 'about', component: ComponentsComponent, pathMatch: 'full'},
+            {path: 'account', component: FormsComponent, pathMatch: 'full'},
+
             {path: '**', redirectTo: '/ypages/404'},
           ]
         }, // add 'canActivate: AuthGuard' for catching unauth users

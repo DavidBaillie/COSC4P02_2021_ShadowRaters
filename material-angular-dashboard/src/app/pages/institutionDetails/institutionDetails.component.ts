@@ -1,7 +1,6 @@
 import { Component, HostBinding } from '@angular/core';
 import { UpgradableComponent } from 'theme/components/upgradable';
 
-
 @Component({
   selector: 'app-institutionDetails',
   templateUrl: './institutionDetails.component.html',

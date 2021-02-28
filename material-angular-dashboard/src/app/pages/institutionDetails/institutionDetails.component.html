@@ -7,8 +7,6 @@
     <base-card-body>
       <div *ngFor="let institution of data;" class="base-card-body-top" >
         <span class="general_rating">General Rating: {{institution.rating}}</span>
-      </div>
-      <div class="base-card-body-middle">
         <div class="rate">
           <input type="radio" id="star5" name="rate" value="5" disabled/>
           <label for="star5" title="text">5 stars</label>
@@ -22,8 +20,13 @@
           <label for="star1" title="text">1 star</label>
         </div>
       </div>
-      <div class="base-card-body-bottom">
-        3
+      <div class="base-card-body-middle">
+        <app-discrete-bar-chart></app-discrete-bar-chart>
+      </div>
+      <div  *ngFor="let institution of data_comments;"  class="base-card-body-bottom">
+        <span class="userId">{{institution.userID}}</span>
+        <span class="userComment">{{institution.comment}}</span>
+        <span class="userRating">Rating score: {{institution.rating}}</span>
       </div>
     </base-card-body>
   </base-card>
