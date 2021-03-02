@@ -1,4 +1,8 @@
-from flask import Flask,jsonify,request,session
+from second import second
+from flask import Flask,jsonify,request,session,g
+from flask_httpauth import HTTPBasicAuth
+from itsdangerous import TimedJSONWebSignatureSerializer as Serializer
+from itsdangerous import BadSignature, SignatureExpired
 from sshtunnel import SSHTunnelForwarder
 import psycopg2
 import os,binascii
@@ -6,6 +10,21 @@ from hashlib import sha256
 import random, string
 app = Flask(__name__)
 app.secret_key = "adaslccadw"
+auth = HTTPBasicAuth()
+SECRET_KEY = "qbsacasd"
+def generate_auth_token(uuid, expiration=36000):
+    s = Serializer(SECRET_KEY,expires_in=expiration)
+    return s.dumps({'uuid':uuid})
+
+def verify_auth_token(token):
+    s = Serializer(SECRET_KEY)
+    try:
+        data = s.loads(token)
+        return data
+    except SignatureExpired:
+        return None
+    except BadSignature:
+        return None
 
 server = SSHTunnelForwarder(
     ('51.222.151.27',22),
@@ -43,7 +62,7 @@ def createNewUser():
     password = sha256(salt.encode()+password.encode()).hexdigest()
     school = newUser.get("school")
     program = newUser.get("program")
-    if not all([admin,username,password]):
+    if not all([username,password]):
         return jsonify(msg="missing admin, username or password")
     curs.execute("select * from \"user\" where username = '%s'" % username)
     data = curs.fetchone()
