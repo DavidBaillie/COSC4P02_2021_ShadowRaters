@@ -36,7 +36,7 @@ export class SearchProfessor extends UpgradableComponent implements OnInit{
       },
       {
         name: "Prof XY",
-        description: "Exciting",
+        description: "Excelent",
         school: "Talent University"
       },
     ]

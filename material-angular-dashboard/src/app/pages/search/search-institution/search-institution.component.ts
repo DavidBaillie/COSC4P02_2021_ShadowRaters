@@ -5,10 +5,10 @@ import { UpgradableComponent } from 'theme/components/upgradable';
 
 @Component({
   selector: 'search-professor',
-  styleUrls: ['./search-professor.component.scss'],
-  templateUrl: './search-professor.component.html',
+  styleUrls: ['./search-institution.component.scss'],
+  templateUrl: './search-institution.component.html',
 })
-export class SearchProfessor extends UpgradableComponent implements OnInit{
+export class SearchInstitution extends UpgradableComponent implements OnInit{
   allProfessors:Array<Object>;
   professors:Array<Object>;
 
@@ -20,22 +20,22 @@ export class SearchProfessor extends UpgradableComponent implements OnInit{
   ngOnInit() {
     this.professors = [
       {
-      name: "Professor Xavier",
-      description: "Brainy dude",
+      name: "Broccoli University",
+      description: "A lot of broccoli",
       school: "School of Gifted Youngsters"
       },
       {
-        name: "Prof Y",
-        description: "Y doe",
+        name: "University of Waterloo",
+        description: "The university of Waterloo",
         school: "Butte University"
       },
       {
-        name: "Prof Z",
-        description: "Zzz sleepy",
+        name: "University of Toronto",
+        description: "The university of Toronto",
         school: "Z university"
       },
       {
-        name: "Prof XY",
+        name: "University X",
         description: "Exciting",
         school: "Talent University"
       },
@@ -45,7 +45,7 @@ export class SearchProfessor extends UpgradableComponent implements OnInit{
 
 
   public filterP() {
-    const profName:string = (<HTMLInputElement> document.getElementById("prof")).value;
+    const profName:string = (<HTMLInputElement> document.getElementById("school")).value;
     var s1:string;
     var s2:string = profName.toLowerCase().replace(/\s/g, "");
 
