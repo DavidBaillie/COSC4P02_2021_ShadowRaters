@@ -1,4 +1,4 @@
-from flask import Blueprint,request,jsonify
+from flask import Blueprint,request,jsonify,session
 from sshtunnel import SSHTunnelForwarder
 import psycopg2
 import os,binascii
@@ -26,7 +26,7 @@ curs = conn.cursor()
 
 session = Blueprint('session',__name__,url_prefix='')
 
-@app.route("/session",methods=["GET"])
+@session.route("/session",methods=["GET"])
 def check_session():
     username = session.get("username")
     if username is not None:

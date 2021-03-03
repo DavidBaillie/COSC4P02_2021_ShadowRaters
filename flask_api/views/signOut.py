@@ -1,4 +1,4 @@
-from flask import Blueprint,request,jsonify
+from flask import Blueprint,request,jsonify,session
 from sshtunnel import SSHTunnelForwarder
 import psycopg2
 import os,binascii
@@ -24,9 +24,9 @@ conn = psycopg2.connect(
 curs = conn.cursor()
 
 
-signOut = Blueprint('signIn',__name__,url_prefix='')
+signOut = Blueprint('signOut',__name__,url_prefix='')
 
-@app.route("/sign_out",methods=["GET"])
+@signOut.route("/sign_out",methods=["GET"])
 def sign_out():
     session.clear()
     return jsonify(msg="success")

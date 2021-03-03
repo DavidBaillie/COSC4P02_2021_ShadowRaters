@@ -26,7 +26,7 @@ curs = conn.cursor()
 
 reviewDepartment = Blueprint('reviewDepartment',__name__,url_prefix='/reviews')
 
-@app.route("/department",methods=["GET","POST"])
+@reviewDepartment.route("/department",methods=["GET","POST"])
 def DepartmentReviews():
     if request.method == 'POST':
         newReview = request.get_json()

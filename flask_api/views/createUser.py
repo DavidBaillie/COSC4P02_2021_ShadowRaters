@@ -26,7 +26,7 @@ curs = conn.cursor()
 
 createUser = Blueprint('createUser',__name__,url_prefix='')
 
-@test.route('/createUser',methods=["POST"])
+@createUser.route('/createUser',methods=["POST"])
 def createNewUser():
     newUser = request.get_json()
     uuid = binascii.b2a_hex(os.urandom(15))

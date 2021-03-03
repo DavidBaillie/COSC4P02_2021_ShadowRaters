@@ -26,7 +26,7 @@ curs = conn.cursor()
 
 courses = Blueprint('courses',__name__,url_prefix='')
 
-@app.route("/Courses",methods=["GET"])
+@courses.route("/Courses",methods=["GET"])
 def getCoursesInfo():
     curs.execute("select * from course")
     info = curs.fetchall()

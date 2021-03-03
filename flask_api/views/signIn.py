@@ -1,4 +1,4 @@
-from flask import Blueprint,request,jsonify
+from flask import Blueprint,request,jsonify,session
 from sshtunnel import SSHTunnelForwarder
 import psycopg2
 import os,binascii
@@ -26,7 +26,7 @@ curs = conn.cursor()
 
 signIn = Blueprint('signIn',__name__,url_prefix='')
 
-@app.route("/sign_in",methods=["POST"])
+@signIn.route("/sign_in",methods=["POST"])
 def sign_in():
     userData = request.get_json()
     username = userData.get("username")
