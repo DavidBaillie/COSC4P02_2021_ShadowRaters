@@ -1,4 +1,3 @@
-from second import second
 from flask import Flask,jsonify,request,session,g
 from flask_httpauth import HTTPBasicAuth
 from itsdangerous import TimedJSONWebSignatureSerializer as Serializer
@@ -79,7 +78,6 @@ def sign_in():
     userData = request.get_json()
     username = userData.get("username")
     password = userData.get("password")
-    salt = userData.get("salt")
     if not all([username,password]):
         return jsonify(msg="missing username or password")
     curs.execute("select password from \"user\" where username = '%s'" % username)
@@ -107,7 +105,7 @@ def check_session():
     else:
         return jsonify(msg="not yet sign in")
 
-@app.route("/Professors",methods=["GET"])
+@app.route("/Professors/",methods=["GET"])
 def getProfessorsInfo():
     curs.execute("select * from professor")
     info = curs.fetchall()
@@ -146,8 +144,8 @@ def getDepartmentsInfo():
     data = {'msg':"success",'departments':departments}
     return jsonify(data)
 
-@app.route("/reviews/professors",methods=["GET","POST"])
-def professorReviews():
+@app.route("/reviews/professors/<pid>",methods=["GET","POST"])
+def professorReviews(pid):
     if request.method == 'POST':
         newReview = request.get_json()
         rpid = binascii.b2a_hex(os.urandom(15))
@@ -170,7 +168,9 @@ def professorReviews():
         conn.commit()
         return jsonify(msg="success")
     else:
-        curs.execute("select * from rating_professor")
+        print(type(pid))
+        curs.execute("select * from rating_professor where pid = '%s'" % pid)
+        #curs.execute("select * from rating_professor")
         info = curs.fetchall()
         if info is None:
             return jsonify(msg="empty table")
