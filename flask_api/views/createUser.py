@@ -4,7 +4,7 @@ import psycopg2
 import os,binascii
 from hashlib import sha256
 import random, string
-test = Blueprint('test',__name__,url_prefix='/test')
+
 server = SSHTunnelForwarder(
     ('51.222.151.27',22),
     ssh_private_key = "C:\\Users\\wsh41\\.ssh\\id_rsa",
@@ -22,6 +22,10 @@ conn = psycopg2.connect(
     port=server.local_bind_port,
 )
 curs = conn.cursor()
+
+
+createUser = Blueprint('createUser',__name__,url_prefix='')
+
 @test.route('/createUser',methods=["POST"])
 def createNewUser():
     newUser = request.get_json()
