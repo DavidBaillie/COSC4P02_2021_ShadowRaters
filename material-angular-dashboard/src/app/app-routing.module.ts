@@ -8,8 +8,10 @@ import {ComponentsComponent} from './pages/institutions';
 import {InstitutionDetailsComponent} from './pages/institutionDetails';
 import {DashboardComponent} from './pages/dashboard';
 import {FormsComponent} from "./pages/forms";
-import { SearchProfessor } from './pages/search-professor';
-import { ProfessorComponent } from './pages/search-professor/professor';
+import { SearchProfessor } from './pages/search/search-professor';
+import { SearchInstitution } from './pages/search/search-institution';
+import { SearchCourse } from './pages/search/search-course';
+import { SearchDepartment } from './pages/search/search-department';
 
 // @ts-ignore
 // @ts-ignore
@@ -23,10 +25,10 @@ import { ProfessorComponent } from './pages/search-professor/professor';
           path: 'app', component: CommonLayoutComponent, children: [
             {path: 'home', component: DashboardComponent, pathMatch: 'full'},
             {path: 'professors', component: SearchProfessor, pathMatch: 'full'},
-            { path: 'professorX', component: InstitutionDetailsComponent, pathMatch: 'full' },
-            {path: 'departments', component: DepartmentsComponent, pathMatch: 'full'},
-            {path: 'courses', component: DepartmentsComponent, pathMatch: 'full'},
-            {path: 'institutions', component: ComponentsComponent, pathMatch: 'full'},
+            {path: 'professorX', component: InstitutionDetailsComponent, pathMatch: 'full' },
+            {path: 'departments', component: SearchDepartment, pathMatch: 'full'},
+            {path: 'courses', component: SearchCourse, pathMatch: 'full'},
+            {path: 'institutions', component: SearchInstitution, pathMatch: 'full'},
             {path: 'institutionDetails', component: InstitutionDetailsComponent, pathMatch: 'full'},
             {path: 'about', component: ComponentsComponent, pathMatch: 'full'},
             {path: 'account', component: FormsComponent, pathMatch: 'full'},

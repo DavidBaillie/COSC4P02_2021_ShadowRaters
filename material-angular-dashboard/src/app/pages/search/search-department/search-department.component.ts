@@ -4,11 +4,11 @@ import { Router } from '@angular/router';
 import { UpgradableComponent } from 'theme/components/upgradable';
 
 @Component({
-  selector: 'search-professor',
-  styleUrls: ['./search-professor.component.scss'],
-  templateUrl: './search-professor.component.html',
+  selector: 'search-department',
+  styleUrls: ['./search-department.component.scss'],
+  templateUrl: './search-department.component.html',
 })
-export class SearchProfessor extends UpgradableComponent implements OnInit{
+export class SearchDepartment extends UpgradableComponent implements OnInit{
   allProfessors:Array<Object>;
   professors:Array<Object>;
 
@@ -20,22 +20,22 @@ export class SearchProfessor extends UpgradableComponent implements OnInit{
   ngOnInit() {
     this.professors = [
       {
-      name: "Professor Xavier",
-      description: "Brainy dude",
+      name: "Computer Science",
+      description: "A lot of broccoli",
       school: "School of Gifted Youngsters"
       },
       {
-        name: "Prof Y",
-        description: "Y doe",
+        name: "Biological Sciences",
+        description: "The university of Waterloo",
         school: "Butte University"
       },
       {
-        name: "Prof Z",
-        description: "Zzz sleepy",
+        name: "Statistics",
+        description: "The university of Toronto",
         school: "Z university"
       },
       {
-        name: "Prof XY",
+        name: "English",
         description: "Exciting",
         school: "Talent University"
       },
