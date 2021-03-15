@@ -5,7 +5,7 @@
     </base-card-title>
 
     <base-card-body>
-      <div *ngFor="let institution of data;" class="base-card-body-top" >
+      <div *ngFor="let institution of data;"  > <!-- class="base-card-body-top"  dont we think this creates too much extra space?--> 
         <span class="general_rating">General Rating: {{institution.rating}}</span>
         <div class="rate">
           <input type="radio" id="star5" name="rate" value="5" disabled/>
@@ -20,7 +20,7 @@
           <label for="star1" title="text">1 star</label>
         </div>
       </div>
-      <div class="base-card-body-middle">
+      <div class="base-card-body-middle" style="margin-top: 80px;">
         <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect button--colored-light-blue"
          style="float: right; margin-bottom: 10px;">Compare to others</button>
          <div style="clear: both;"></div>
@@ -59,7 +59,7 @@
       <h3 class="mdl-card__title-text">Leave a rating for Professor X...</h3>
       <!-- <textarea name="Text1" cols="40" rows="5"></textarea> -->
       <div class="mdl-textfield mdl-js-textfield">
-        <textarea class="mdl-textfield__input modal_inp" id="modalTextArea" type="text" rows= "5" cols="100"></textarea>
+        <textarea class="mdl-textfield__input modal_inp" id="modalTextArea" type="text" rows= "3" cols="100"></textarea>
         <label class="mdl-textfield__label" for="sample5">Don't be mean...</label>
       </div>
       
