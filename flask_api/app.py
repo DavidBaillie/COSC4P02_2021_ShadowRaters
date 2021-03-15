@@ -54,14 +54,14 @@ def verify_auth_token(token):
     except BadSignature:
         return None
 
-server = SSHTunnelForwarder(
-    ('51.222.151.27',22),
-    ssh_private_key = "C:\\Users\\wsh41\\.ssh\\id_rsa",
-    ssh_username='root',
-    remote_bind_address=('localhost',5432))
+# server = SSHTunnelForwarder(
+    # ('51.222.151.27',22),
+    # ssh_private_key = "C:\\Users\\wsh41\\.ssh\\id_rsa",
+    # ssh_username='root',
+    # remote_bind_address=('localhost',5432))
 
-server.start()
-print("server connected")
+# server.start()
+#print("server connected")
 
 conn = psycopg2.connect(
     database='postgres',
@@ -83,4 +83,4 @@ def hello_world():
 
 
 if __name__ == '__main__':
-    app.run()
+    app.run(host='localhost', port='5000')
