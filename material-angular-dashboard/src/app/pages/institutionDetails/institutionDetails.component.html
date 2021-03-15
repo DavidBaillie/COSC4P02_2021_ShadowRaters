@@ -21,13 +21,54 @@
         </div>
       </div>
       <div class="base-card-body-middle">
+        <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect button--colored-light-blue"
+         style="float: right; margin-bottom: 10px;">Compare to others</button>
+         <div style="clear: both;"></div>
+        <app-line-chart></app-line-chart>
+        <hr>
         <app-discrete-bar-chart></app-discrete-bar-chart>
       </div>
-      <div  *ngFor="let institution of data_comments;"  class="base-card-body-bottom">
-        <span class="userId">{{institution.userID}}</span>
-        <span class="userComment">{{institution.comment}}</span>
-        <span class="userRating">Rating score: {{institution.rating}}</span>
+      <hr>
+
+      <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect button--colored-light-blue"
+       (click)="openModal()" style="float: right; margin-bottom: 10px;">Leave Rating</button>
+      <div style="clear: both;"></div>
+
+      <div style="height: 400px; overflow: auto;">
+        <div  *ngFor="let institution of data_comments;"  class="base-card-body-bottom">
+          <span class="userId">{{institution.userID}}</span>
+          <span class="userComment">{{institution.comment}}</span>
+          <span class="userRating">Rating score: {{institution.rating}}</span>
+          <div>
+            <button class="mdl-button mdl-js-button mdl-button--raised:hover" style="width: 10px; padding: 0px;">
+            <i class="material-icons" style="font-size: 1em;">thumb_up</i>
+            </button>
+            <button class="mdl-button mdl-js-button mdl-button--fab:hover">
+            <i class="material-icons" style="font-size: 1em;">thumb_down</i>
+            </button>
+          </div>
+        </div>
       </div>
     </base-card-body>
   </base-card>
+
+  <!-- modal to submit rating -->
+  <div id="myModal" class="modal">
+    <!-- Modal content -->
+    <div class="modal-content container">
+      <h3 class="mdl-card__title-text">Leave a rating for Professor X...</h3>
+      <!-- <textarea name="Text1" cols="40" rows="5"></textarea> -->
+      <div class="mdl-textfield mdl-js-textfield">
+        <textarea class="mdl-textfield__input modal_inp" id="modalTextArea" type="text" rows= "5" cols="100"></textarea>
+        <label class="mdl-textfield__label" for="sample5">Don't be mean...</label>
+      </div>
+      
+      <!-- <input class="mdl-slider mdl-js-slider slider--colored-teal is-upgraded" type="range"
+      min="0" max="5" value="5" tabindex="0"> -->
+      <p>( star rating goes here )</p>
+      <button (click)="submitRating()" class="button--colored-light-blue mdl-button mdl-button--raised mdl-js-button mdl-js-ripple-effect inline-bttn">
+        Submit
+      </button>
+    </div>
+  </div>
 </div>
