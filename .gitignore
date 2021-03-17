@@ -9,9 +9,8 @@ material-angular-dashboard/out-tsc
 material-angular-dashboard/node_modules
 
 # IDEs and editors
-/.idea
+
 /demo.iml
-material-angular-dashboard/.idea
 material-angular-dashboard/.project
 material-angular-dashboard/.classpath
 material-angular-dashboard/.c9/
@@ -42,3 +41,4 @@ material-angular-dashboard/e2e/*.map
 # System Files
 material-angular-dashboard/.DS_Store
 material-angular-dashboard/Thumbs.db
+/.idea/
