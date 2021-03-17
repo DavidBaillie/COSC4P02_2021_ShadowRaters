@@ -1,25 +1,25 @@
-# app/views/departments.py
+#app\views\department.py
 from flask import Blueprint,jsonify,request
 from . import db,department_table,rating_department_table
 import os,binascii
 import time
 
 
-departments = Blueprint('departments',__name__,url_prefix='/departments')
+department = Blueprint('department',__name__,url_prefix='/department')
 
-@departments.route('/',methods=["GET"])
-def getDepartmentsInfo():
+@department.route('/',methods=["GET"])
+def getDepartmentInfo():
     try:
         data = db.session.query(department_table).all()
         res = []
         for i in data:
             content = {'did':i.did,'uid':i.uid,'name':i.name,'info':i.info,'equipment':i.equipment,'education_support':i.education_support}
             res.append(content)
-        return jsonify({'msg':"success",'departments':res})
+        return jsonify({'msg':"success",'department':res})
     except:
         db.session.rollback()
         return jsonify({'msg':'error'})
-@departments.route('/reviews/<did>',methods=["GET","POST"])
+@department.route('/reviews/<did>',methods=["GET","POST"])
 def courseReviws(did):
     if request.method == 'POST':
         newReview = request.get_json()
@@ -27,7 +27,7 @@ def courseReviws(did):
         rdid = str(rdid,encoding="utf-8")
         uuid = newReview.get('uuid')
         try:
-            data = db.session.query(rating_department_table).filter_by(uuid=uuid,did=did)
+            data = db.session.query(rating_department_table).filter_by(uuid=uuid,did=did).all()
             if data != []:
                 return jsonify(msg="error, already rated")
             else:

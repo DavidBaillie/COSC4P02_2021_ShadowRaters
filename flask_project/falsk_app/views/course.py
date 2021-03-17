@@ -1,25 +1,24 @@
-# app/views/courses.py
 from flask import Blueprint,jsonify,request
 from . import db,course_table,rating_course_table
 import os,binascii
 import time
 
 
-courses = Blueprint('course',__name__,url_prefix='/courses')
+course = Blueprint('course',__name__,url_prefix='/course')
 
-@courses.route('/',methods=["GET"])
-def getCoursesInfo():
+@course.route('/',methods=["GET"])
+def getCourseInfo():
     try:
         data = db.session.query(course_table).all()
         res = []
         for i in data:
             content = {'cid':i.cid,'pid':i.pid,'uid':i.uid,'did':i.did,'name':i.name,'info':i.info}
             res.append(content)
-        return jsonify({'msg':"success",'courses':res})
+        return jsonify({'msg':"success",'course':res})
     except:
         db.session.rollback()
         return jsonify({'msg':'error'})
-@courses.route('/reviews/<cid>',methods=["GET","POST"])
+@course.route('/reviews/<cid>',methods=["GET","POST"])
 def courseReviws(cid):
     if request.method == 'POST':
         newReview = request.get_json()
@@ -27,7 +26,7 @@ def courseReviws(cid):
         rcid = str(rcid,encoding="utf-8")
         uuid = newReview.get('uuid')
         try:
-            data = db.session.query(rating_course_table).filter_by(uuid=uuid,cid=cid)
+            data = db.session.query(rating_course_table).filter_by(uuid=uuid,cid=cid).all()
             if data != []:
                 return jsonify(msg="error, already rated")
             else:

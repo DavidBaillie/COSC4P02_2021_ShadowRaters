@@ -13,17 +13,17 @@ server = SSHTunnelForwarder(
 server.start()
 print("server connected")
 
-#app.config["SQLALCHEMY_DATABASE_URI"] = 'postgresql://postgres:123456@localhost:5432/testDB'
+app.config["SQLALCHEMY_DATABASE_URI"] = 'postgresql://postgres:123456@localhost:5432/testDB'
 
-app.config["SQLALCHEMY_DATABASE_URI"] = 'postgresql://postgres:COSC4P02Raters@localhost:5432/postgres'
+#app.config["SQLALCHEMY_DATABASE_URI"] = 'postgresql://postgres:COSC4P02Raters@localhost:5432/postgres'
 db = SQLAlchemy(app)
 
 Base = automap_base()
 Base.prepare(db.engine,reflect=True)
 user_table = Base.classes.user
-course_table = Base.classes.courses
+course_table = Base.classes.course
 rating_course_table = Base.classes.rating_course
-department_table = Base.classes.departments
+department_table = Base.classes.department
 rating_department_table = Base.classes.rating_department
 professor_table = Base.classes.professor
 rating_professor_table = Base.classes.rating_professor
