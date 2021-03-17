@@ -38,9 +38,12 @@ def courseReviws(cid):
             db.session.rollback()
             return jsonify({'msg': 'error'})
     else:
-        data = db.session.query(rating_course_table).filer_by(cid=cid).all()
-        res = []
-        for i in data:
-            content = {'rcid':i.rcid,'uuid':i.uuid,'cid':i.cid,'score':i.score,'duration':i.duration,'comment':i.comment,'num_agree':i.num_agree,'num_disagree':i.num_disagree,'date':i.date}
-            res.append(content)
-        return jsonify({'msg':"success",'reviews':res})
+        try:
+            data = db.session.query(rating_course_table).filer_by(cid=cid).all()
+            res = []
+            for i in data:
+                content = {'rcid':i.rcid,'uuid':i.uuid,'cid':i.cid,'score':i.score,'duration':i.duration,'comment':i.comment,'num_agree':i.num_agree,'num_disagree':i.num_disagree,'date':i.date}
+                res.append(content)
+            return jsonify({'msg':"success",'reviews':res})
+        except:
+            return jsonify({'msg':'error'})
