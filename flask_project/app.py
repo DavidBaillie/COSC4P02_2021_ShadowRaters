@@ -1,10 +1,4 @@
-from flask import Flask
-from views.university import university
-from views.course import course
-
-app = Flask(__name__)
-app.register_blueprint(university,url_prefix='/university')
-app.register_blueprint(course,url_prefix='/course')
+from falsk_app import app
 
 @app.route('/')
 def hello_world():
