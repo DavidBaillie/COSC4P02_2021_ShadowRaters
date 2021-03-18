@@ -5,8 +5,8 @@ import { FormsModule } from '@angular/forms';
 import { MaterialAngularSelectModule } from 'material-angular-select';
 import { ThemeModule } from 'theme';
 
-import { DepartmentsModule } from '../../departments/departments.module';
-import { DashboardModule } from '../../dashboard/dashboard.module';
+import { DepartmentsModule } from '../../departments';
+import { DashboardModule } from '../../dashboard';
 import { RouterModule } from '@angular/router';
 
 import { SearchCourse } from './search-course.component';

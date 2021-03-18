@@ -3,10 +3,10 @@ import { UpgradableComponent } from 'theme/components/upgradable';
 
 @Component({
   selector: 'app-institutionDetails',
-  templateUrl: './institutionDetails.component.html',
-  styleUrls: ['./institutionDetails.component.scss'],
+  templateUrl: './detail-institution.html',
+  styleUrls: ['./detail-institution.component.scss'],
 })
-export class InstitutionDetailsComponent extends UpgradableComponent implements OnInit {
+export class DetailInstitutionComponent extends UpgradableComponent implements OnInit {
   @HostBinding('class.mdl-grid') public readonly mdlGrid = true;
   @HostBinding('class.ui-components') public readonly uiComponents = true;
 
@@ -68,7 +68,7 @@ export class InstitutionDetailsComponent extends UpgradableComponent implements 
 
   public openModal():void {
     this.modal.style.display = "block";
-  }  
+  }
 
   public submitRating():void {
     this.data_comments.unshift(
@@ -80,6 +80,6 @@ export class InstitutionDetailsComponent extends UpgradableComponent implements 
     this.modalTextArea.value = " ";
     this.modal.style.display = "none";
   }
-   
+
 
 }

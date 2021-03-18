@@ -9,7 +9,7 @@ import { LineChartService } from './line-chart.service';
 
 @Component({
   selector: 'app-line-chart',
-  styleUrls: ['../../../../theme/components/line-chart/line-chart.component.scss'],
+  styleUrls: ['../../../../../theme/components/line-chart/line-chart.component.scss'],
   template: ``,
   providers: [LineChartService],
 })

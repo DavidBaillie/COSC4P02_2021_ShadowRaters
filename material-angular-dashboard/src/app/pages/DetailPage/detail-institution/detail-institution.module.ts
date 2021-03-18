@@ -1,7 +1,7 @@
 import {CommonModule} from '@angular/common';
 import {NgModule} from '@angular/core';
 import {FormsModule} from '@angular/forms';
-import {InstitutionDetailsComponent} from './institutionDetails.component';
+import {DetailInstitutionComponent} from './detail-institution.component';
 import {DiscreteBarChartComponent} from "./discrete-bar-chart";
 import {LineChartComponent} from "./line-chart";
 
@@ -14,13 +14,13 @@ import {ThemeModule} from 'theme';
     FormsModule,
   ],
   exports: [
-    InstitutionDetailsComponent,
+    DetailInstitutionComponent,
   ],
   declarations: [
-    InstitutionDetailsComponent,
+    DetailInstitutionComponent,
     DiscreteBarChartComponent,
     LineChartComponent,
   ],
 })
-export class InstitutionDetailsModule {
+export class DetailInstitutionModule {
 }
