@@ -2,47 +2,32 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { UpgradableComponent } from 'theme/components/upgradable';
+import {SearchCourseService} from './search-course.service'
 
 @Component({
   selector: 'search-course',
   styleUrls: ['./search-course.component.scss'],
   templateUrl: './search-course.component.html',
+  providers: [SearchCourseService],
 })
 export class SearchCourse extends UpgradableComponent implements OnInit{
-  allProfessors:Array<Object>;
-  professors:Array<Object>;
+  allProfessors:any;
+  professors:any;
 
-  constructor(private router: Router) {
+  constructor(private router: Router, private searchCourseService: SearchCourseService) {
     super();
   }
 
   
   ngOnInit() {
-    this.professors = [
-      {
-      name: "COSC 4P02",
-      description: "Great course teaching you the fundamentals of software engineering.",
-      school: "Broccoli University"
-      },
-      {
-        name: "COSC 3P03",
-        description: "The algorithms course.",
-        school: "Broccoli University"
-      },
-      {
-        name: "ESC 3P01",
-        description: "Economy of the world.",
-        school: "Stan Unviersity"
-      },
-      {
-        name: "ESC 3P01",
-        description: "Economy of the worlds.",
-        school: "Stan University"
-      },
-    ]
-    this.allProfessors = this.professors;
+    this.getCourses();
   }
 
+  private async getCourses() {
+    const courses = await this.searchCourseService.getCourses();
+    this.professors = courses.courses;
+    this.allProfessors =this.professors;
+  }
 
   public filterP() {
     const profName:string = (<HTMLInputElement> document.getElementById("prof")).value;
