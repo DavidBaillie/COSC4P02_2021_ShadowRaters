@@ -1,0 +1,29 @@
+.aboutTop {
+  text-align: center;
+  background-color: gray;
+  margin: 0px;
+  padding: 30px 0px 30px 0px;
+}
+
+.aboutBottom {
+  text-align: center;
+  background-color: rgb(196, 196, 196);
+}
+
+#knowMore {
+  margin-bottom: 0px; 
+  color: black; 
+  font-family: Brush Script mt, cursive; 
+  font-size: 45px;
+}
+
+.member {
+  width: 10%;
+  border-radius: 30px;
+  background-color: black;
+  margin: 0px 10px 0px 10px;
+}
+
+.members {
+  display: flex;
+}

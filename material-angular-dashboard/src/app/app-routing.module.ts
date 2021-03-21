@@ -12,6 +12,7 @@ import { SearchProfessor } from './pages/search/search-professor';
 import { SearchInstitution } from './pages/search/search-institution';
 import { SearchCourse } from './pages/search/search-course';
 import { SearchDepartment } from './pages/search/search-department';
+import { AboutComponent } from './pages/about';
 
 // @ts-ignore
 // @ts-ignore
@@ -30,7 +31,7 @@ import { SearchDepartment } from './pages/search/search-department';
             {path: 'courses', component: SearchCourse, pathMatch: 'full'},
             {path: 'institutions', component: SearchInstitution, pathMatch: 'full'},
             {path: 'institutionDetails', component: InstitutionDetailsComponent, pathMatch: 'full'},
-            {path: 'about', component: ComponentsComponent, pathMatch: 'full'},
+            {path: 'about', component: AboutComponent, pathMatch: 'full'},
             {path: 'account', component: FormsComponent, pathMatch: 'full'},
 
             {path: '**', redirectTo: '/ypages/404'},

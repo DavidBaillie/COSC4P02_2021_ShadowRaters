@@ -1,0 +1,25 @@
+<div>
+
+  <div class="aboutTop">
+    <p id="knowMore"> <b>Know more</b></p>
+    <h1 style="margin: 0px; font-size: 100px;"><b>About Us</b></h1> 
+  </div>
+
+  <div class="aboutBottom">
+    <h1 style="margin: 0px;">HELLO! WE ARE cool</h1>
+
+    
+    <p> {{ aboutUs }} </p>
+
+    <h3 style="color: black; margin-bottom: 2px;">The Team</h3>
+    <hr style="background-color: rgba(0, 0, 0, 0.151); width: 80%; margin: auto;">
+
+    <div style="display: flex; margin-top: 20px;">
+      <team-member *ngFor="let name of members" [memberName]="name"></team-member>
+    </div>
+    
+  </div>
+
+</div>
+
+
