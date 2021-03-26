@@ -1,10 +1,9 @@
-from flask import Flask
-from views.university import university
-from views.course import course
+from falsk_app import app
+from falsk_app.config import settings
+from flask_cors import *
 
-app = Flask(__name__)
-app.register_blueprint(university,url_prefix='/university')
-app.register_blueprint(course,url_prefix='/course')
+app.config.from_object(settings.Test)
+CORS(app,supports_credentials=True)
 
 @app.route('/')
 def hello_world():
