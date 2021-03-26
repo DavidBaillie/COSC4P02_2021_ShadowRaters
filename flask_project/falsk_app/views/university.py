@@ -7,7 +7,7 @@ import time
 university = Blueprint('university',__name__,url_prefix='/university')
 
 @university.route('/',methods=["GET"])
-def getDepartmentInfo():
+def getUniversityInfo():
     try:
         data = db.session.query(university_table).all()
         res = []
