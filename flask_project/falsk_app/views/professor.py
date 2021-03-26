@@ -24,20 +24,19 @@ def professorReviws(pid):
         newReview = request.get_json()
         rpid = binascii.b2a_hex(os.urandom(15))
         uuid = newReview.get("uuid")
-        print(uuid)
         try:
             data = db.session.query(rating_professor_table).filter_by(uuid=uuid,pid=pid).all()
             if data != []:
                 return jsonify({'msg':"error, already rated"})
             else:
                 date = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())
-                review = rating_professor_table(rpid=rpid,uuid=uuid,pid=pid,score=newReview.get('score'),comment=newReview.get('comment'),num_agree=0,num_disagree=0,date=date)
+                review = rating_professor_table(rpid=rpid,uuid=uuid,pid=pid,score=newReview.get("score"),comment=newReview.get("comment"),num_agree=0,num_disagree=0,date=date)
                 db.session.add(review)
                 db.session.commit()
                 return jsonify(msg="success")
         except:
             db.session.rollback()
-            return jsonify({'msg': 'error'})
+            return jsonify({'msg': "error"})
     else:
         try:
             data = db.session.query(rating_professor_table).filter_by(pid=pid).all()

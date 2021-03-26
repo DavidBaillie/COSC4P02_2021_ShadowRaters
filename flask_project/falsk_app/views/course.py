@@ -31,7 +31,7 @@ def courseReviws(cid):
                 return jsonify(msg="error, already rated")
             else:
                 date = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())
-                review = rating_course_table(rcid=rcid,uuid=uuid,cid=cid,score=newReview.get('score'),duration=newReview.get('duration'),comment=newReview.get('comment'),num_agree=0,num_disagree=0,date=date)
+                review = rating_course_table(rcid=rcid,uuid=uuid,cid=cid,score=newReview.get('score'),duration=newReview.get("duration"),comment=newReview.get("comment"),num_agree=0,num_disagree=0,date=date)
                 db.session.add(review)
                 db.session.commit()
         except:
