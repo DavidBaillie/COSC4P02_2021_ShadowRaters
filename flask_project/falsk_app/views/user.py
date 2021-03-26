@@ -29,7 +29,7 @@ def verify_auth_token(token):
 def createNewUser():
     newUser = request.get_json()
     uuid = binascii.b2a_hex(os.urandom(15))
-    #uuid = str(uuid, encoding="utf-8")
+
     admin = newUser.get("admin")
     username = newUser.get("username")
     email = newUser.get("email")

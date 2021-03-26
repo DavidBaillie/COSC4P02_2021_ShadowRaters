@@ -23,7 +23,7 @@ def professorReviws(pid):
     if request.method == 'POST':
         newReview = request.get_json()
         rpid = binascii.b2a_hex(os.urandom(15))
-        #rpid = str(rpid,encoding="utf-8")
+
         uuid = newReview.get('uuid')
         try:
             data = db.session.query(rating_professor_table).filter_by(uuid=uuid,pid=pid).all()
