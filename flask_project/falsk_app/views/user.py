@@ -10,12 +10,8 @@ user = Blueprint('user',__name__,url_prefix='/user')
 
 def generate_token(uuid):
     expiration = 3600
-    print('1')
     s = Serializer(current_app.config['SECRET_KEY'],expires_in=expiration)
-    print('2')
     token = s.dumps({'uuid': uuid}).decode('ascii')
-    print('3')
-    print(token)
     return token
 
 def verify_auth_token(token):
@@ -33,7 +29,7 @@ def verify_auth_token(token):
 def createNewUser():
     newUser = request.get_json()
     uuid = binascii.b2a_hex(os.urandom(15))
-    uuid = str(uuid, encoding="utf-8")
+    #uuid = str(uuid, encoding="utf-8")
     admin = newUser.get("admin")
     username = newUser.get("username")
     email = newUser.get("email")
@@ -42,6 +38,7 @@ def createNewUser():
     password = sha256(salt.encode() + password.encode()).hexdigest()
     school = newUser.get("school")
     program = newUser.get("program")
+
     try:
         db.session.add(user_table(uuid=uuid,admin=admin,username=username,email=email,password=password,salt=salt,school=school,program=program))
         db.session.commit()

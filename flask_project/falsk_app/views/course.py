@@ -23,7 +23,7 @@ def courseReviws(cid):
     if request.method == 'POST':
         newReview = request.get_json()
         rcid = binascii.b2a_hex(os.urandom(15))
-        rcid = str(rcid,encoding="utf-8")
+        #rcid = str(rcid,encoding="utf-8")
         uuid = newReview.get('uuid')
         try:
             data = db.session.query(rating_course_table).filter_by(uuid=uuid,cid=cid).all()
