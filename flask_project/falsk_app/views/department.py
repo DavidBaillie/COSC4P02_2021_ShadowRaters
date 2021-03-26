@@ -25,7 +25,7 @@ def courseReviws(did):
         newReview = request.get_json()
         rdid = binascii.b2a_hex(os.urandom(15))
 
-        uuid = newReview.get('uuid')
+        uuid = newReview.get("uuid")
         try:
             data = db.session.query(rating_department_table).filter_by(uuid=uuid,did=did).all()
             if data != []:
