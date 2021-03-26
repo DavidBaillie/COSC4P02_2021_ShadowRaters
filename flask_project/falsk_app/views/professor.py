@@ -20,7 +20,7 @@ def getprofessorInfo():
         return jsonify({'msg':'error'})
 @professor.route('/reviews/<pid>',methods=["GET","POST"])
 def professorReviws(pid):
-    if request.method == 'POST':
+    if request.method == "POST":
         newReview = request.get_json()
         rpid = binascii.b2a_hex(os.urandom(15))
 

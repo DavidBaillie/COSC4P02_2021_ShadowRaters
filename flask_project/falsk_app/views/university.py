@@ -20,7 +20,7 @@ def getUniversityInfo():
         return jsonify({'msg':'error'})
 @university.route('/reviews/<uid>',methods=["GET","POST"])
 def universityReviws(uid):
-    if request.method == 'POST':
+    if request.method == "POST”:
         newReview = request.get_json()
         ruid = binascii.b2a_hex(os.urandom(15))
 

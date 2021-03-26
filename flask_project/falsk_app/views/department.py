@@ -21,7 +21,7 @@ def getDepartmentInfo():
         return jsonify({'msg':'error'})
 @department.route('/reviews/<did>',methods=["GET","POST"])
 def courseReviws(did):
-    if request.method == 'POST':
+    if request.method == "POST":
         newReview = request.get_json()
         rdid = binascii.b2a_hex(os.urandom(15))
 

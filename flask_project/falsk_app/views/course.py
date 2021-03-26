@@ -20,7 +20,7 @@ def getCourseInfo():
         return jsonify({'msg':'error'})
 @course.route('/reviews/<cid>',methods=["GET","POST"])
 def courseReviws(cid):
-    if request.method == 'POST':
+    if request.method == "POST":
         newReview = request.get_json()
         rcid = binascii.b2a_hex(os.urandom(15))
 
