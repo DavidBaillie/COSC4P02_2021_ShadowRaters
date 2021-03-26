@@ -13,9 +13,9 @@ server = SSHTunnelForwarder(
 server.start()
 print("server connected")
 
-app.config["SQLALCHEMY_DATABASE_URI"] = 'postgresql://postgres:123456@localhost:5432/testDB'
+#app.config["SQLALCHEMY_DATABASE_URI"] = 'postgresql://postgres:123456@localhost:5432/testDB'
 
-#app.config["SQLALCHEMY_DATABASE_URI"] = 'postgresql://postgres:COSC4P02Raters@localhost:5432/postgres'
+app.config["SQLALCHEMY_DATABASE_URI"] = 'postgresql://postgres:COSC4P02Raters@localhost:5432/postgres'
 db = SQLAlchemy(app)
 
 Base = automap_base()
