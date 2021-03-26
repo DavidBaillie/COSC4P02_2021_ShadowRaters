@@ -23,7 +23,6 @@ def universityReviws(uid):
     if request.method == 'POST':
         newReview = request.get_json()
         ruid = binascii.b2a_hex(os.urandom(15))
-        #ruid = str(ruid,encoding="utf-8")
         uuid = newReview.get('uuid')
         try:
             data = db.session.query(rating_university_table).filter_by(uuid=uuid,uid=uid).all()

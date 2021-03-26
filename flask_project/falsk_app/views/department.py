@@ -24,7 +24,6 @@ def courseReviws(did):
     if request.method == 'POST':
         newReview = request.get_json()
         rdid = binascii.b2a_hex(os.urandom(15))
-        #rdid = str(rdid,encoding="utf-8")
         uuid = newReview.get('uuid')
         try:
             data = db.session.query(rating_department_table).filter_by(uuid=uuid,did=did).all()

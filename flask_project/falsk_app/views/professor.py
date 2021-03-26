@@ -23,7 +23,6 @@ def professorReviws(pid):
     if request.method == 'POST':
         newReview = request.get_json()
         rpid = binascii.b2a_hex(os.urandom(15))
-        #rpid = str(rpid,encoding="utf-8")
         uuid = newReview.get('uuid')
         try:
             data = db.session.query(rating_professor_table).filter_by(uuid=uuid,pid=pid).all()
@@ -40,7 +39,7 @@ def professorReviws(pid):
             return jsonify({'msg': 'error'})
     else:
         try:
-            data = db.session.query(rating_professor_table).filer_by(pid=pid).all()
+            data = db.session.query(rating_professor_table).filter_by(pid=pid).all()
             res = []
             for i in data:
                 content = {'rpid':i.rpid,'uuid':i.uuid,'pid':i.pid,'score':i.score,'comment':i.comment,'num_agree':i.num_agree,'num_disagree':i.num_disagree,'date':i.date}
