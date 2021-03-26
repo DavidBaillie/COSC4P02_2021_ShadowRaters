@@ -40,7 +40,6 @@ def professorReviws(pid):
     else:
         try:
             data = db.session.query(rating_professor_table).filter_by(pid=pid).all()
-            print('3')
             res = []
             for i in data:
                 content = {'rpid':i.rpid,'uuid':i.uuid,'pid':i.pid,'score':i.score,'comment':i.comment,'num_agree':i.num_agree,'num_disagree':i.num_disagree,'date':i.date}

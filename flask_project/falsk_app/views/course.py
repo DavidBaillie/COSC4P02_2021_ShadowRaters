@@ -39,7 +39,7 @@ def courseReviws(cid):
             return jsonify({'msg': 'error'})
     else:
         try:
-            data = db.session.query(rating_course_table).filer_by(cid=cid).all()
+            data = db.session.query(rating_course_table).filter_by(cid=cid).all()
             res = []
             for i in data:
                 content = {'rcid':i.rcid,'uuid':i.uuid,'cid':i.cid,'score':i.score,'duration':i.duration,'comment':i.comment,'num_agree':i.num_agree,'num_disagree':i.num_disagree,'date':i.date}

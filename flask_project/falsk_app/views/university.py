@@ -39,7 +39,7 @@ def universityReviws(uid):
             return jsonify({'msg': 'error'})
     else:
         try:
-            data = db.session.query(rating_university_table).filer_by(uid=uid).all()
+            data = db.session.query(rating_university_table).filter_by(uid=uid).all()
             res = []
             for i in data:
                 content = {'ruid':i.ruid,'uuid':i.uuid,'uid':i.uid,'score':i.score,'comment':i.comment,'num_agree':i.num_agree,'num_disagree':i.num_disagree,'date':i.date}
