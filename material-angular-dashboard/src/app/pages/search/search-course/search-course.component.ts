@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 
 import { UpgradableComponent } from 'theme/components/upgradable';
 import {SearchCourseService} from './search-course.service'
+import {ICourses} from "./courses";
 
 @Component({
   selector: 'search-course',
@@ -11,8 +12,8 @@ import {SearchCourseService} from './search-course.service'
   providers: [SearchCourseService],
 })
 export class SearchCourse extends UpgradableComponent implements OnInit{
-  allProfessors:any;
-  professors:any;
+  allCourses:ICourses[];
+  courses:ICourses[];
 
   constructor(private router: Router, private searchCourseService: SearchCourseService) {
     super();
@@ -24,28 +25,28 @@ export class SearchCourse extends UpgradableComponent implements OnInit{
   }
 
   private async getCourses() {
-    const courses = await this.searchCourseService.getCourses();
-    this.professors = courses.course;
-    this.allProfessors =this.professors;
+    const temp = await this.searchCourseService.getCourses();
+    this.courses = temp.course;
+    this.allCourses =this.courses;
   }
 
-  public filterP() {
-    const profName:string = (<HTMLInputElement> document.getElementById("prof")).value;
+  public filterCourses() {
+    const profName:string = (<HTMLInputElement> document.getElementById("course")).value;
     var s1:string;
     var s2:string = profName.toLowerCase().replace(/\s/g, "");
 
     if (s2 == "") {
-      this.professors = this.allProfessors;
+      this.courses = this.allCourses;
       return;
     }
 
-    this.professors = this.allProfessors.filter( (prof:any) => {
-      s1 = prof.name.toLowerCase().replace(/\s/g, "");
+    this.courses = this.allCourses.filter( (course:any) => {
+      s1 = course.name.toLowerCase().replace(/\s/g, "");
       return s1.toLowerCase().includes(s2);
     });
   }
 
-  public goToProf() {
+  public goToCourseX() {
     this.router.navigate(['/app/professorX']);
   }
 

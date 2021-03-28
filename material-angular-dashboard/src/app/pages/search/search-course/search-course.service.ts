@@ -5,13 +5,15 @@ import { catchError, retry } from 'rxjs/operators';
 
 @Injectable()
 export class SearchCourseService {
-    professorsURL = "http://database.ratemyscholar.ca/course";
+    coursesURL = "http://database.ratemyscholar.ca/course";
 
     constructor(private http: HttpClient) {}
 
-    /** GET professors */
+    /** GET courses */
     async getCourses() {
-        const a = await this.http.get<any>(this.professorsURL).toPromise();
-        return a;
+      const res = await this.http.get<any>(this.coursesURL).toPromise();
+      // console.log("testing courses");
+      // console.log(res);
+      return res;
     }
 }
