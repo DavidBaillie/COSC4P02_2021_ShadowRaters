@@ -18,14 +18,14 @@ export class SearchCourse extends UpgradableComponent implements OnInit{
     super();
   }
 
-  
+
   ngOnInit() {
     this.getCourses();
   }
 
   private async getCourses() {
     const courses = await this.searchCourseService.getCourses();
-    this.professors = courses.courses;
+    this.professors = courses.course;
     this.allProfessors =this.professors;
   }
 
@@ -39,8 +39,8 @@ export class SearchCourse extends UpgradableComponent implements OnInit{
       return;
     }
 
-    this.professors = this.allProfessors.filter( (prof:any) => {     
-      s1 = prof.name.toLowerCase().replace(/\s/g, ""); 
+    this.professors = this.allProfessors.filter( (prof:any) => {
+      s1 = prof.name.toLowerCase().replace(/\s/g, "");
       return s1.toLowerCase().includes(s2);
     });
   }
@@ -48,5 +48,5 @@ export class SearchCourse extends UpgradableComponent implements OnInit{
   public goToProf() {
     this.router.navigate(['/app/professorX']);
   }
-  
+
 }

@@ -5,7 +5,7 @@ import { catchError, retry } from 'rxjs/operators';
 
 @Injectable()
 export class SearchCourseService {
-    professorsURL = "http://database.ratemyscholar.ca/Courses";
+    professorsURL = "http://database.ratemyscholar.ca/course";
 
     constructor(private http: HttpClient) {}
 

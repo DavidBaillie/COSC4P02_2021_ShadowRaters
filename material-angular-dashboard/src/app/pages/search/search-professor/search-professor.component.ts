@@ -2,11 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 // import { Console } from 'console';
 import { UpgradableComponent } from 'theme/components/upgradable';
-
 import {SearchProfessorService} from './search-professor.service';
-
 import { Observable, throwError } from 'rxjs';
 import {IProfessor} from './professor';
+
 
 @Component({
   selector: 'search-professor',
@@ -28,7 +27,7 @@ export class SearchProfessor extends UpgradableComponent implements OnInit{
 
   private async getProfessors() {
     const professors = await this.searchProfessorService.getProfessors();
-    this.professors = professors.professors
+    this.professors = professors.professor
     this.allProfessors = this.professors;
   }
 
@@ -42,14 +41,16 @@ export class SearchProfessor extends UpgradableComponent implements OnInit{
       return;
     }
 
-    this.professors = this.allProfessors.filter( (prof:any) => {     
-      s1 = prof.name.toLowerCase().replace(/\s/g, ""); 
+    this.professors = this.allProfessors.filter( (prof:any) => {
+      s1 = prof.name.toLowerCase().replace(/\s/g, "");
       return s1.toLowerCase().includes(s2);
     });
   }
 
-  public goToProf() {
-    this.router.navigate(['/app/professorX']);
+  public goToProf(parameter:string) {
+    const profURL:string = '/app/professorX/' + parameter;
+    console.log(profURL);
+    this.router.navigate([profURL]);
   }
-  
+
 }

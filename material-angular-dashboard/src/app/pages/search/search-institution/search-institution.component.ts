@@ -16,7 +16,7 @@ export class SearchInstitution extends UpgradableComponent implements OnInit{
     super();
   }
 
-  
+
   ngOnInit() {
     this.professors = [
       {
@@ -54,14 +54,14 @@ export class SearchInstitution extends UpgradableComponent implements OnInit{
       return;
     }
 
-    this.professors = this.allProfessors.filter( (prof:any) => {     
-      s1 = prof.name.toLowerCase().replace(/\s/g, ""); 
+    this.professors = this.allProfessors.filter( (prof:any) => {
+      s1 = prof.name.toLowerCase().replace(/\s/g, "");
       return s1.toLowerCase().includes(s2);
     });
   }
 
-  public goToProf() {
-    this.router.navigate(['/app/professorX']);
+  public gotoInsti() {
+    this.router.navigate(['/app/institutionX']);
   }
-  
+
 }

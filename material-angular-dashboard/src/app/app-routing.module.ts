@@ -5,13 +5,14 @@ import {LayoutsModule} from './layouts';
 import {CommonLayoutComponent} from './layouts/common-layout';
 import {DepartmentsComponent} from './pages/departments';
 import {ComponentsComponent} from './pages/institutions';
-import {DetailInstitutionComponent} from './pages/DetailPage/detail-institution';
 import {DashboardComponent} from './pages/dashboard';
 import {FormsComponent} from "./pages/forms";
 import { SearchProfessor } from './pages/search/search-professor';
 import { SearchInstitution } from './pages/search/search-institution';
 import { SearchCourse } from './pages/search/search-course';
 import { SearchDepartment } from './pages/search/search-department';
+import {DetailProfessorComponent} from './pages/DetailPage/detail-professor';
+import {DetailInstitutionComponent} from "./pages/DetailPage/detail-institution";
 
 // @ts-ignore
 // @ts-ignore
@@ -25,11 +26,11 @@ import { SearchDepartment } from './pages/search/search-department';
           path: 'app', component: CommonLayoutComponent, children: [
             {path: 'home', component: DashboardComponent, pathMatch: 'full'},
             {path: 'professors', component: SearchProfessor, pathMatch: 'full'},
-            {path: 'professorX', component: DetailInstitutionComponent, pathMatch: 'full' },
+            {path: 'professorX/:pid', component: DetailProfessorComponent, pathMatch: 'full' },
+            {path: 'institutionX', component: DetailInstitutionComponent, pathMatch: 'full'},
             {path: 'departments', component: SearchDepartment, pathMatch: 'full'},
             {path: 'courses', component: SearchCourse, pathMatch: 'full'},
             {path: 'institutions', component: SearchInstitution, pathMatch: 'full'},
-            {path: 'institutionDetails', component: DetailInstitutionComponent, pathMatch: 'full'},
             {path: 'about', component: ComponentsComponent, pathMatch: 'full'},
             {path: 'account', component: FormsComponent, pathMatch: 'full'},
 

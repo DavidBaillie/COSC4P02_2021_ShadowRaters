@@ -6,7 +6,7 @@ import {IProfessor} from './professor';
 
 @Injectable()
 export class SearchProfessorService {
-    professorsURL = "http://database.ratemyscholar.ca/Professors";
+    professorsURL = "http://database.ratemyscholar.ca/professor";
 
     constructor(private http: HttpClient) {}
 

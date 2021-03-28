@@ -27,6 +27,12 @@ export class CommonLayoutComponent implements OnInit {
       this.createUserIcon();
   }
 
+
+  route_account_management = function () {
+    alert('test');
+    this.router.navigateByUrl('/app/account');
+  };
+
   public logout() {
     this.authService.logout()
       .subscribe(
