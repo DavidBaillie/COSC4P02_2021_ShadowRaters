@@ -13,8 +13,15 @@ const tokenName = 'token';
 export class AuthService {
 
   private isLogged$ = new BehaviorSubject(false);
-  private url = `${environment.apiBaseUrl}/api/auth`;
-  private user = { username: 'Luke', email: 'Luke@skywalker.com' }; // some data about user
+  // private url = `${environment.apiBaseUrl}/api/auth`;
+  private url = `${environment.apiBaseUrl}/user`;
+
+  // private user = { username: 'test', email: 'test@skywalker.com' };  //defined with all parameter that login function provides
+
+  //Currently only return these two attributes
+  private user = { uuid: 'test', token:"test" };
+
+
 
   constructor(private http: HttpClient) {
 
@@ -24,15 +31,17 @@ export class AuthService {
     return this.isLogged$.value;
   }
 
+
+  //This function sends post request with username and password
   public login(data): Observable<any> {
     return this.http.post(`${this.url}/login`, data)
       .pipe(
-        map((res: { user: any, token: string }) => {
-          this.user = res.user;
+        map((res: { uuid: any, token: string }) => {
+          this.user = res;
+          localStorage.setItem('uuid', res.uuid);
           localStorage.setItem(tokenName, res.token);
-          // only for example
-          localStorage.setItem('username', res.user.username);
-          localStorage.setItem('email', res.user.email);
+          // localStorage.setItem('username', res.username);
+          // localStorage.setItem('email', res.email);
           this.isLogged$.next(true);
           return this.user;
         }));
@@ -45,18 +54,18 @@ export class AuthService {
         this.user = null;
         this.isLogged$.next(false);
         return of(false);
+
       }));
   }
 
+
+  //Changes pending. Need to
   public signup(data) {
     return this.http.post(`${this.url}/signup`, data)
       .pipe(
-        map((res: { user: any, token: string }) => {
-          this.user = res.user;
-          localStorage.setItem(tokenName, res.token);
-          // only for example
-          localStorage.setItem('username', res.user.username);
-          localStorage.setItem('email', res.user.email);
+        map((res: { username: string, email: string }) => {
+          localStorage.setItem('username', res.username);
+          localStorage.setItem('email', res.email);
           this.isLogged$.next(true);
           return this.user;
         }));
@@ -76,8 +85,10 @@ export class AuthService {
     // it's fake and useing only for example
     if (localStorage.getItem('username') && localStorage.getItem('email')) {
       this.user = {
-        username: localStorage.getItem('username'),
-        email: localStorage.getItem('email'),
+        // username: localStorage.getItem('username'),
+        // email: localStorage.getItem('email'),
+        uuid: localStorage.getItem('uuid'),
+        token: localStorage.getItem(tokenName),
       };
     }
     return of(this.user);
