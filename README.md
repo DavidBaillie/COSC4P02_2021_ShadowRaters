@@ -1,4 +1,4 @@
-# COSC 4P02 Software Engineering 2 Proposal - Team Shadow Raters Brock University - Department of Computer Sciences 2021
+# COSC 4P02 Software Engineering 2 Proposal - Team Shadow Raters Brock University - Department of Computer Sciences 2021 
 
 ## Team members (8)
 Name | e-mail | Role
