@@ -71,15 +71,31 @@ export class InstitutionDetailsComponent extends UpgradableComponent implements 
   }  
 
   public submitRating():void {
+    var rating:number = this.getNumericalRating();
     this.data_comments.unshift(
       {
+        userID: "Anonymous",
         date: "Jan 10th, 2021",
         comment: this.modalTextArea.value,
+        rating,
       }
     );
     this.modalTextArea.value = " ";
     this.modal.style.display = "none";
   }
-   
+  
+  public getNumericalRating():number {
+    var stars:HTMLElement = document.getElementById("star-radios");
+    var children:any = stars.children;
+    var rating:number = 0;
+
+    // iterate over the stars and get the one checked
+    for (var i=0; i < stars.children.length; i++) {
+      if (children[i].checked) 
+        rating = parseFloat(children[i].id)
+    }
+        
+    return rating;
+  }
 
 }

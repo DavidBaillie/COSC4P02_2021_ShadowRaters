@@ -7,19 +7,10 @@
     <base-card-body>
       <div *ngFor="let institution of data;"  > <!-- class="base-card-body-top"  dont we think this creates too much extra space?--> 
         <span class="general_rating">General Rating: {{institution.rating}}</span>
-        <div class="rate">
-          <input type="radio" id="star5" name="rate" value="5" disabled/>
-          <label for="star5" title="text">5 stars</label>
-          <input type="radio" id="star4" name="rate" value="4" disabled checked/>
-          <label for="star4" title="text">4 stars</label>
-          <input type="radio" id="star3" name="rate" value="3" disabled/>
-          <label for="star3" title="text">3 stars</label>
-          <input type="radio" id="star2" name="rate" value="2" disabled/>
-          <label for="star2" title="text">2 stars</label>
-          <input type="radio" id="star1" name="rate" value="1" disabled/>
-          <label for="star1" title="text">1 star</label>
-        </div>
       </div>
+
+      <div class="Stars" style="--rating: 4.3; font-size: 40px;" aria-label="Rating of this product is 2.3 out of 5."></div>
+      
       <div class="base-card-body-middle" style="margin-top: 80px;">
         <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect button--colored-light-blue"
          style="float: right; margin-bottom: 10px;">Compare to others</button>
@@ -56,17 +47,19 @@
   <div id="myModal" class="modal">
     <!-- Modal content -->
     <div class="modal-content container">
-      <h3 class="mdl-card__title-text">Leave a rating for Professor X...</h3>
+      <h3 class="mdl-card__title-text" style="color: rgba(0, 0, 0, 0.418);">Leave a rating</h3>
       <!-- <textarea name="Text1" cols="40" rows="5"></textarea> -->
       <div class="mdl-textfield mdl-js-textfield">
-        <textarea class="mdl-textfield__input modal_inp" id="modalTextArea" type="text" rows= "3" cols="100"></textarea>
-        <label class="mdl-textfield__label" for="sample5">Don't be mean...</label>
+        <textarea class="mdl-textfield__input modal_inp" id="modalTextArea" type="text" rows= "15" cols="80"></textarea>
+        <label class="mdl-textfield__label" for="sample5">Leave a rating...</label>
+      </div>
+    
+      <div>
+        <star-rating></star-rating>
       </div>
       
-      <!-- <input class="mdl-slider mdl-js-slider slider--colored-teal is-upgraded" type="range"
-      min="0" max="5" value="5" tabindex="0"> -->
-      <p>( star rating goes here )</p>
-      <button (click)="submitRating()" class="button--colored-light-blue mdl-button mdl-button--raised mdl-js-button mdl-js-ripple-effect inline-bttn">
+
+      <button (click)="submitRating()" style="width: 150px;" class="button--colored-light-blue mdl-button mdl-button--raised mdl-js-button mdl-js-ripple-effect inline-bttn">
         Submit
       </button>
     </div>

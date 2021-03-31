@@ -25,7 +25,7 @@ export class SearchCourse extends UpgradableComponent implements OnInit{
 
   private async getCourses() {
     const courses = await this.searchCourseService.getCourses();
-    this.professors = courses.courses;
+    this.professors = courses.course;
     this.allProfessors =this.professors;
   }
 
