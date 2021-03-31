@@ -1,6 +1,6 @@
 #app\views\department.py
-from flask import Blueprint,jsonify,request
-from . import db,department_table,rating_department_table
+from flask import Blueprint,jsonify,request,session
+from . import db,department_table,rating_department_table,user_table
 import os,binascii
 import time
 
@@ -22,6 +22,8 @@ def getDepartmentInfo():
 @department.route('/reviews/<did>',methods=["GET","POST"])
 def courseReviws(did):
     if request.method == "POST":
+        if session.get('uuid') is None:
+            return jsonify(msg="error, login first")
         newReview = request.get_json()
         rdid = binascii.b2a_hex(os.urandom(15))
 
@@ -43,7 +45,10 @@ def courseReviws(did):
             data = db.session.query(rating_department_table).filter_by(did=did).all()
             res = []
             for i in data:
-                content = {'rdid':i.rdid,'uuid':i.uuid,'did':i.did,'score':i.score,'comment':i.comment,'num_agree':i.num_agree,'num_disagree':i.num_disagree,'date':i.date}
+                uuid = i.uuid
+                j = db.session.query(user_table).filter_by(uuid=uuid).first()
+                username = j.username
+                content = {'rdid':i.rdid,'username':username,'did':i.did,'score':i.score,'comment':i.comment,'num_agree':i.num_agree,'num_disagree':i.num_disagree,'date':i.date}
                 res.append(content)
             return jsonify({'msg':"success",'reviews':res})
         except:

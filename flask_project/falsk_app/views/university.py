@@ -1,5 +1,5 @@
-from flask import Blueprint,jsonify,request
-from . import db,university_table,rating_university_table
+from flask import Blueprint,jsonify,request,session
+from . import db,university_table,rating_university_table,user_table
 import os,binascii
 import time
 
@@ -21,6 +21,8 @@ def getUniversityInfo():
 @university.route('/reviews/<uid>',methods=["GET","POST"])
 def universityReviws(uid):
     if request.method == "POST":
+        if session.get('uuid') is None:
+            return jsonify(msg="error, login first")
         newReview = request.get_json()
         ruid = binascii.b2a_hex(os.urandom(15))
 
@@ -42,7 +44,10 @@ def universityReviws(uid):
             data = db.session.query(rating_university_table).filter_by(uid=uid).all()
             res = []
             for i in data:
-                content = {'ruid':i.ruid,'uuid':i.uuid,'uid':i.uid,'score':i.score,'comment':i.comment,'num_agree':i.num_agree,'num_disagree':i.num_disagree,'date':i.date}
+                uuid = i.uuid
+                j = db.session.query(user_table).filter_by(uuid=uuid).first()
+                username = j.username
+                content = {'ruid':i.ruid,'username':username,'uid':i.uid,'score':i.score,'comment':i.comment,'num_agree':i.num_agree,'num_disagree':i.num_disagree,'date':i.date}
                 res.append(content)
             return jsonify({'msg':"success",'reviews':res})
         except:

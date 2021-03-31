@@ -59,7 +59,7 @@ def login():
             u = db.session.query(user_table).filter_by(uuid=data).first()
             if u:
                 session['uuid'] = u.uuid
-                return jsonify(uuid=u.uuid,msg="login success")
+                return jsonify(uuid=u.uuid,msg="login success",username=u.username,email=u.email)
             else:
                 return jsonify(msg="user not exist")
         else:
@@ -76,7 +76,7 @@ def login():
                 if data.password == sha256(salt.encode()+password.encode()).hexdigest():
                     new_token = generate_token(data.uuid)
                     session['uuid'] = data.uuid
-                    return jsonify(uuid=data.uuid,msg="login success",token=new_token)
+                    return jsonify(uuid=data.uuid,msg="login success",token=new_token,username=data.username,email=data.email)
                 else:
                     return jsonify(msg="wrong password")
             else:

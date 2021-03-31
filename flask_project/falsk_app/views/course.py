@@ -1,5 +1,5 @@
-from flask import Blueprint,jsonify,request
-from . import db,course_table,rating_course_table
+from flask import Blueprint,jsonify,request,session
+from . import db,course_table,rating_course_table,user_table
 import os,binascii
 import time
 
@@ -21,6 +21,8 @@ def getCourseInfo():
 @course.route('/reviews/<cid>',methods=["GET","POST"])
 def courseReviws(cid):
     if request.method == "POST":
+        if session.get('uuid') is None:
+            return jsonify(msg="error, login first")
         newReview = request.get_json()
         rcid = binascii.b2a_hex(os.urandom(15))
 
@@ -42,7 +44,10 @@ def courseReviws(cid):
             data = db.session.query(rating_course_table).filter_by(cid=cid).all()
             res = []
             for i in data:
-                content = {'rcid':i.rcid,'uuid':i.uuid,'cid':i.cid,'score':i.score,'duration':i.duration,'comment':i.comment,'num_agree':i.num_agree,'num_disagree':i.num_disagree,'date':i.date}
+                uuid = i.uuid
+                j = db.session.query(user_table).filter_by(uuid=uuid).first()
+                username = j.username
+                content = {'rcid':i.rcid,'username':username,'cid':i.cid,'score':i.score,'duration':i.duration,'comment':i.comment,'num_agree':i.num_agree,'num_disagree':i.num_disagree,'date':i.date}
                 res.append(content)
             return jsonify({'msg':"success",'reviews':res})
         except:
