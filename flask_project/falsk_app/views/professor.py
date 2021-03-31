@@ -1,5 +1,5 @@
 from flask import Blueprint,jsonify,request,session
-from . import db,professor_table,rating_professor_table,user_table
+from . import db,professor_table,rating_professor_table,user_table,university_table,department_table
 import os,binascii
 import time
 
@@ -12,7 +12,9 @@ def getprofessorInfo():
         data = db.session.query(professor_table).all()
         res = []
         for i in data:
-            content = {'pid':i.pid,'uid':i.uid,'did':i.did,'name':i.name,'info':i.info}
+            university_name = db.session.query(university_table).filter_by(uid=i.uid).first().name
+            department_name = db.session.query(department_table).filter_by(did=i.did).first().name
+            content = {'pid':i.pid,'uid':i.uid,'university':university_name,'did':i.did,'department':department_name,'name':i.name,'info':i.info}
             res.append(content)
         return jsonify({'msg':"success",'professor':res})
     except:

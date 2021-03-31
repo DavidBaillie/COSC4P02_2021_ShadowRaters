@@ -1,6 +1,6 @@
 #app\views\department.py
 from flask import Blueprint,jsonify,request,session
-from . import db,department_table,rating_department_table,user_table
+from . import db,department_table,rating_department_table,user_table,university_table
 import os,binascii
 import time
 
@@ -13,7 +13,8 @@ def getDepartmentInfo():
         data = db.session.query(department_table).all()
         res = []
         for i in data:
-            content = {'did':i.did,'uid':i.uid,'name':i.name,'info':i.info,'equipment':i.equipment,'education_support':i.education_support}
+            university_name = db.session.query(university_table).filter_by(uid=i.uid).first().name
+            content = {'did':i.did,'uid':i.uid,'university':university_name,'name':i.name,'info':i.info,'equipment':i.equipment,'education_support':i.education_support}
             res.append(content)
         return jsonify({'msg':"success",'department':res})
     except:
