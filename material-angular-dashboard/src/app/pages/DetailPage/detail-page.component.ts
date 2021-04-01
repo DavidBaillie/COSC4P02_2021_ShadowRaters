@@ -1,12 +1,7 @@
 import {Component, HostBinding, OnInit} from '@angular/core';
 import {UpgradableComponent} from 'theme/components/upgradable';
-<<<<<<< HEAD:material-angular-dashboard/src/app/pages/DetailPage/detail-professor/detail-professor.component.ts
-import {IProfessor} from '../../search/search-professor/professor';
-import {ProfReview} from './professorReviews';
-=======
 import {IProfessor} from '../search/search-professor/professor';
 import {Details} from './Reviews';
->>>>>>> web_integration:material-angular-dashboard/src/app/pages/DetailPage/detail-page.component.ts
 import {ActivatedRoute} from '@angular/router';
 import {SearchService} from "../search/search-general/search.service";
 
@@ -30,11 +25,7 @@ export class DetailsComponent extends UpgradableComponent implements OnInit {
 
 
   //Attributes for data of professor reviews
-<<<<<<< HEAD:material-angular-dashboard/src/app/pages/DetailPage/detail-professor/detail-professor.component.ts
-  reviews: ProfReview[];
-=======
   reviews: Details[];
->>>>>>> web_integration:material-angular-dashboard/src/app/pages/DetailPage/detail-page.component.ts
   data_comments: Array<Object>;
 
   modal: HTMLElement;
@@ -71,42 +62,52 @@ export class DetailsComponent extends UpgradableComponent implements OnInit {
       ];
     });
 
-    this.getAProfReviews().then(res => {
-      this.data_comments = res;
-    });
+    // this.getAProfReviews().then(res => {
+    //   this.data_comments = [
+    //     {
+    //
+    //     },
+    //   ];
+    //
+    // });
 
-    // this.data_comments = [
-    //   {
-    //     userID: 'Mathieu Cote',
-    //     comment: 'I think we did a Pretty Good job so far!',
-    //     rating: '4.5',
-    //   },
-    //   {
-    //     userID: 'Spongebob',
-    //     comment: 'Always follow your heart – unless your heart is bad with directions!',
-    //     rating: '5.0',
-    //   },
-    //   {
-    //     userID: 'Squidward',
-    //     comment: "It would be if I didn't have to go to work.",
-    //     rating: '3.8',
-    //   },
-    //   {
-    //     userID: 'Mathieu Cote',
-    //     comment: 'I think we did a Pretty Good job so far!',
-    //     rating: '4.5',
-    //   },
-    //   {
-    //     userID: 'Spongebob',
-    //     comment: 'Always follow your heart – unless your heart is bad with directions!',
-    //     rating: '5.0',
-    //   },
-    //   {
-    //     userID: 'Squidward',
-    //     comment: "It would be if I didn't have to go to work.",
-    //     rating: '3.8',
-    //   },
-    // ];
+    // this.getAProfReviews().then(res => {
+    //   this.data_comments = res;
+    // });
+
+
+    this.data_comments = [
+      {
+        userID: 'Mathieu Cote',
+        comment: 'I think we did a Pretty Good job so far!',
+        rating: '4.5',
+      },
+      {
+        userID: 'Spongebob',
+        comment: 'Always follow your heart – unless your heart is bad with directions!',
+        rating: '5.0',
+      },
+      {
+        userID: 'Squidward',
+        comment: "It would be if I didn't have to go to work.",
+        rating: '3.8',
+      },
+      {
+        userID: 'Mathieu Cote',
+        comment: 'I think we did a Pretty Good job so far!',
+        rating: '4.5',
+      },
+      {
+        userID: 'Spongebob',
+        comment: 'Always follow your heart – unless your heart is bad with directions!',
+        rating: '5.0',
+      },
+      {
+        userID: 'Squidward',
+        comment: "It would be if I didn't have to go to work.",
+        rating: '3.8',
+      },
+    ];
 
     this.modal = document.getElementById("myModal");
     this.modalTextArea = <HTMLTextAreaElement>document.getElementById("modalTextArea");

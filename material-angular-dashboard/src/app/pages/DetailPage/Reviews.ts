@@ -1,8 +1,12 @@
+<<<<<<< HEAD:material-angular-dashboard/src/app/pages/DetailPage/Reviews.ts
 <<<<<<< HEAD:material-angular-dashboard/src/app/pages/DetailPage/detail-professor/professorReviews.ts
 export interface ProfReview {
 =======
 export interface Details {
 >>>>>>> web_integration:material-angular-dashboard/src/app/pages/DetailPage/Reviews.ts
+=======
+export interface Details {
+>>>>>>> web_integration:material-angular-dashboard/src/app/pages/DetailPage/detail-professor/professorReviews.ts
   rpid: string,
   uuid: string,
   pid: string,
