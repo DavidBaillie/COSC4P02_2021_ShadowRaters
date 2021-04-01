@@ -9,8 +9,8 @@ import { DepartmentsModule } from '../../departments/departments.module';
 import { DashboardModule } from '../../dashboard/dashboard.module';
 import { RouterModule } from '@angular/router';
 
-import { SearchDepartment } from './search-department.component';
-import {SearchModule} from '../search-general'
+import { Search } from './search.component';
+// import { FiltersComponent } from './filters/filters.component';
 
 @NgModule({
   imports: [
@@ -21,10 +21,13 @@ import {SearchModule} from '../search-general'
     DepartmentsModule,
     MaterialAngularSelectModule,
     RouterModule,
-    SearchModule,
   ],
   declarations: [
-    SearchDepartment,
+    Search,
+    // FiltersComponent,
   ],
+  exports: [
+    Search,
+  ]
 })
-export class SearchDepartmentModule {}
+export class SearchModule {}
