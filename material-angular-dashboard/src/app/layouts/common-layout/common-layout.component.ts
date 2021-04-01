@@ -18,8 +18,8 @@ export class CommonLayoutComponent implements OnInit {
   public ngOnInit() {
     this.userSpace = document.getElementById('user-space');
     this.authService.userData.subscribe(user => this.user = user ? user : {
-      // username: 'TestUSer',
-      // email: 'email@email.com',
+      username: user.username,
+      email: user.email,
       uuid: user.uuid,
       token: user.token,
     });

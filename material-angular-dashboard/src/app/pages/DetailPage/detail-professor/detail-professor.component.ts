@@ -1,7 +1,7 @@
 import {Component, HostBinding, OnInit} from '@angular/core';
 import {UpgradableComponent} from 'theme/components/upgradable';
 import {IProfessor} from '../../search/search-professor/professor';
-import {ProfessorDetail} from './professorReviews';
+import {ProfReview} from './professorReviews';
 import {ActivatedRoute} from '@angular/router';
 import {SearchProfessorService} from "./detail-professor.service";
 
@@ -25,7 +25,7 @@ export class DetailProfessorComponent extends UpgradableComponent implements OnI
 
 
   //Attributes for data of professor reviews
-  reviews: ProfessorDetail[];
+  reviews: ProfReview[];
   data_comments: Array<Object>;
 
   modal: HTMLElement;
@@ -61,52 +61,42 @@ export class DetailProfessorComponent extends UpgradableComponent implements OnI
       ];
     });
 
-    // this.getAProfReviews().then(res => {
-    //   this.data_comments = [
-    //     {
-    //
-    //     },
-    //   ];
-    //
-    // });
+    this.getAProfReviews().then(res => {
+      this.data_comments = res;
+    });
 
-    // this.getAProfReviews().then(res => {
-    //   this.data_comments = res;
-    // });
-
-
-    this.data_comments = [
-      {
-        userID: 'Mathieu Cote',
-        comment: 'I think we did a Pretty Good job so far!',
-        rating: '4.5',
-      },
-      {
-        userID: 'Spongebob',
-        comment: 'Always follow your heart – unless your heart is bad with directions!',
-        rating: '5.0',
-      },
-      {
-        userID: 'Squidward',
-        comment: "It would be if I didn't have to go to work.",
-        rating: '3.8',
-      },
-      {
-        userID: 'Mathieu Cote',
-        comment: 'I think we did a Pretty Good job so far!',
-        rating: '4.5',
-      },
-      {
-        userID: 'Spongebob',
-        comment: 'Always follow your heart – unless your heart is bad with directions!',
-        rating: '5.0',
-      },
-      {
-        userID: 'Squidward',
-        comment: "It would be if I didn't have to go to work.",
-        rating: '3.8',
-      },
-    ];
+    // this.data_comments = [
+    //   {
+    //     userID: 'Mathieu Cote',
+    //     comment: 'I think we did a Pretty Good job so far!',
+    //     rating: '4.5',
+    //   },
+    //   {
+    //     userID: 'Spongebob',
+    //     comment: 'Always follow your heart – unless your heart is bad with directions!',
+    //     rating: '5.0',
+    //   },
+    //   {
+    //     userID: 'Squidward',
+    //     comment: "It would be if I didn't have to go to work.",
+    //     rating: '3.8',
+    //   },
+    //   {
+    //     userID: 'Mathieu Cote',
+    //     comment: 'I think we did a Pretty Good job so far!',
+    //     rating: '4.5',
+    //   },
+    //   {
+    //     userID: 'Spongebob',
+    //     comment: 'Always follow your heart – unless your heart is bad with directions!',
+    //     rating: '5.0',
+    //   },
+    //   {
+    //     userID: 'Squidward',
+    //     comment: "It would be if I didn't have to go to work.",
+    //     rating: '3.8',
+    //   },
+    // ];
 
     this.modal = document.getElementById("myModal");
     this.modalTextArea = <HTMLTextAreaElement>document.getElementById("modalTextArea");

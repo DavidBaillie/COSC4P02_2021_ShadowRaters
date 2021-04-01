@@ -1,4 +1,4 @@
-export interface ProfessorDetail {
+export interface ProfReview {
   rpid: string,
   uuid: string,
   pid: string,

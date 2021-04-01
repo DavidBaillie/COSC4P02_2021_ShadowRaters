@@ -36,17 +36,15 @@
 
       <div style="height: 400px; overflow: auto;">
         <div *ngFor="let item of data_comments;" class="base-card-body-bottom">
-          <span class="userId">{{item.userID}}</span>
-          <span class="userComment">{{item.comment}}</span>
-          <span class="userRating">Rating score: {{item.rating}}</span>
-<!--          <span class="userId">{{item.uuid}}</span>-->
+<!--          <span class="userId">{{item.userID}}</span>-->
 <!--          <span class="userComment">{{item.comment}}</span>-->
-<!--          <span class="userRating">Rating score: {{item.score}}</span>-->
-<!--          <span class="userThumbAgree">Agree: {{item.num_agree}}</span>-->
-<!--          <span class="userThumbDisagree">Disagree: {{item.num_disagree}}</span>-->
-<!--          <span class="userCommentDate">{{item.date}}</span>-->
-
-
+<!--          <span class="userRating">Rating score: {{item.rating}}</span>-->
+          <span class="userName">{{item.username}}</span>
+          <span class="userComment">{{item.comment}}</span>
+          <span class="userRating">Rating score: {{item.score}}</span>
+          <span class="userThumbAgree">Agree: {{item.num_agree}}</span>
+          <span class="userThumbDisagree">Disagree: {{item.num_disagree}}</span>
+          <span class="userCommentDate">{{item.date}}</span>
           <div>
             <button class="mdl-button mdl-js-button mdl-button--raised:hover" style="width: 10px; padding: 0px;">
             <i class="material-icons" style="font-size: 1em;">thumb_up</i>

@@ -16,12 +16,8 @@ export class AuthService {
   // private url = `${environment.apiBaseUrl}/api/auth`;
   private url = `${environment.apiBaseUrl}/user`;
 
-  // private user = { username: 'test', email: 'test@skywalker.com' };  //defined with all parameter that login function provides
-
-  //Currently only return these two attributes
-  private user = { uuid: 'test', token:"test" };
-
-
+  //Initialize all attributes a user has
+  private user = {username:"", email:"", uuid: "", token:"" };
 
   constructor(private http: HttpClient) {
 
@@ -36,13 +32,17 @@ export class AuthService {
   public login(data): Observable<any> {
     return this.http.post(`${this.url}/login`, data)
       .pipe(
-        map((res: { uuid: any, token: string }) => {
-          this.user = res;
-          localStorage.setItem('uuid', res.uuid);
-          localStorage.setItem(tokenName, res.token);
-          // localStorage.setItem('username', res.username);
-          // localStorage.setItem('email', res.email);
-          this.isLogged$.next(true);
+        map((res: { msg:string ,username:string, email:string, uuid: any, token: string }) => {
+
+          if(res.msg =="login success"){
+            this.user = res;
+            localStorage.setItem('username', res.username);
+            localStorage.setItem('email', res.email);
+            localStorage.setItem('uuid', res.uuid);
+            localStorage.setItem(tokenName, res.token);
+            this.isLogged$.next(true);
+          }
+
           return this.user;
         }));
   }
@@ -85,8 +85,8 @@ export class AuthService {
     // it's fake and useing only for example
     if (localStorage.getItem('username') && localStorage.getItem('email')) {
       this.user = {
-        // username: localStorage.getItem('username'),
-        // email: localStorage.getItem('email'),
+        username: localStorage.getItem('username'),
+        email: localStorage.getItem('email'),
         uuid: localStorage.getItem('uuid'),
         token: localStorage.getItem(tokenName),
       };
