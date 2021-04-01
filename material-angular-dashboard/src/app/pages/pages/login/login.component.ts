@@ -12,9 +12,10 @@ import { AuthService } from '../../../services/auth';
 })
 export class LoginComponent extends BlankLayoutCardComponent implements OnInit {
   public loginForm: FormGroup;
-  public email;
+  public username;
   public password;
-  public emailPattern = '^([a-zA-Z0-9_\\-\\.]+)@([a-zA-Z0-9_\\-\\.]+)\\.([a-zA-Z]{2,5})$';
+  // public emailPattern = '^([a-zA-Z0-9_\\-\\.]+)@([a-zA-Z0-9_\\-\\.]+)\\.([a-zA-Z]{2,5})$';
+  public usernamePattern = "[A-Za-z0-9]+";
   public error: string;
 
   constructor(public authService: AuthService,
@@ -24,13 +25,13 @@ export class LoginComponent extends BlankLayoutCardComponent implements OnInit {
 
     this.loginForm = this.fb.group({
       password: new FormControl('', Validators.required),
-      email: new FormControl('', [
+      username: new FormControl('', [
         Validators.required,
-        Validators.pattern(this.emailPattern),
-        Validators.maxLength(20),
+        Validators.pattern(this.usernamePattern),
+        Validators.maxLength(15),
       ]),
     });
-    this.email = this.loginForm.get('email');
+    this.username = this.loginForm.get('username');
     this.password = this.loginForm.get('password');
   }
 
@@ -45,8 +46,12 @@ export class LoginComponent extends BlankLayoutCardComponent implements OnInit {
     this.error = null;
     if (this.loginForm.valid) {
       this.authService.login(this.loginForm.getRawValue())
-        .subscribe(res => this.router.navigate(['/app/home']),
-                   error => this.error = error.message);
+        .subscribe(res =>
+        {if(res.msg == 'login success') this.router.navigate(['/app/home']);
+        else this.error = res.msg;
+        },
+            error => this.error = error.message
+        );
     }
   }
 

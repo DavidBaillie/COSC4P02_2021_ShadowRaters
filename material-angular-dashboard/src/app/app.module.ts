@@ -8,10 +8,8 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { DepartmentsModule } from './pages/departments';
 import { InstitutionsModule } from './pages/institutions';
-import { InstitutionDetailsModule } from './pages/institutionDetails';
 
 import { DashboardModule } from './pages/dashboard';
-import { SearchProfessorModule } from './pages/search-professor';
 import { FormsModule } from './pages/forms';
 
 @NgModule({
@@ -21,7 +19,6 @@ import { FormsModule } from './pages/forms';
     AppRoutingModule,
     InstitutionsModule,
     DashboardModule,
-    SearchProfessorModule,
     FormsModule,
     DepartmentsModule,
     HttpClientModule,

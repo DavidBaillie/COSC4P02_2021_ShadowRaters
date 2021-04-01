@@ -10,7 +10,7 @@ import { DashboardModule } from '../../dashboard/dashboard.module';
 import { RouterModule } from '@angular/router';
 
 import { SearchProfessor } from './search-professor.component';
-// import { FiltersComponent } from './filters/filters.component';
+import {SearchModule} from '../search-general';
 
 @NgModule({
   imports: [
@@ -21,10 +21,10 @@ import { SearchProfessor } from './search-professor.component';
     DepartmentsModule,
     MaterialAngularSelectModule,
     RouterModule,
+    SearchModule,
   ],
   declarations: [
     SearchProfessor,
-    // FiltersComponent,
   ],
 })
 export class SearchProfessorModule {}

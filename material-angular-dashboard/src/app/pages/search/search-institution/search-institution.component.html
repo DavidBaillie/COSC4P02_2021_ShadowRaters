@@ -4,29 +4,26 @@
     <input id="school" type="text" placeholder="School Name" (input)="filterP()">
   </div>
 
-  <!-- div for professor cards -->
   <div class="mdl-grid">
-    <div *ngFor="let prof of professors" class="mdl-cell mdl-cell--4-col-desktop mdl-cell--4-col-tablet mdl-cell--2-col-phone">
+    <div *ngFor="let hit of hits" class="mdl-cell mdl-cell--4-col-desktop mdl-cell--4-col-tablet mdl-cell--2-col-phone">
       <base-card>
         <base-card-title>
-          <h2 class="mdl-card__title-text">{{ prof.name }}</h2>
+          <h2 class="mdl-card__title-text">{{ hit.name }}</h2>
         </base-card-title>
         <base-card-body expanded>
-          {{ prof.description }}
+          {{ hit.info }}
           <br><br>
-          <b>Current School:</b> {{ prof.school }}
-          <br>
-          <b>Schools:</b> X, Y, Z
+          <b>Institution:</b> {{ hit.pid }}
           <br>
           <b>Average Rating</b> 4.5 / 5
         </base-card-body>
         <base-card-actions>
-          <span (click)="goToProf()" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect button--colored-orange pull-right">
+          <span (click)="goToHit(hit.uid)" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect button--colored-orange pull-right">
             See Ratings
           </span>
         </base-card-actions>
       </base-card>
     </div>
   </div>
- 
+
 </div>

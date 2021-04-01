@@ -11,20 +11,20 @@
       <form class="login-form" [formGroup]="loginForm" (submit)="login()" autocomplete="off" novalidate>
         <div class="mdl-cell mdl-cell--12-col mdl-cell--4-col-phone">
           <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label full-size"
-               [class.is-invalid]="email.invalid && (email.dirty || email.touched)"
-               [class.is-valid]="email.valid && (email.dirty || email.touched)">
-            <input formControlName="email"
-                   pattern="{{emailPattern}}"
+               [class.is-invalid]="username.invalid && (username.dirty || username.touched)"
+               [class.is-valid]="username.valid && (username.dirty || username.touched)">
+            <input formControlName="username"
+                   pattern="{{usernamePattern}}"
                    (change)="onInputChange($event)"
-                   class="mdl-textfield__input" type="text" id="email">
-            <label class="mdl-textfield__label" for="email">Email</label>
+                   class="mdl-textfield__input" type="text" id="username">
+            <label class="mdl-textfield__label" for="username">Username</label>
 
-            <div *ngIf="email.invalid && (email.dirty || email.touched)">
-              <span *ngIf="email.errors.required" class="mdl-textfield__error">
-                Email is required. <span class="color-text--orange"> Please, write any valid email.</span>
+            <div *ngIf="username.invalid && (username.dirty || username.touched)">
+              <span *ngIf="username.errors.required" class="mdl-textfield__error">
+                User name is required. <span class="color-text--orange"> Please provide valid user name.</span>
               </span>
-              <span *ngIf="email.errors.pattern" class="mdl-textfield__error">
-                Email is invalid.
+              <span *ngIf="username.errors.pattern" class="mdl-textfield__error">
+                User name is invalid.
               </span>
             </div>
           </div>

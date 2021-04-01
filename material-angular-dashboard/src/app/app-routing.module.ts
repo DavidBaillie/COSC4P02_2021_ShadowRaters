@@ -3,16 +3,17 @@ import {RouterModule} from '@angular/router';
 
 import {LayoutsModule} from './layouts';
 import {CommonLayoutComponent} from './layouts/common-layout';
-import {DepartmentsComponent} from './pages/departments';
-import {ComponentsComponent} from './pages/institutions';
-import {InstitutionDetailsComponent} from './pages/institutionDetails';
 import {DashboardComponent} from './pages/dashboard';
 import {FormsComponent} from "./pages/forms";
-import { SearchProfessor } from './pages/search/search-professor';
+import { Search } from './pages/search/search-general';
+
 import { SearchInstitution } from './pages/search/search-institution';
-import { SearchCourse } from './pages/search/search-course';
 import { SearchDepartment } from './pages/search/search-department';
+import { SearchProfessor } from './pages/search/search-professor';
+import { SearchCourse } from './pages/search/search-course';
 import { AboutComponent } from './pages/about';
+import {DetailsComponent} from './pages/DetailPage';
+
 
 // @ts-ignore
 // @ts-ignore
@@ -25,12 +26,11 @@ import { AboutComponent } from './pages/about';
         {
           path: 'app', component: CommonLayoutComponent, children: [
             {path: 'home', component: DashboardComponent, pathMatch: 'full'},
-            {path: 'professors', component: SearchProfessor, pathMatch: 'full'},
-            {path: 'professorX', component: InstitutionDetailsComponent, pathMatch: 'full' },
-            {path: 'departments', component: SearchDepartment, pathMatch: 'full'},
-            {path: 'courses', component: SearchCourse, pathMatch: 'full'},
-            {path: 'institutions', component: SearchInstitution, pathMatch: 'full'},
-            {path: 'institutionDetails', component: InstitutionDetailsComponent, pathMatch: 'full'},
+            {path: 'search/professors', component: SearchProfessor, pathMatch: 'full'},
+            {path: 'search/courses', component: SearchCourse, pathMatch: 'full'},
+            {path: 'search/institutions', component: SearchInstitution, pathMatch: 'full'},
+            {path: 'search/departments', component: SearchDepartment, pathMatch: 'full'},
+            {path: 'details/:type/:id', component: DetailsComponent, pathMatch: 'full' },
             {path: 'about', component: AboutComponent, pathMatch: 'full'},
             {path: 'account', component: FormsComponent, pathMatch: 'full'},
 

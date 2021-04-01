@@ -5,5 +5,5 @@
 
 export const environment = {
   production: false,
-  apiBaseUrl: '',
+  apiBaseUrl: 'http://database.ratemyscholar.ca',
 };

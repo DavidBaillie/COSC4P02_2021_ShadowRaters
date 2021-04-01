@@ -2,47 +2,33 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { UpgradableComponent } from 'theme/components/upgradable';
+import {SearchService} from '../search-general/search.service';
+import {IProfessor} from '../search-general/professor';
 
 @Component({
   selector: 'search-professor',
   styleUrls: ['./search-institution.component.scss'],
   templateUrl: './search-institution.component.html',
+  providers: [SearchService],
 })
 export class SearchInstitution extends UpgradableComponent implements OnInit{
-  allProfessors:Array<Object>;
-  professors:Array<Object>;
+  allHits:IProfessor[];
+  hits:IProfessor[];
 
-  constructor(private router: Router) {
+  constructor(private router: Router, private searchService: SearchService) {
     super();
   }
 
-  
   ngOnInit() {
-    this.professors = [
-      {
-      name: "Broccoli University",
-      description: "A lot of broccoli",
-      school: "School of Gifted Youngsters"
-      },
-      {
-        name: "University of Waterloo",
-        description: "The university of Waterloo",
-        school: "Butte University"
-      },
-      {
-        name: "University of Toronto",
-        description: "The university of Toronto",
-        school: "Z university"
-      },
-      {
-        name: "University X",
-        description: "Exciting",
-        school: "Talent University"
-      },
-    ]
-    this.allProfessors = this.professors;
+    this.getHits();
   }
 
+  private async getHits() {
+    const hits = await this.searchService.getHits("university");
+    this.hits = hits.university;
+    // this.hits = this.searchService.getRightHits(hits, "university");
+    this.allHits = this.hits;
+  }
 
   public filterP() {
     const profName:string = (<HTMLInputElement> document.getElementById("school")).value;
@@ -50,18 +36,18 @@ export class SearchInstitution extends UpgradableComponent implements OnInit{
     var s2:string = profName.toLowerCase().replace(/\s/g, "");
 
     if (s2 == "") {
-      this.professors = this.allProfessors;
+      this.hits = this.allHits;
       return;
     }
 
-    this.professors = this.allProfessors.filter( (prof:any) => {     
-      s1 = prof.name.toLowerCase().replace(/\s/g, ""); 
+    this.hits = this.allHits.filter( (prof:any) => {
+      s1 = prof.name.toLowerCase().replace(/\s/g, "");
       return s1.toLowerCase().includes(s2);
     });
   }
 
-  public goToProf() {
-    this.router.navigate(['/app/professorX']);
+  public goToHit(uid:string) {
+    this.router.navigate(['/app/details/university/'+uid]);
   }
-  
+
 }
