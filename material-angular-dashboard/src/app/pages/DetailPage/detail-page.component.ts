@@ -21,7 +21,7 @@ export class DetailsComponent extends UpgradableComponent implements OnInit {
   //Attributes for data of professors
   hits: IProfessor[];
   target_hit: IProfessor;
-  data: { name: string; rating: string }[];
+  data: { name: string; }[];
 
 
   //Attributes for data of professor reviews
@@ -38,6 +38,8 @@ export class DetailsComponent extends UpgradableComponent implements OnInit {
   target_type: string = this.activatedroute.snapshot.paramMap.get("type");
   target_id: string = this.activatedroute.snapshot.paramMap.get("id");
 
+
+  //Get the name of an object by id
   private async getAHit() {
     const temp = await this.searchService.getHits(this.target_type);
     this.hits = this.searchService.getRightHits(temp, this.target_type);
@@ -51,57 +53,19 @@ export class DetailsComponent extends UpgradableComponent implements OnInit {
     return this.reviews;
   }
 
-
   ngOnInit() {
     this.getAHit().then(res => {
       this.data = [
         {
           name: res.name,
-          rating: '4.8',
         },
       ];
     });
 
 
-
-
     this.getReviews().then(res => {
       this.data_comments = res;
     });
-
-
-    // this.data_comments = [
-    //   {
-    //     userID: 'Mathieu Cote',
-    //     comment: 'I think we did a Pretty Good job so far!',
-    //     rating: '4.5',
-    //   },
-    //   {
-    //     userID: 'Spongebob',
-    //     comment: 'Always follow your heart – unless your heart is bad with directions!',
-    //     rating: '5.0',
-    //   },
-    //   {
-    //     userID: 'Squidward',
-    //     comment: "It would be if I didn't have to go to work.",
-    //     rating: '3.8',
-    //   },
-    //   {
-    //     userID: 'Mathieu Cote',
-    //     comment: 'I think we did a Pretty Good job so far!',
-    //     rating: '4.5',
-    //   },
-    //   {
-    //     userID: 'Spongebob',
-    //     comment: 'Always follow your heart – unless your heart is bad with directions!',
-    //     rating: '5.0',
-    //   },
-    //   {
-    //     userID: 'Squidward',
-    //     comment: "It would be if I didn't have to go to work.",
-    //     rating: '3.8',
-    //   },
-    // ];
 
     this.modal = document.getElementById("myModal");
     this.modalTextArea = <HTMLTextAreaElement>document.getElementById("modalTextArea");

@@ -25,9 +25,7 @@
 
       <div style="height: 400px; overflow: auto;">
         <div *ngFor="let item of data_comments;" class="base-card-body-bottom">
-<!--          <span class="userId">{{item.userID}}</span>-->
-<!--          <span class="userComment">{{item.comment}}</span>-->
-<!--          <span class="userRating">Rating score: {{item.rating}}</span>-->
+
           <span class="userName">{{item.username}}</span>
           <span class="userComment">{{item.comment}}</span>
           <span class="userRating">Rating score: {{item.score}}</span>
@@ -57,11 +55,11 @@
         <textarea class="mdl-textfield__input modal_inp" id="modalTextArea" type="text" rows= "15" cols="80"></textarea>
         <label class="mdl-textfield__label" for="sample5">Leave a rating...</label>
       </div>
-    
+
       <div>
         <star-rating></star-rating>
       </div>
-      
+
 
       <button (click)="submitRating()" style="width: 150px;" class="button--colored-light-blue mdl-button mdl-button--raised mdl-js-button mdl-js-ripple-effect inline-bttn">
         Submit
