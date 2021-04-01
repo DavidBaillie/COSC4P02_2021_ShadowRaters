@@ -62,52 +62,46 @@ export class DetailsComponent extends UpgradableComponent implements OnInit {
       ];
     });
 
-    // this.getAProfReviews().then(res => {
-    //   this.data_comments = [
-    //     {
-    //
-    //     },
-    //   ];
-    //
-    // });
-
-    // this.getAProfReviews().then(res => {
-    //   this.data_comments = res;
-    // });
 
 
-    this.data_comments = [
-      {
-        userID: 'Mathieu Cote',
-        comment: 'I think we did a Pretty Good job so far!',
-        rating: '4.5',
-      },
-      {
-        userID: 'Spongebob',
-        comment: 'Always follow your heart – unless your heart is bad with directions!',
-        rating: '5.0',
-      },
-      {
-        userID: 'Squidward',
-        comment: "It would be if I didn't have to go to work.",
-        rating: '3.8',
-      },
-      {
-        userID: 'Mathieu Cote',
-        comment: 'I think we did a Pretty Good job so far!',
-        rating: '4.5',
-      },
-      {
-        userID: 'Spongebob',
-        comment: 'Always follow your heart – unless your heart is bad with directions!',
-        rating: '5.0',
-      },
-      {
-        userID: 'Squidward',
-        comment: "It would be if I didn't have to go to work.",
-        rating: '3.8',
-      },
-    ];
+
+    this.getReviews().then(res => {
+      this.data_comments = res;
+    });
+
+
+    // this.data_comments = [
+    //   {
+    //     userID: 'Mathieu Cote',
+    //     comment: 'I think we did a Pretty Good job so far!',
+    //     rating: '4.5',
+    //   },
+    //   {
+    //     userID: 'Spongebob',
+    //     comment: 'Always follow your heart – unless your heart is bad with directions!',
+    //     rating: '5.0',
+    //   },
+    //   {
+    //     userID: 'Squidward',
+    //     comment: "It would be if I didn't have to go to work.",
+    //     rating: '3.8',
+    //   },
+    //   {
+    //     userID: 'Mathieu Cote',
+    //     comment: 'I think we did a Pretty Good job so far!',
+    //     rating: '4.5',
+    //   },
+    //   {
+    //     userID: 'Spongebob',
+    //     comment: 'Always follow your heart – unless your heart is bad with directions!',
+    //     rating: '5.0',
+    //   },
+    //   {
+    //     userID: 'Squidward',
+    //     comment: "It would be if I didn't have to go to work.",
+    //     rating: '3.8',
+    //   },
+    // ];
 
     this.modal = document.getElementById("myModal");
     this.modalTextArea = <HTMLTextAreaElement>document.getElementById("modalTextArea");
@@ -137,7 +131,7 @@ export class DetailsComponent extends UpgradableComponent implements OnInit {
     this.modalTextArea.value = " ";
     this.modal.style.display = "none";
   }
-  
+
   public getNumericalRating():number {
     var stars:HTMLElement = document.getElementById("star-radios");
     var children:any = stars.children;
@@ -145,10 +139,10 @@ export class DetailsComponent extends UpgradableComponent implements OnInit {
 
     // iterate over the stars and get the one checked
     for (var i=0; i < stars.children.length; i++) {
-      if (children[i].checked) 
+      if (children[i].checked)
         rating = parseFloat(children[i].id)
     }
-        
+
     return rating;
   }
 
