@@ -17,7 +17,7 @@ class test_course(unittest.TestCase):
         self.assertEqual('success',msg)
     def test_courseReviws_POST_have_not_login(self):
         response = self.client.post('/course/reviews/c662cb64b1559cedd5f3d727658ade',
-                                    data=json.dumps(dict(uuid = "02ecedf3fbb4a510acb4c41f2d02d3",
+                                    data=json.dumps(dict(uuid = "92c578860624ecc1aafe33ccc66f13",
                                                          cid = "c662cb64b1559cedd5f3d727658ade",
                                                          score = 10,
                                                          comment = None)),
@@ -29,10 +29,10 @@ class test_course(unittest.TestCase):
     def test_courseReviws_POST_have_login(self):
 
         with self.client.session_transaction() as sess:
-            sess['uuid'] = "02ecedf3fbb4a510acb4c41f2d02d3"
+            sess['uuid'] = "92c578860624ecc1aafe33ccc66f13"
         #case 1: correct input
         response = self.client.post('/course/reviews/c662cb64b1559cedd5f3d727658ade',
-                                        data=json.dumps(dict(uuid="02ecedf3fbb4a510acb4c41f2d02d3",
+                                        data=json.dumps(dict(uuid="92c578860624ecc1aafe33ccc66f13",
                                                             cid="c662cb64b1559cedd5f3d727658ade",
                                                             score=10,
                                                             comment=None)),
@@ -43,7 +43,7 @@ class test_course(unittest.TestCase):
         self.assertEqual("success",msg)
         #case 2: repeat input
         response = self.client.post('/course/reviews/c662cb64b1559cedd5f3d727658ade',
-                                    data=json.dumps(dict(uuid="02ecedf3fbb4a510acb4c41f2d02d3",
+                                    data=json.dumps(dict(uuid="92c578860624ecc1aafe33ccc66f13",
                                                          cid="c662cb64b1559cedd5f3d727658ade",
                                                          score=10,
                                                          comment=None)),
@@ -53,7 +53,7 @@ class test_course(unittest.TestCase):
         msg = resp_json.get('msg')
         self.assertEqual("error, already rated", msg)
         #delete data after testing
-        db.session.query(rating_course_table).filter_by(uuid="02ecedf3fbb4a510acb4c41f2d02d3",
+        db.session.query(rating_course_table).filter_by(uuid="92c578860624ecc1aafe33ccc66f13",
                                                         cid="c662cb64b1559cedd5f3d727658ade").delete()
         db.session.commit()
         #case 3: missing input
@@ -68,7 +68,7 @@ class test_course(unittest.TestCase):
         self.assertEqual("error", msg)
         #case 4: id not exist
         response = self.client.post('/course/reviews/c662cb64b1559cedd5f3d727658ade',
-                                    data=json.dumps(dict(uuid="12ecedf3fbb4a510acb4c41f2d02d3",
+                                    data=json.dumps(dict(uuid="82c578860624ecc1aafe33ccc66f13",
                                                          cid="c662cb64b1559cedd5f3d727658ade",
                                                          score=10,
                                                          comment=None)),
@@ -77,3 +77,9 @@ class test_course(unittest.TestCase):
         print(resp_json)
         msg = resp_json.get('msg')
         self.assertEqual("error", msg)
+
+    def test_courseReviws_GET(self):
+        response = self.client.get('/course/reviews/c662cb64b1559cedd5f3d727658ade', follow_redirects=True)
+        resp_json = response.get_json()
+        msg = resp_json.get('msg')
+        self.assertEqual('success', msg)

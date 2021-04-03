@@ -18,7 +18,8 @@ def getCourseInfo():
             content = {'cid':i.cid,'pid':i.pid,'professor':professor_name,'uid':i.uid,'university':university_name,'did':i.did,'department':department_name,'name':i.name,'info':i.info}
             res.append(content)
         return jsonify({'msg':"success",'course':res})
-    except:
+    except Exception as e:
+        print(e)
         db.session.rollback()
         return jsonify({'msg':'error'})
 @course.route('/reviews/<cid>',methods=["GET","POST"])
@@ -40,7 +41,8 @@ def courseReviws(cid):
                 db.session.add(review)
                 db.session.commit()
                 return jsonify(msg="success")
-        except:
+        except Exception as e:
+            print(e)
             db.session.rollback()
             return jsonify({'msg': 'error'})
     else:
@@ -54,5 +56,6 @@ def courseReviws(cid):
                 content = {'rcid':i.rcid,'username':username,'cid':i.cid,'score':i.score,'duration':i.duration,'comment':i.comment,'num_agree':i.num_agree,'num_disagree':i.num_disagree,'date':i.date}
                 res.append(content)
             return jsonify({'msg':"success",'reviews':res})
-        except:
+        except Exception as e:
+            print(e)
             return jsonify({'msg':'error'})

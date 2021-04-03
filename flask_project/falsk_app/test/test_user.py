@@ -111,3 +111,19 @@ class test_user(unittest.TestCase):
         print(resp_json)
         msg = resp_json.get('msg')
         self.assertEqual('missing username or password', msg)
+
+    def test_logout_have_not_login(self):
+        with self.client.session_transaction() as sess:
+            sess['uuid'] = None
+        response = self.client.get('/user/logout', follow_redirects=True)
+        resp_json = response.get_json()
+        msg = resp_json.get('msg')
+        self.assertEqual('not login yet', msg)
+
+    def test_logout_have_login(self):
+        with self.client.session_transaction() as sess:
+            sess['uuid'] = "92c578860624ecc1aafe33ccc66f13"
+        response = self.client.get('/user/logout', follow_redirects=True)
+        resp_json = response.get_json()
+        msg = resp_json.get('msg')
+        self.assertEqual('logout success', msg)

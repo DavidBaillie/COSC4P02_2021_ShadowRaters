@@ -16,7 +16,8 @@ def getUniversityInfo():
             content = {'uid':i.uid,'name':i.name,'info':i.info,'address':i.address,'website':i.website,'food':i.food,'scholarships':i.scholarships,'facilities':i.facilities,'student_life':i.student_life,'cleanliness':i.cleanliness}
             res.append(content)
         return jsonify({'msg':"success",'university':res})
-    except:
+    except Exception as e:
+        print(e)
         db.session.rollback()
         return jsonify({'msg':'error'})
 @university.route('/reviews/<uid>',methods=["GET","POST"])
@@ -38,7 +39,8 @@ def universityReviws(uid):
                 db.session.add(review)
                 db.session.commit()
                 return jsonify(msg="success")
-        except:
+        except Exception as e:
+            print(e)
             db.session.rollback()
             return jsonify({'msg': 'error'})
     else:
@@ -52,6 +54,7 @@ def universityReviws(uid):
                 content = {'ruid':i.ruid,'username':username,'uid':i.uid,'score':i.score,'comment':i.comment,'num_agree':i.num_agree,'num_disagree':i.num_disagree,'date':i.date}
                 res.append(content)
             return jsonify({'msg':"success",'reviews':res})
-        except:
+        except Exception as e:
+            print(e)
             db.session.rollback()
             return jsonify({'msg': 'error'})

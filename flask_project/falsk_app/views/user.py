@@ -31,7 +31,6 @@ def createNewUser():
     uuid = binascii.b2a_hex(os.urandom(15))
 
     admin = newUser.get("admin")
-    print(admin)
     username = newUser.get("username")
     email = newUser.get("email")
     password = newUser.get("password")
@@ -46,7 +45,8 @@ def createNewUser():
         db.session.add(user_table(uuid=uuid,admin=admin,username=username,email=email,password=password,salt=salt,school=school,program=program))
         db.session.commit()
         return jsonify({'msg':'success'})
-    except:
+    except Exception as e:
+        print(e)
         db.session.rollback()
         return jsonify({'msg':'error'})
 
@@ -84,7 +84,8 @@ def login():
                     return jsonify(msg="wrong password")
             else:
                 return jsonify(msg="username not exist")
-        except:
+        except Exception as e:
+            print(e)
             db.session.rollback()
             return jsonify(msg="error")
 

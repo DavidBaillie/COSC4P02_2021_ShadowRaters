@@ -17,7 +17,7 @@ class test_professor(unittest.TestCase):
         self.assertEqual('success',msg)
     def test_professorReviws_POST_have_not_login(self):
         response = self.client.post('/professor/reviews/47269dc7357140e3a6f2ab9ae7ed6c',
-                                    data=json.dumps(dict(uuid = "02ecedf3fbb4a510acb4c41f2d02d3",
+                                    data=json.dumps(dict(uuid = "92c578860624ecc1aafe33ccc66f13",
                                                          pid = "47269dc7357140e3a6f2ab9ae7ed6c",
                                                          score = 10,
                                                          comment = None)),
@@ -32,7 +32,7 @@ class test_professor(unittest.TestCase):
             sess['uuid'] = "02ecedf3fbb4a510acb4c41f2d02d3"
         #case 1: correct input
         response = self.client.post('/professor/reviews/47269dc7357140e3a6f2ab9ae7ed6c',
-                                        data=json.dumps(dict(uuid="02ecedf3fbb4a510acb4c41f2d02d3",
+                                        data=json.dumps(dict(uuid="92c578860624ecc1aafe33ccc66f13",
                                                              pid="47269dc7357140e3a6f2ab9ae7ed6c",
                                                              score=10,
                                                              comment=None)),
@@ -43,7 +43,7 @@ class test_professor(unittest.TestCase):
         self.assertEqual("success",msg)
         #case 2: repeat input
         response = self.client.post('/professor/reviews/47269dc7357140e3a6f2ab9ae7ed6c',
-                                    data=json.dumps(dict(uuid="02ecedf3fbb4a510acb4c41f2d02d3",
+                                    data=json.dumps(dict(uuid="92c578860624ecc1aafe33ccc66f13",
                                                          pid="47269dc7357140e3a6f2ab9ae7ed6c",
                                                          score=10,
                                                          comment=None)),
@@ -53,7 +53,7 @@ class test_professor(unittest.TestCase):
         msg = resp_json.get('msg')
         self.assertEqual("error, already rated", msg)
         #delete data after testing
-        db.session.query(rating_professor_table).filter_by(uuid="02ecedf3fbb4a510acb4c41f2d02d3",
+        db.session.query(rating_professor_table).filter_by(uuid="92c578860624ecc1aafe33ccc66f13",
                                                             pid="47269dc7357140e3a6f2ab9ae7ed6c").delete()
         db.session.commit()
         #case 3: missing input
@@ -68,7 +68,7 @@ class test_professor(unittest.TestCase):
         self.assertEqual("error", msg)
         #case 4: id not exist
         response = self.client.post('/professor/reviews/47269dc7357140e3a6f2ab9ae7ed6c',
-                                    data=json.dumps(dict(uuid="12ecedf3fbb4a510acb4c41f2d02d3",
+                                    data=json.dumps(dict(uuid="82c578860624ecc1aafe33ccc66f13",
                                                          pid="47269dc7357140e3a6f2ab9ae7ed6c",
                                                          score=10,
                                                          comment=None)),
@@ -77,3 +77,9 @@ class test_professor(unittest.TestCase):
         print(resp_json)
         msg = resp_json.get('msg')
         self.assertEqual("error", msg)
+
+    def test_professorReviws_GET(self):
+        response = self.client.get('/course/reviews/47269dc7357140e3a6f2ab9ae7ed6c', follow_redirects=True)
+        resp_json = response.get_json()
+        msg = resp_json.get('msg')
+        self.assertEqual('success', msg)
