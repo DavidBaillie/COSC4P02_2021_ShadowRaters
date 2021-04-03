@@ -21,7 +21,7 @@ def getDepartmentInfo():
         db.session.rollback()
         return jsonify({'msg':'error'})
 @department.route('/reviews/<did>',methods=["GET","POST"])
-def courseReviws(did):
+def courseReviews(did):
     if request.method == "POST":
         if session.get('uuid') is None:
             return jsonify(msg="error, login first")

@@ -15,7 +15,7 @@ class test_university(unittest.TestCase):
         resp_json = response.get_json()
         msg = resp_json.get('msg')
         self.assertEqual('success',msg)
-    def test_universityReviws_POST_have_not_login(self):
+    def test_universityReviews_POST_have_not_login(self):
         response = self.client.post('/university/reviews/5a05866e09c4377fd977047e34bd0c',
                                     data=json.dumps(dict(uuid = "92c578860624ecc1aafe33ccc66f13",
                                                          uid = "5a05866e09c4377fd977047e34bd0c",
@@ -26,7 +26,7 @@ class test_university(unittest.TestCase):
         msg = resp_json.get('msg')
         self.assertEqual("error, login first",msg)
 
-    def test_universityReviws_POST_have_login(self):
+    def test_universityReviews_POST_have_login(self):
 
         with self.client.session_transaction() as sess:
             sess['uuid'] = "92c578860624ecc1aafe33ccc66f13"
@@ -78,7 +78,7 @@ class test_university(unittest.TestCase):
         msg = resp_json.get('msg')
         self.assertEqual("error", msg)
 
-    def test_universityReviws_GET(self):
+    def test_universityReviews_GET(self):
         response = self.client.get('/course/reviews/5a05866e09c4377fd977047e34bd0c', follow_redirects=True)
         resp_json = response.get_json()
         msg = resp_json.get('msg')

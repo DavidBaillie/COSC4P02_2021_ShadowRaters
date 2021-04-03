@@ -22,7 +22,7 @@ def getprofessorInfo():
         db.session.rollback()
         return jsonify({'msg':'error'})
 @professor.route('/reviews/<pid>',methods=["GET","POST"])
-def professorReviws(pid):
+def professorReviews(pid):
     if request.method == "POST":
         if session.get('uuid') is None:
             return jsonify(msg="error, login first")

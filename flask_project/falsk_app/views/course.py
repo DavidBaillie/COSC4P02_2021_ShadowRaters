@@ -23,7 +23,7 @@ def getCourseInfo():
         db.session.rollback()
         return jsonify({'msg':'error'})
 @course.route('/reviews/<cid>',methods=["GET","POST"])
-def courseReviws(cid):
+def courseReviews(cid):
     if request.method == "POST":
         if session.get('uuid') is None:
             return jsonify(msg="error, login first")

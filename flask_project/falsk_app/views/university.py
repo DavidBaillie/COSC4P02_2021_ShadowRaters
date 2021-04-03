@@ -21,7 +21,7 @@ def getUniversityInfo():
         db.session.rollback()
         return jsonify({'msg':'error'})
 @university.route('/reviews/<uid>',methods=["GET","POST"])
-def universityReviws(uid):
+def universityReviews(uid):
     if request.method == "POST":
         if session.get('uuid') is None:
             return jsonify(msg="error, login first")
