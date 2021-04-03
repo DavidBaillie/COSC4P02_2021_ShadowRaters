@@ -1,4 +1,3 @@
-#app\views\department.py
 from flask import Blueprint,jsonify,request,session
 from . import db,department_table,rating_department_table,user_table,university_table
 import os,binascii
@@ -38,6 +37,7 @@ def courseReviws(did):
                 review = rating_department_table(rdid=rdid,uuid=uuid,did=did,score=newReview.get("score"),comment=newReview.get("comment"),num_agree=0,num_disagree=0,date=date)
                 db.session.add(review)
                 db.session.commit()
+                return jsonify(msg="success")
         except:
             db.session.rollback()
             return jsonify({'msg': 'error'})

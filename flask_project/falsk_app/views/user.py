@@ -11,7 +11,7 @@ user = Blueprint('user',__name__,url_prefix='/user')
 def generate_token(uuid):
     expiration = 3600
     s = Serializer(current_app.config['SECRET_KEY'],expires_in=expiration)
-    token = s.dumps({'uuid': uuid}).decode('ascii')
+    token = s.dumps({'uuid': uuid}).decode("ascii")
     return token
 
 def verify_auth_token(token):
@@ -31,9 +31,12 @@ def createNewUser():
     uuid = binascii.b2a_hex(os.urandom(15))
 
     admin = newUser.get("admin")
+    print(admin)
     username = newUser.get("username")
     email = newUser.get("email")
     password = newUser.get("password")
+    if password is None:
+        return jsonify({'msg':'error'})
     salt = ''.join(random.sample(string.ascii_letters + string.digits, 10))
     password = sha256(salt.encode() + password.encode()).hexdigest()
     school = newUser.get("school")
@@ -61,7 +64,7 @@ def login():
                 session['uuid'] = u.uuid
                 return jsonify(uuid=u.uuid,msg="login success",username=u.username,email=u.email)
             else:
-                return jsonify(msg="user not exist")
+                return jsonify(msg="invalid or expired token")
         else:
             return jsonify(msg="invalid or expired token")
     else:

@@ -39,6 +39,7 @@ def courseReviws(cid):
                 review = rating_course_table(rcid=rcid,uuid=uuid,cid=cid,score=newReview.get('score'),duration=newReview.get("duration"),comment=newReview.get("comment"),num_agree=0,num_disagree=0,date=date)
                 db.session.add(review)
                 db.session.commit()
+                return jsonify(msg="success")
         except:
             db.session.rollback()
             return jsonify({'msg': 'error'})

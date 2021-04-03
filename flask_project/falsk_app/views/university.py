@@ -9,6 +9,7 @@ university = Blueprint('university',__name__,url_prefix='/university')
 @university.route('/',methods=["GET"])
 def getUniversityInfo():
     try:
+        print("1")
         data = db.session.query(university_table).all()
         res = []
         for i in data:
@@ -36,6 +37,7 @@ def universityReviws(uid):
                 review = rating_university_table(ruid=ruid,uuid=uuid,uid=uid,score=newReview.get("score"),comment=newReview.get("comment"),num_agree=0,num_disagree=0,date=date)
                 db.session.add(review)
                 db.session.commit()
+                return jsonify(msg="success")
         except:
             db.session.rollback()
             return jsonify({'msg': 'error'})

@@ -1,7 +1,7 @@
 from falsk_app import app
 from falsk_app.config import settings
 from flask_cors import *
-
+from falsk_app import test
 app.config.from_object(settings.Test)
 CORS(app,supports_credentials=True)
 
