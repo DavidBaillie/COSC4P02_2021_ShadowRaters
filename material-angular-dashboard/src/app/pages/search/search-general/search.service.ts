@@ -1,54 +1,53 @@
-import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable, throwError } from 'rxjs';
-import { catchError, retry } from 'rxjs/operators';
-import {IProfessor} from './professor';
+import { Injectable } from '@angular/core';
 
 @Injectable()
 export class SearchService {
-    url:string = "http://database.ratemyscholar.ca/";
-    reviewUrl:string;
+  url = 'http://database.ratemyscholar.ca/';
+  reviewUrl: string;
 
-    constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) {}
 
     /** GET professors | courses | departments */
-    async getHits(type:string) {
-        const a = await this.http.get<any>(this.url+type).toPromise();
-        return a;
-    }
+  async getHits(type: string) {
+    const a = await this.http.get<any>(this.url + type).toPromise();
+    return a;
+  }
 
       /** GET reviews by id */
-  async getReviews(type:string, id:string) {
+  async getReviews(type: string, id: string) {
     this.reviewUrl = `http://database.ratemyscholar.ca/${type}/reviews/${id}`;
     const res = await this.http.get<any>(this.reviewUrl).toPromise();
-    console.log("testing reviews")
-    console.log(res)
+    // console.log('testing reviews');
     return res;
   }
 
-  getRightId(hit:any, target_type:string) {
-    console.log(target_type)
-    switch(target_type) {
-      case "professor":
+
+  //Return the correct id attribute
+  getRightId(hit: any, target_type: string) {
+    // console.log(target_type);
+    switch (target_type) {
+      case 'professor':
         return hit.pid;
-      case "university":
+      case 'university':
         return hit.uid;
-      case "department":
+      case 'department':
         return hit.did;
-      case "course":
+      case 'course':
         return hit.cid;
     }
   }
 
-  getRightHits(hits:any, target_type:string) {
-    switch(target_type) {
-      case "professor":
+  //Return an array of all prof/university/depart/course
+  getRightHits(hits: any, target_type: string) {
+    switch (target_type) {
+      case 'professor':
         return hits.professor;
-      case "university":
+      case 'university':
         return hits.university;
-      case "department":
+      case 'department':
         return hits.department;
-      case "course":
+      case 'course':
         return hits.course;
     }
   }

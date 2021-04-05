@@ -49,9 +49,9 @@ export class Search extends UpgradableComponent implements OnInit{
   }
 
   public goToHit(id:string) {
-    const profURL:string = `/app/details/${this.target_type}/${id}`;
-    console.log(profURL);
-    this.router.navigate([profURL]);
+    const itemURL:string = `/app/details/${this.target_type}/${id}`;
+    console.log(itemURL);
+    this.router.navigate([itemURL]);
   }
 
 }

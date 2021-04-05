@@ -1,18 +1,20 @@
 <div class="mdl-cell mdl-cell--12-col mdl-cell--16-col-tablet mdl-cell--8-col-phone mdl-cell--top">
   <base-card>
     <base-card-title *ngFor="let item of data;">
-      <h1 class="mdl-card__title-text">{{item.name}}</h1>
+      <h1 class="mdl-card__title-text">{{ item.name }}</h1>
     </base-card-title>
 
     <base-card-body>
-      <div *ngFor="let item of data;"  > <!-- class="base-card-body-top"  dont we think this creates too much extra space?-->
-        <span class="general_rating">General Rating: {{item.rating}}</span>
-        <div class="Stars" style="--rating: 4.3; font-size: 40px;" aria-label="Rating of this product is 2.3 out of 5."></div>
+      <div *ngFor="let item of avg_score;">
+        <!-- class="base-card-body-top"  dont we think this creates too much extra space?-->
+        <span class="general_rating">General Rating: {{ item.score }}</span>
+        <div class="Stars" style="--rating: 4.3; font-size: 40px;"
+             aria-label="Rating of this product is 2.3 out of 5."></div>
       </div>
       <div class="base-card-body-middle" style="margin-top: 80px;">
         <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect button--colored-light-blue"
-         style="float: right; margin-bottom: 10px;">Compare to others {{ target_type }}</button>
-         <div style="clear: both;"></div>
+                style="float: right; margin-bottom: 10px;">Compare to others {{ target_type }}</button>
+        <div style="clear: both;"></div>
         <app-line-chart></app-line-chart>
         <hr>
         <app-discrete-bar-chart></app-discrete-bar-chart>
@@ -20,24 +22,24 @@
       <hr>
 
       <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect button--colored-light-blue"
-       (click)="openModal()" style="float: right; margin-bottom: 10px;">Leave Rating</button>
+              (click)="openModal()" style="float: right; margin-bottom: 10px;">Leave Rating
+      </button>
       <div style="clear: both;"></div>
 
       <div style="height: 400px; overflow: auto;">
         <div *ngFor="let item of data_comments;" class="base-card-body-bottom">
-
-          <span class="userName">{{item.username}}</span>
-          <span class="userComment">{{item.comment}}</span>
-          <span class="userRating">Rating score: {{item.score}}</span>
-          <span class="userThumbAgree">Agree: {{item.num_agree}}</span>
-          <span class="userThumbDisagree">Disagree: {{item.num_disagree}}</span>
-          <span class="userCommentDate">{{item.date}}</span>
+          <span class="userName">{{ item.username }}</span>
+          <span class="userComment">{{ item.comment }}</span>
+          <span class="userRating">Rating score: {{ item.score }}</span>
+          <span class="userThumbAgree">Agree: {{ item.num_agree }}</span>
+          <span class="userThumbDisagree">Disagree: {{ item.num_disagree }}</span>
+          <span class="userCommentDate">{{ item.date }}</span>
           <div>
-            <button class="mdl-button mdl-js-button mdl-button--raised:hover" style="width: 10px; padding: 0px;">
-            <i class="material-icons" style="font-size: 1em;">thumb_up</i>
+            <button class="mdl-button mdl-js-button mdl-button--raised:hover" style="width: 10px; padding: 0;">
+              <i class="material-icons" style="font-size: 1em;">thumb_up</i>
             </button>
             <button class="mdl-button mdl-js-button mdl-button--fab:hover">
-            <i class="material-icons" style="font-size: 1em;">thumb_down</i>
+              <i class="material-icons" style="font-size: 1em;">thumb_down</i>
             </button>
           </div>
         </div>
@@ -52,7 +54,7 @@
       <h3 class="mdl-card__title-text" style="color: rgba(0, 0, 0, 0.418);">Leave a rating</h3>
       <!-- <textarea name="Text1" cols="40" rows="5"></textarea> -->
       <div class="mdl-textfield mdl-js-textfield">
-        <textarea class="mdl-textfield__input modal_inp" id="modalTextArea" type="text" rows= "15" cols="80"></textarea>
+        <textarea class="mdl-textfield__input modal_inp" id="modalTextArea" type="text" rows="15" cols="80"></textarea>
         <label class="mdl-textfield__label" for="sample5">Leave a rating...</label>
       </div>
 
@@ -61,7 +63,8 @@
       </div>
 
 
-      <button (click)="submitRating()" style="width: 150px;" class="button--colored-light-blue mdl-button mdl-button--raised mdl-js-button mdl-js-ripple-effect inline-bttn">
+      <button (click)="submitRating()" style="width: 150px;"
+              class="button--colored-light-blue mdl-button mdl-button--raised mdl-js-button mdl-js-ripple-effect inline-bttn">
         Submit
       </button>
     </div>
