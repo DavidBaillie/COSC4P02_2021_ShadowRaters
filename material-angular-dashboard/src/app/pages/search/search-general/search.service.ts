@@ -10,14 +10,14 @@ export class SearchService {
 
     /** GET professors | courses | departments */
   async getHits(type: string) {
-    const a = await this.http.get<any>(this.url + type).toPromise();
+    const a = await this.http.get<any>(this.url + type,{ withCredentials: true }).toPromise();
     return a;
   }
 
       /** GET reviews by id */
   async getReviews(type: string, id: string) {
     this.reviewUrl = `http://database.ratemyscholar.ca/${type}/reviews/${id}`;
-    const res = await this.http.get<any>(this.reviewUrl).toPromise();
+    const res = await this.http.get<any>(this.reviewUrl,{ withCredentials: true }).toPromise();
     // console.log('testing reviews');
     return res;
   }
@@ -25,7 +25,6 @@ export class SearchService {
 
   //Return the correct id attribute
   getRightId(hit: any, target_type: string) {
-    // console.log(target_type);
     switch (target_type) {
       case 'professor':
         return hit.pid;

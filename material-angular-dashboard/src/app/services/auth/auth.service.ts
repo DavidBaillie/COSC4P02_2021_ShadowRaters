@@ -89,7 +89,7 @@ export class AuthService{
 
 
   public logout() {
-    return this.http.get(`${this.url}/logout`)
+    return this.http.get(`${this.url}/logout`,{ withCredentials: true })
       .pipe(map((data) => {
         localStorage.clear();
         this.user = null;
@@ -102,7 +102,7 @@ export class AuthService{
 
   //Changes pending. Need to
   public signup(data) {
-    return this.http.post(`${this.url}/signup`, data)
+    return this.http.post(`${this.url}/signup`, data,{ withCredentials: true })
       .pipe(
         map((res: { username: string, email: string }) => {
           localStorage.setItem('username', res.username);
