@@ -2,7 +2,7 @@ from flask import Blueprint,jsonify,request,session
 from . import db,department_table,rating_department_table,user_table,university_table
 import os,binascii
 import time
-
+from user import verify_auth_token
 
 department = Blueprint('department',__name__,url_prefix='/department')
 
@@ -23,12 +23,13 @@ def getDepartmentInfo():
 @department.route('/reviews/<did>',methods=["GET","POST"])
 def courseReviews(did):
     if request.method == "POST":
-        if session.get('uuid') is None:
-            return jsonify(msg="error, login first")
         newReview = request.get_json()
-        rdid = binascii.b2a_hex(os.urandom(15))
+        token = newReview.get('token')
+        if token is None or verify_auth_token(token) is None:
+            return jsonify(msg="invalid or expired token")
 
-        uuid = newReview.get("uuid")
+        rdid = binascii.b2a_hex(os.urandom(15))
+        uuid = newReview.get('uuid')
         try:
             data = db.session.query(rating_department_table).filter_by(uuid=uuid,did=did).all()
             if data != []:

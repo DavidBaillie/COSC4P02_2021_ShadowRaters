@@ -1,6 +1,7 @@
 from flask import Blueprint,jsonify,request,session
 from . import db,course_table,rating_course_table,user_table,university_table,department_table,professor_table
 import os,binascii
+from user import verify_auth_token
 import time
 
 
@@ -25,11 +26,12 @@ def getCourseInfo():
 @course.route('/reviews/<cid>',methods=["GET","POST"])
 def courseReviews(cid):
     if request.method == "POST":
-        if session.get('uuid') is None:
-            return jsonify(msg="error, login first")
         newReview = request.get_json()
-        rcid = binascii.b2a_hex(os.urandom(15))
+        token = newReview.get('token')
+        if token is None or verify_auth_token(token) is None:
+            return jsonify(msg="invalid or expired token")
 
+        rcid = binascii.b2a_hex(os.urandom(15))
         uuid = newReview.get("uuid")
         try:
             data = db.session.query(rating_course_table).filter_by(uuid=uuid,cid=cid).all()

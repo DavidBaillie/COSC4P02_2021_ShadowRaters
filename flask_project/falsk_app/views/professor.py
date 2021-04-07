@@ -2,7 +2,7 @@ from flask import Blueprint,jsonify,request,session
 from . import db,professor_table,rating_professor_table,user_table,university_table,department_table
 import os,binascii
 import time
-
+from user import verify_auth_token
 
 professor = Blueprint('professor',__name__,url_prefix='/professor')
 
@@ -24,9 +24,11 @@ def getprofessorInfo():
 @professor.route('/reviews/<pid>',methods=["GET","POST"])
 def professorReviews(pid):
     if request.method == "POST":
-        if session.get('uuid') is None:
-            return jsonify(msg="error, login first")
         newReview = request.get_json()
+        token = newReview.get('token')
+        if token is None or verify_auth_token(token) is None:
+            return jsonify(msg="invalid or expired token")
+
         rpid = binascii.b2a_hex(os.urandom(15))
         uuid = newReview.get("uuid")
         try:

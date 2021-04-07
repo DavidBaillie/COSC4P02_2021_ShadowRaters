@@ -9,7 +9,7 @@ from itsdangerous import BadSignature,SignatureExpired
 user = Blueprint('user',__name__,url_prefix='/user')
 
 def generate_token(uuid):
-    expiration = 3600
+    expiration = 3600 * 24
     s = Serializer(current_app.config['SECRET_KEY'],expires_in=expiration)
     token = s.dumps({'uuid': uuid}).decode("ascii")
     return token
