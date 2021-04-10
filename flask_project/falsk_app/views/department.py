@@ -1,5 +1,5 @@
 from flask import Blueprint,jsonify,request,session
-from . import db,department_table,rating_department_table,user_table,university_table
+from . import db,department_table,rating_department_table,user_table,university_table,vote_department_table
 import os,binascii
 import time
 from user import verify_auth_token
@@ -21,7 +21,7 @@ def getDepartmentInfo():
         db.session.rollback()
         return jsonify({'msg':'error'})
 @department.route('/reviews/<did>',methods=["GET","POST"])
-def courseReviews(did):
+def departmentReviews(did):
     if request.method == "POST":
         newReview = request.get_json()
         token = newReview.get('token')
@@ -29,7 +29,7 @@ def courseReviews(did):
             return jsonify(msg="invalid or expired token")
 
         rdid = binascii.b2a_hex(os.urandom(15))
-        uuid = newReview.get('uuid')
+        uuid = verify_auth_token(token)
         try:
             data = db.session.query(rating_department_table).filter_by(uuid=uuid,did=did).all()
             if data != []:
@@ -59,3 +59,77 @@ def courseReviews(did):
             print(e)
             db.session.rollback()
             return jsonify({'msg': 'error'})
+
+@department.route('/reviews/vote_agree/<rdid>',methods=["POST"])
+def voteDepaartmentReview_agree(rdid):
+    vote = request.get_json()
+    token = vote.get('token')
+    if token is None or verify_auth_token(token) is None:
+        return jsonify(msg="invalid or expired token")
+    uuid = verify_auth_token(token)
+    vdid = binascii.b2a_hex(os.urandom(15))
+    try:
+        data = db.session.query(vote_department_table).filter_by(uuid=uuid, rdid=rdid).first()
+        if data is not None:
+            return jsonify(msg="already vote")
+        vote = vote_department_table(vdid=vdid,uuid=uuid,rdid=rdid,flag=0)
+        db.session.add(vote)
+        review = db.session.query(rating_department_table).filter_by(rdid=rdid).first()
+        review.num_agree += 1
+        db.session.merge(review)
+        db.session.commit()
+        return jsonify(msg="success")
+    except Exception as e:
+        print(e)
+        db.session.rollback()
+        return jsonify(msg="error")
+
+
+@department.route('/reviews/vote_disagree/<rdid>',methods=["POST"])
+def voteDepartmentReview_disagree(rdid):
+    vote = request.get_json()
+    token = vote.get('token')
+    if token is None or verify_auth_token(token) is None:
+        return jsonify(msg="invalid or expired token")
+    uuid = verify_auth_token(token)
+    vdid = binascii.b2a_hex(os.urandom(15))
+    try:
+        data = db.session.query(vote_department_table).filter_by(uuid=uuid, rdid=rdid).first()
+        if data is not None:
+            return jsonify(msg="already vote")
+        vote = vote_department_table(vdid=vdid, uuid=uuid, rdid=rdid, flag=1)
+        db.session.add(vote)
+        review = db.session.query(rating_department_table).filter_by(rdid=rdid).first()
+        review.num_disagree += 1
+        db.session.merge(review)
+        db.session.commit()
+        return jsonify(msg="success")
+    except Exception as e:
+        print(e)
+        db.session.rollback()
+        return jsonify(msg="error")
+
+@department.route('/reviews/vote_cancle/<rdid>',methods=["POST"])
+def voteDepartmentReview_cancel(rdid):
+    vote = request.get_json()
+    token = vote.get('token')
+    if token is None or verify_auth_token(token) is None:
+        return jsonify(msg="invalid or expired token")
+    uuid = verify_auth_token(token)
+    try:
+        data = db.session.query(vote_department_table).filter_by(uuid=uuid, rdid=rdid).first()
+        if data is None:
+            return jsonify(msg="vote not exist")
+        review = db.session.query(rating_department_table).filter_by(rdid=rdid).first()
+        if data.flag == 0:
+            review.num_agree -= 1
+        elif data.flag == 1:
+            review.num_disagree -= 1
+        db.session.query(vote_department_table).filter_by(uuid=uuid, rdid=rdid).delete()
+        db.session.merge(review)
+        db.session.commit()
+        return jsonify(msg="success")
+    except Exception as e:
+        print(e)
+        db.session.rollback()
+        return jsonify(msg="error")

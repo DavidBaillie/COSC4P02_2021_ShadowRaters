@@ -1,5 +1,5 @@
 from flask import Blueprint,jsonify,request,session
-from . import db,course_table,rating_course_table,user_table,university_table,department_table,professor_table
+from . import db,course_table,rating_course_table,user_table,university_table,department_table,professor_table,vote_course_table
 import os,binascii
 from user import verify_auth_token
 import time
@@ -32,7 +32,7 @@ def courseReviews(cid):
             return jsonify(msg="invalid or expired token")
 
         rcid = binascii.b2a_hex(os.urandom(15))
-        uuid = newReview.get("uuid")
+        uuid = verify_auth_token(token)
         try:
             data = db.session.query(rating_course_table).filter_by(uuid=uuid,cid=cid).all()
             if data != []:
@@ -61,3 +61,77 @@ def courseReviews(cid):
         except Exception as e:
             print(e)
             return jsonify({'msg':'error'})
+
+@course.route('/reviews/vote_agree/<rcid>',methods=["POST"])
+def voteCourseReview_agree(rcid):
+    vote = request.get_json()
+    token = vote.get('token')
+    if token is None or verify_auth_token(token) is None:
+        return jsonify(msg="invalid or expired token")
+    uuid = verify_auth_token(token)
+    vcid = binascii.b2a_hex(os.urandom(15))
+    try:
+        data = db.session.query(vote_course_table).filter_by(uuid=uuid, rcid=rcid).first()
+        if data is not None:
+            return jsonify(msg="already vote")
+        vote = vote_course_table(vcid=vcid,uuid=uuid,rcid=rcid,flag=0)
+        db.session.add(vote)
+        review = db.session.query(rating_course_table).filter_by(rcid=rcid).first()
+        review.num_agree += 1
+        db.session.merge(review)
+        db.session.commit()
+        return jsonify(msg="success")
+    except Exception as e:
+        print(e)
+        db.session.rollback()
+        return jsonify(msg="error")
+
+
+@course.route('/reviews/vote_disagree/<rcid>',methods=["POST"])
+def voteCourseReview_disagree(rcid):
+    vote = request.get_json()
+    token = vote.get('token')
+    if token is None or verify_auth_token(token) is None:
+        return jsonify(msg="invalid or expired token")
+    uuid = verify_auth_token(token)
+    vcid = binascii.b2a_hex(os.urandom(15))
+    try:
+        data = db.session.query(vote_course_table).filter_by(uuid=uuid, rcid=rcid).first()
+        if data is not None:
+            return jsonify(msg="already vote")
+        vote = vote_course_table(vcid=vcid, uuid=uuid, rcid=rcid, flag=1)
+        db.session.add(vote)
+        review = db.session.query(rating_course_table).filter_by(rcid=rcid).first()
+        review.num_disagree += 1
+        db.session.merge(review)
+        db.session.commit()
+        return jsonify(msg="success")
+    except Exception as e:
+        print(e)
+        db.session.rollback()
+        return jsonify(msg="error")
+
+@course.route('/reviews/vote_cancle/<rcid>',methods=["POST"])
+def voteCouresReview_cancel(rcid):
+    vote = request.get_json()
+    token = vote.get('token')
+    if token is None or verify_auth_token(token) is None:
+        return jsonify(msg="invalid or expired token")
+    uuid = verify_auth_token(token)
+    try:
+        data = db.session.query(vote_course_table).filter_by(uuid=uuid, rcid=rcid).first()
+        if data is None:
+            return jsonify(msg="vote not exist")
+        review = db.session.query(rating_course_table).filter_by(rcid=rcid).first()
+        if data.flag == 0:
+            review.num_agree -= 1
+        elif data.flag == 1:
+            review.num_disagree -= 1
+        db.session.query(vote_course_table).filter_by(uuid=uuid, rcid=rcid).delete()
+        db.session.merge(review)
+        db.session.commit()
+        return jsonify(msg="success")
+    except Exception as e:
+        print(e)
+        db.session.rollback()
+        return jsonify(msg="error")

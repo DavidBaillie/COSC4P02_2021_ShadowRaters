@@ -52,8 +52,6 @@ def createNewUser():
 
 @user.route('/login',methods=["POST"])
 def login():
-    if session.get('uuid'):
-        return jsonify(msg="already login")
     info = request.get_json()
     token = info.get('token')
     if token:
@@ -61,7 +59,6 @@ def login():
         if data:
             u = db.session.query(user_table).filter_by(uuid=data).first()
             if u:
-                session['uuid'] = u.uuid
                 return jsonify(uuid=u.uuid,msg="login success",username=u.username,email=u.email)
             else:
                 return jsonify(msg="invalid or expired token")
@@ -78,7 +75,6 @@ def login():
                 salt = data.salt
                 if data.password == sha256(salt.encode()+password.encode()).hexdigest():
                     new_token = generate_token(data.uuid)
-                    session['uuid'] = data.uuid
                     return jsonify(uuid=data.uuid,msg="login success",token=new_token,username=data.username,email=data.email)
                 else:
                     return jsonify(msg="wrong password")
@@ -88,10 +84,3 @@ def login():
             print(e)
             db.session.rollback()
             return jsonify(msg="error")
-
-@user.route('/logout',methods=["GET"])
-def logout():
-    if session.get('uuid') is None:
-        return jsonify(msg="not login yet")
-    session.clear()
-    return jsonify(msg="logout success")

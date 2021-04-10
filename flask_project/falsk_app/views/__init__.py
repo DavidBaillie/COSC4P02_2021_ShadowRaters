@@ -22,10 +22,13 @@ Base.prepare(db.engine,reflect=True)
 user_table = Base.classes.user
 course_table = Base.classes.course
 rating_course_table = Base.classes.rating_course
+vote_course_table = Base.classes.vote_course
 department_table = Base.classes.department
 rating_department_table = Base.classes.rating_department
+vote_department_table = Base.classes.vote_department
 professor_table = Base.classes.professor
 rating_professor_table = Base.classes.rating_professor
+vote_professor_table = Base.classes.vote_professor
 university_table = Base.classes.university
 rating_university_table = Base.classes.rating_university
-
+vote_university_table = Base.classes.vote_university
