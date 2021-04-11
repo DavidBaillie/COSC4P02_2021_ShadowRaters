@@ -46,14 +46,19 @@ export class SignUpComponent extends BlankLayoutCardComponent implements OnInit 
     });
   }
 
-  public login() {
+  public register() {
     this.error = null;
     if (this.signupForm.valid) {
-      this.authService.signup(this.signupForm.getRawValue())
+      this.authService.register(this.signupForm.getRawValue())
         .subscribe(res => {
-          this.router.navigate(['/app/home'])
-          },
-                   error => this.error = error.message);
+          if(res.msg!="success"){
+            alert("Registration failed. Please try again!");
+          }
+          else{
+            alert("Registration success! Redirecting to login page!");
+            this.router.navigate(['/pages/login']);
+          }
+          });
     }
   }
 

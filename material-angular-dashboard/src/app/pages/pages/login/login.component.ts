@@ -49,10 +49,11 @@ export class LoginComponent extends BlankLayoutCardComponent implements OnInit {
         .subscribe(res =>
         {
           if(res.msg == 'login success')
-        {
-          this.router.navigate(['/app/home']);
-        }
-        else this.error = res.msg;
+          {
+            alert("Login success! Redirecting to home page!");
+            this.router.navigate(['/app/home']);
+          }
+          else this.error = res.msg;
         },
             error => this.error = error.message
         );

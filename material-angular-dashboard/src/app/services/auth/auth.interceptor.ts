@@ -16,8 +16,8 @@ export class AuthInterceptor implements HttpInterceptor {
   }
 
   public intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    // add authorization token for full api requests
-    if (request.url.includes('api') && this.auth.isLoggedIn) {
+    // add authorization token to requests
+    if (request.url.includes('api') && localStorage.getItem("token")!=undefined) {
       request = request.clone({
         setHeaders: { Authorization: `Bearer ${this.auth.authToken}` },
       });

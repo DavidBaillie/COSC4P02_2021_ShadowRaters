@@ -4,7 +4,7 @@ import {UpgradableComponent} from 'theme/components/upgradable';
 
 @Component({
   selector: 'app-dashboard',
-  styleUrls: ['../departments/departments.component.scss', '../../../theme/scss/centre.scss'],
+  styleUrls: ['../../../theme/scss/centre.scss'],
   templateUrl: './dashboard.component.html',
 })
 

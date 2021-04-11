@@ -13,12 +13,8 @@ export interface IDetail{
 }
 
 export  interface IMyComment{
-  uuid: string;
-  pid?:string;
-  uid?:string;
-  cid?:string;
-  did?:string;
   score:number;
   comment:string;
+  token:string;
 }
 

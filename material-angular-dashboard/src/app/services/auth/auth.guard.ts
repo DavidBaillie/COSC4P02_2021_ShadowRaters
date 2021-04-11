@@ -12,7 +12,7 @@ export class AuthGuard implements CanActivate {
   }
 
   canActivate(next: ActivatedRouteSnapshot): boolean {
-    if (this.authService.isLoggedIn) {
+    if (localStorage.getItem("token")!=undefined) {
       return true;
     }
     // Navigate to the login page with extras

@@ -4,13 +4,9 @@ import { FormsModule } from '@angular/forms';
 
 import { MaterialAngularSelectModule } from 'material-angular-select';
 import { ThemeModule } from 'theme';
-
-import { DepartmentsModule } from '../../departments/departments.module';
 import { DashboardModule } from '../../dashboard/dashboard.module';
 import { RouterModule } from '@angular/router';
-
 import { Search } from './search.component';
-// import { FiltersComponent } from './filters/filters.component';
 
 @NgModule({
   imports: [
@@ -18,7 +14,6 @@ import { Search } from './search.component';
     ThemeModule,
     FormsModule,
     DashboardModule,
-    DepartmentsModule,
     MaterialAngularSelectModule,
     RouterModule,
   ],

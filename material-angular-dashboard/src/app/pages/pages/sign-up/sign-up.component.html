@@ -7,7 +7,7 @@
       <div class="mdl-cell mdl-cell--12-col mdl-cell--4-col-phone">
         <span class="blank-layout-card-name text-color--white">Sign up</span>
       </div>
-      <form class="login-form" [formGroup]="signupForm" (submit)="login()" novalidate autocomplete="off">
+      <form class="login-form" [formGroup]="signupForm" (submit)="register()" novalidate autocomplete="off">
         <div class="mdl-cell mdl-cell--12-col mdl-cell--4-col-phone">
           <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label full-size"
                [class.is-invalid]="username.invalid && (username.dirty || username.touched)"

@@ -1,114 +1,77 @@
-import {HttpClient, HttpHeaders} from '@angular/common/http';
-import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable, of } from 'rxjs';
-import {map, retry} from 'rxjs/operators';
+import {HttpClient} from '@angular/common/http';
+import {Injectable} from '@angular/core';
+import {Observable, of} from 'rxjs';
+import {map} from 'rxjs/operators';
 
-import { environment } from '../../../environments/environment';
+import {environment} from '../../../environments/environment';
 
 const tokenName = 'token';
 
 @Injectable({
   providedIn: 'root',
 })
-export class AuthService{
+export class AuthService {
 
-  private isLogged$ = new BehaviorSubject(false);
-  // private url = `${environment.apiBaseUrl}/api/auth`;
+
+  //Environment url link
   private url = `${environment.apiBaseUrl}/user`;
-  //Initialize all attributes a user has
-  private user = { username:"", email:"", uuid: "", token:"" };
 
-  // httpOptions = {
-  //   headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
-  //   withCredentials: true,
-  //   observe: 'response' as 'response'
-  // };
+  //Initialize all attributes after user login
+  private user = {username: "", email: "", uuid: "", token: ""};
+  private user_reg = {admin: false, username: "", password: "", email: "", school: null, program: null}
 
   constructor(private http: HttpClient) {
 
   }
 
-  public get isLoggedIn(): boolean {
-    return this.isLogged$.value;
-  }
-
-  // private setCookie(name: string, val: string) {
-  //   const date = new Date();
-  //   const value = val;
-  //
-  //   // Set it expire in 7 days
-  //   date.setTime(date.getTime() + (7 * 24 * 60 * 60 * 1000));
-  //
-  //   // Set it
-  //   document.cookie = name+"="+value+"; expires="+date.toUTCString()+"; path=/";
-  // }
-  //
-  // private getCookie(name: string) {
-  //   const value = "; " + document.cookie;
-  //   const parts = value.split("; " + name + "=");
-  //
-  //   if (parts.length == 2) {
-  //     return parts.pop().split(";").shift();
-  //   }
-  // }
-  //
-  // private deleteCookie(name: string) {
-  //   const date = new Date();
-  //   // Set it expire in -1 days
-  //   date.setTime(date.getTime() + (-1 * 24 * 60 * 60 * 1000));
-  //   document.cookie = name+"=; expires="+date.toUTCString()+"; path=/";
-  // }
 
   //This function sends post request with username and password
   public login(data): Observable<any> {
-    return this.http.post(`${this.url}/login`, data,{withCredentials: true})
+    return this.http.post(`${this.url}/login`, data, {withCredentials: true})
       .pipe(
-        map((res:{msg:"" ,username:"", email:"", uuid: "", token: ""}) => {
+        map((res: { msg: "", username: "", email: "", uuid: "", token: "" }) => {
             this.user = res;
-            localStorage.setItem('username', res.username);
-            localStorage.setItem('email', res.email);
-            localStorage.setItem('uuid', res.uuid);
-            localStorage.setItem(tokenName, res.token);
-            this.isLogged$.next(true);
+            if ((res.uuid != undefined) && (res.token != undefined)) {
+              localStorage.setItem('username', res.username);
+              localStorage.setItem('email', res.email);
+              localStorage.setItem('uuid', res.uuid);
+              localStorage.setItem(tokenName, res.token);
+            } else {
+            }
             return this.user;
-        }
+          }
         ));
   }
 
 
   //Post the comment and return a message
-  public postComment(type:string,id:string,myComment){
-    return this.http.post(`http://database.ratemyscholar.ca/${type}/reviews/${id}`, myComment,{withCredentials: true})
+  public postComment(type: string, id: string, myComment) {
+    return this.http.post(`http://database.ratemyscholar.ca/${type}/reviews/${id}`, myComment, {withCredentials: true})
       .pipe(
-        map((res: { msg:string }) => {
-          console.log(res.msg);
+        map((res: { msg: string }) => {
           return res;
         }));
   }
 
-
-
   public logout() {
-    return this.http.get(`${this.url}/logout`,{ withCredentials: true })
-      .pipe(map((data) => {
-        localStorage.clear();
-        this.user = null;
-        this.isLogged$.next(false);
-        return of(false);
-
-      }));
+    localStorage.clear();
   }
 
-
-  //Changes pending. Need to
-  public signup(data) {
-    return this.http.post(`${this.url}/signup`, data,{ withCredentials: true })
+  //Try to register a new account
+  public register(data) {
+    this.user_reg = {
+      admin: false,
+      username: data.username,
+      password: data.password,
+      email: data.email,
+      school: null,
+      program: null
+    };
+    console.log(data.username);
+    return this.http.post(`${this.url}/createAccount`, this.user_reg)
       .pipe(
-        map((res: { username: string, email: string }) => {
-          localStorage.setItem('username', res.username);
-          localStorage.setItem('email', res.email);
-          this.isLogged$.next(true);
-          return this.user;
+        map((res: { msg: string }) => {
+          return res;
         }));
   }
 
@@ -117,14 +80,11 @@ export class AuthService{
   }
 
   public get userData(): Observable<any> {
-    // send current user or load data from backend using token
     return this.loadUser();
   }
 
   private loadUser(): Observable<any> {
-    // use request to load user data with token
-    // it's fake and using only for example
-    if (localStorage.getItem('username') && localStorage.getItem('email')) {
+    if (localStorage.getItem('username') && localStorage.getItem('uuid')) {
       this.user = {
         username: localStorage.getItem('username'),
         email: localStorage.getItem('email'),

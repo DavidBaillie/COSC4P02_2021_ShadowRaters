@@ -14,10 +14,6 @@ import { SearchCourse } from './pages/search/search-course';
 import { AboutComponent } from './pages/about';
 import {DetailsComponent} from './pages/DetailPage';
 
-
-// @ts-ignore
-// @ts-ignore
-// @ts-ignore
 @NgModule({
   imports: [
     RouterModule.forRoot(

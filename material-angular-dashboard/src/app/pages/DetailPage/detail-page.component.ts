@@ -43,7 +43,6 @@ export class DetailsComponent extends UpgradableComponent implements OnInit {
 
   //Data of comment to be posted
   data_myComment: IMyComment;
-  idType: string = "";
 
 
   // Get the name of an object by id
@@ -90,21 +89,6 @@ export class DetailsComponent extends UpgradableComponent implements OnInit {
       ];
     });
 
-    //Get the proper attribute name for id
-    switch (this.target_type) {
-      case 'professor':
-        this.idType = "pid";
-        break;
-      case 'university':
-        this.idType = "uid";
-        break;
-      case 'department':
-        this.idType = "did";
-        break;
-      case 'course':
-        this.idType = "cid";
-    }
-
     this.modal = document.getElementById('myModal');
     this.modalTextArea = document.getElementById('modalTextArea') as HTMLTextAreaElement;
 
@@ -122,22 +106,27 @@ export class DetailsComponent extends UpgradableComponent implements OnInit {
 
   public submitRating(): void {
     const rating: number = this.getNumericalRating();
-    const uuid = localStorage.getItem("uuid");
+    const token = localStorage.getItem("token");
     const comment = this.modalTextArea.value;
-    console.log(rating + " " + uuid + " " + comment);
-
     this.data_myComment = {
-      uuid: uuid,
       score: rating,
       comment: comment,
+      token:token
     };
 
     //Comment submission
     this.authService.postComment(this.target_type,this.target_id,this.data_myComment).subscribe(
       res => {
         // console.log("testing rating message: " + res.msg);
-        if (res.msg == 'success') alert("Comment is successful!");
-        else alert(res.msg);
+        if (res.msg == 'success')
+        {
+          alert("Comment is successful!");
+          window.location.reload();
+        }
+        else
+        {
+          alert(res.msg);
+        }
       }
     );
 

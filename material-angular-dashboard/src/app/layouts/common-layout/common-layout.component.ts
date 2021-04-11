@@ -1,7 +1,7 @@
-import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import {Component, OnInit} from '@angular/core';
+import {Router} from '@angular/router';
 
-import { AuthService } from '@services/*';
+import {AuthService} from '@services/*';
 
 @Component({
   selector: 'app-common-layout',
@@ -13,7 +13,8 @@ export class CommonLayoutComponent implements OnInit {
   public userSpace;
 
   constructor(private authService: AuthService,
-              private router: Router) {}
+              private router: Router) {
+  }
 
   public ngOnInit() {
     this.userSpace = document.getElementById('user-space');
@@ -23,10 +24,11 @@ export class CommonLayoutComponent implements OnInit {
       uuid: user.uuid,
       token: user.token,
     });
-    if (!this.authService.isLoggedIn)
+    if (localStorage.getItem("uuid") == undefined) {
       this.createSignIn();
-    else
+    } else {
       this.createUserIcon();
+    }
   }
 
 
@@ -35,16 +37,23 @@ export class CommonLayoutComponent implements OnInit {
   };
 
   public logout() {
-    this.authService.logout()
-      .subscribe(
-        res => {
-          const accountIcon = document.getElementById('icon');
-          accountIcon.remove();
-          this.createSignIn();
-        });
+    // this.authService.logout()
+    //   .subscribe(
+    //     res => {
+    //       const accountIcon = document.getElementById('icon');
+    //       accountIcon.remove();
+    //       this.createSignIn();
+    //     });
+    if(confirm("Are you sure you want to log out?")){
+      this.authService.logout();
+      const accountIcon = document.getElementById('icon');
+      accountIcon.remove();
+      this.createSignIn();
+    }
   }
 
 
+  //Create user name and profile picture once logged in
   private createUserIcon() {
     const userIcon = document.createElement("div");
     const span = document.createElement("span");
@@ -58,13 +67,14 @@ export class CommonLayoutComponent implements OnInit {
     this.userSpace.append(userIcon);
   }
 
+
+  //If not logged in, show login button
   private createSignIn() {
     const signInUpTag = document.createElement("div");
     const signIn = document.createElement("button");
     signIn.className = "mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect";
     // signIn.onclick = () => this.router.navigate(['/pages/login']);
     signIn.onclick = () => this.router.navigateByUrl("/pages/login");
-
     signIn.innerText = "Sign in";
     signInUpTag.append(signIn);
     this.userSpace.append(signInUpTag);
