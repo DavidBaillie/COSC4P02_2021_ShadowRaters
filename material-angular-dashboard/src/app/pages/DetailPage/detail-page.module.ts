@@ -6,6 +6,7 @@ import {DiscreteBarChartComponent} from "./discrete-bar-chart";
 import {LineChartComponent} from "./line-chart";
 import {ThemeModule} from 'theme';
 import {StarRatingComponent} from './stars/stars.component';
+import {MiniSearchComponent} from './mini-search/mini-search.component';
 
 @NgModule({
   imports: [
@@ -21,6 +22,7 @@ import {StarRatingComponent} from './stars/stars.component';
     DiscreteBarChartComponent,
     LineChartComponent,
     StarRatingComponent,
+    MiniSearchComponent,
   ],
 })
 export class DetailsModule {

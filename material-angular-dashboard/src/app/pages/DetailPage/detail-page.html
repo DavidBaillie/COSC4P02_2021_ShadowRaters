@@ -1,25 +1,30 @@
 <div class="mdl-cell mdl-cell--12-col mdl-cell--16-col-tablet mdl-cell--8-col-phone mdl-cell--top">
   <base-card>
-    <base-card-title *ngFor="let item of data;">
-      <h1 class="mdl-card__title-text">{{ item.name }}</h1>
+    <base-card-title>
+      <h1 class="mdl-card__title-text">{{ name }}</h1>
     </base-card-title>
 
     <base-card-body>
       <div *ngFor="let item of avg_score;">
-        <!-- class="base-card-body-top"  dont we think this creates too much extra space?-->
-        <span class="general_rating">General Rating: {{ item.score }}</span>
-        <div class="Stars" style="--rating: 4.3; font-size: 40px;"
-             aria-label="Rating of this product is 2.3 out of 5."></div>
+        <span class="general_rating" style="margin-top: 10px;">Rating: {{ item.score }}</span>
+        <div class="Stars" style="font-size: 40px;" [style.--rating]=item.score aria-label="Rating of this product is 2.3 out of 5."></div>
       </div>
       <div class="base-card-body-middle" style="margin-top: 80px;">
-        <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect button--colored-light-blue"
-                style="float: right; margin-bottom: 10px;">Compare to others {{ target_type }}</button>
+        <!-- <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect button--colored-light-blue"
+                style="float: right; margin-bottom: 10px;">Compare to other {{ target_type }}s</button> -->
+        <mini-search [target_type]=target_type (selectIdEvent)="addTargetComparison($event)" style="float: right;"></mini-search>
         <div style="clear: both;"></div>
-        <app-line-chart></app-line-chart>
-        <hr>
-        <app-discrete-bar-chart></app-discrete-bar-chart>
+
+        <!-- *ngIf is a param to wait for an async call to finish -->
+        <div *ngIf=avg_year_scores>
+          <div *ngIf=target_name>
+            <app-line-chart [data]=avg_year_scores [name]=target_name></app-line-chart>
+          </div>
+        </div>
+        <!-- <hr> -->
+        <!-- <app-discrete-bar-chart></app-discrete-bar-chart> -->
       </div>
-      <hr>
+      <hr style=" border-top: 3px solid rgba(204, 204, 204, 0.432);">
 
       <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect button--colored-light-blue"
               (click)="openModal()" style="float: right; margin-bottom: 10px;">Leave Rating

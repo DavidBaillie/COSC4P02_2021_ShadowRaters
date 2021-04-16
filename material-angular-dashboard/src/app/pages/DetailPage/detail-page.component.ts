@@ -26,24 +26,47 @@ export class DetailsComponent extends UpgradableComponent implements OnInit {
   //Parameters retrieved from search page
   target_type: string = this.activatedRoute.snapshot.paramMap.get('type');
   target_id: string = this.activatedRoute.snapshot.paramMap.get('id');
-
-  //Data of the item to be reviewed (a prof/course/department/university)
-  hits: IItem[];
+  
+  hits: IItem[]; //Data of the item to be reviewed (a prof/course/department/university)
   target_hit: IItem;
-  data: any[];
-
-  //Average score
-  avg_score: any[];
-
+  target_name: string[];
+  name: string;
+  avg_score: any[]; //Average score
+  avg_year_scores: any[]; //Average score per year
   modal: HTMLElement;
   modalTextArea: HTMLTextAreaElement;
+  data_comments: IDetail[]; //Data of comments GET from API
+  data_myComment: IMyComment; //Data of comment to be posted
 
-  //Data of comments GET from API
-  data_comments: IDetail[];
 
-  //Data of comment to be posted
-  data_myComment: IMyComment;
+  ngOnInit() {
+    //Get page item's name
+    this.getAHit().then((res) => {
+      this.target_name = [res.name];
+      this.name = res.name;
+    });
 
+    this.getReviews().then((res) => {
+      this.data_comments = res;
+      this.avg_year_scores = [this.getAvgYearScores(this.data_comments)];
+      this.avg_score = [
+        {
+          score: this.getAverageScore(),
+        }
+      ];
+    });
+   
+    this.modal = document.getElementById('myModal');
+    this.modalTextArea = document.getElementById('modalTextArea') as HTMLTextAreaElement;
+
+    // When the user clicks anywhere outside of the modal, close it
+    window.onclick = (event) => {
+      if (event.target === this.modal) {
+        this.modal.style.display = 'none';
+      }
+    };
+
+  }
 
   // Get the name of an object by id
   private async getAHit() {
@@ -68,36 +91,24 @@ export class DetailsComponent extends UpgradableComponent implements OnInit {
     return (temp / this.data_comments.length);
   }
 
+  // get another target to compare it to the current ones in the line graph
+  public async addTargetComparison(comparison: string) {
+    var avg_years_copy = JSON.parse(JSON.stringify(this.avg_year_scores));
+    var t_name_copy = JSON.parse(JSON.stringify(this.target_name));
 
-  ngOnInit() {
+    let reviews: any;
+    var comparison_parts = comparison.split(",");
+    var target_id = comparison_parts[0]; //id
+    const temp = await this.searchService.getReviews(this.target_type, target_id);
+    reviews = temp.reviews;
 
-    //Get page item's name
-    this.getAHit().then((res) => {
-      this.data = [
-        {
-          name: res.name,
-        },
-      ];
-    });
+    avg_years_copy.push(this.getAvgYearScores(reviews));
+    t_name_copy.push(comparison_parts[1]);
 
-    this.getReviews().then((res) => {
-      this.data_comments = res;
-      this.avg_score = [
-        {
-          score: this.getAverageScore(),
-        }
-      ];
-    });
-
-    this.modal = document.getElementById('myModal');
-    this.modalTextArea = document.getElementById('modalTextArea') as HTMLTextAreaElement;
-
-    // When the user clicks anywhere outside of the modal, close it
-    window.onclick = (event) => {
-      if (event.target === this.modal) {
-        this.modal.style.display = 'none';
-      }
-    };
+    // needed to change assign a new value to these
+    // to trigger a ngOnChange from the line graphs
+    this.avg_year_scores = avg_years_copy;
+    this.target_name = t_name_copy; 
   }
 
   public openModal(): void {
@@ -135,18 +146,43 @@ export class DetailsComponent extends UpgradableComponent implements OnInit {
     this.modal.style.display = 'none';
   }
 
+  // get the rating from the star input by getting the star checked
   public getNumericalRating(): number {
     const stars: HTMLElement = document.getElementById('star-radios');
     const children: any = stars.children;
     let rating = 0;
 
-    // iterate over the stars and get the one checked
     for (let i = 0; i < stars.children.length; i++) {
       if (children[i].checked) {
         rating = parseFloat(children[i].id);
       }
     }
     return rating;
+  }
+
+  public getAvgYearScores(data_comments) {
+    var yearRatings = {};
+    var numYearRatings = {};
+    for (var i = 0; i < data_comments.length; i++) {
+      var comment:any = data_comments[i];
+      var year:string = comment.date.split(" ")[3];
+      var score:number = comment.score;
+
+      if (year in yearRatings) {
+        yearRatings[year] += score; 
+        numYearRatings[year] += 1;
+      }
+      else {
+        yearRatings[year] = score;
+        numYearRatings[year] = 1;
+      }
+    }
+
+    for (var key in yearRatings) {
+      yearRatings[key] /= numYearRatings[key];
+    }
+
+    return yearRatings;
   }
 
 }

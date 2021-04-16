@@ -1,7 +1,7 @@
 import * as d3 from 'd3';
 import * as nv from 'nvd3';
 
-import { Component, ElementRef, HostBinding, OnInit } from '@angular/core';
+import { Component, ElementRef, HostBinding, OnInit, OnChanges, Input } from '@angular/core';
 
 import { LineChartComponent as BaseLineChartComponent } from 'theme/components/line-chart';
 
@@ -9,48 +9,48 @@ import { LineChartService } from './line-chart.service';
 
 @Component({
   selector: 'app-line-chart',
-  styleUrls: ['./line-chart.component.scss'],
   template: ``,
   providers: [LineChartService],
 })
-export class LineChartComponent extends BaseLineChartComponent {
-  constructor(
-    el: ElementRef,
-    public lineChartService: LineChartService,
-  ) {
+export class LineChartComponent extends BaseLineChartComponent implements OnChanges {
+  @Input() data: Object[];
+  @Input() name: string;
+  colors: string[];
+  
+
+  constructor(el: ElementRef, public lineChartService: LineChartService,) {
     super(el);
 
-    this.xAxis = 'TIME';
-    this.yAxis = 'REVENUE';
-    this.maxX = 14;
+    this.colors = ['#00bcd4', '#ffc107', '#f44336', 'black', 'yellow', 'white'];
+
+    this.xAxis = 'YEAR';
+    this.yAxis = 'AVERAGE RATING';
+    this.maxX = 10;
 
     this.afterConfigure();
-
-    this.animatedData = [
-      {
-        values: [],
-        key: 'Awesome',
-        color: '#00bcd4',
-      },
-      {
-        values: [],
-        key: 'Good',
-        fillOpacity: 0.00001,
-        area: true,
-        color: '#ffc107',
-      },
-      {
-        values: [],
-        key: 'Fail',
-        color: '#f44336',
-      },
-    ];
-    this.rawData = [
-      lineChartService.getAwesomeGraph,
-      lineChartService.getGoodGraph,
-      lineChartService.getFailGraph,
-    ]
-      .map(f => f.bind(lineChartService))
-      .map(f => [...f(0, this.maxX + 1, this.xStep)]);
   }
+
+  ngOnInit() {}
+
+  ngOnChanges() { 
+    this.animatedData = [];
+    this.rawData = [];
+    for(var i=0; i<this.data.length; i++) {
+      var years = Object.keys(this.data[i]);
+      this.maxX = (years.length - 1) / 2.0;
+      this.animatedData.push(
+        {
+          values: [],
+          key: this.name[i],
+          color: this.colors[i],
+        }
+      );
+
+      var rawD = this.lineChartService.getHuh.bind(this.lineChartService);
+      rawD = [...rawD(0.5, this.data[i], years)]
+      this.rawData.push(rawD);
+    } 
+    this.refesh();
+  }
+
 }
