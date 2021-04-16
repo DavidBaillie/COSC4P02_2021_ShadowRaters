@@ -6,7 +6,7 @@ import { AuthInterceptor, AuthService } from '@services/*';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { DashboardModule } from './pages/dashboard';
+import { HomePageModule } from './pages/homePage';
 import { FormsModule } from './pages/forms';
 
 @NgModule({
@@ -14,7 +14,7 @@ import { FormsModule } from './pages/forms';
   imports: [
     BrowserModule,
     AppRoutingModule,
-    DashboardModule,
+    HomePageModule,
     FormsModule,
     HttpClientModule,
   ],

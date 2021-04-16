@@ -3,7 +3,7 @@ import {RouterModule} from '@angular/router';
 
 import {LayoutsModule} from './layouts';
 import {CommonLayoutComponent} from './layouts/common-layout';
-import {DashboardComponent} from './pages/dashboard';
+import {HomePageComponent} from './pages/homePage';
 import {FormsComponent} from "./pages/forms";
 import { Search } from './pages/search/search-general';
 
@@ -21,7 +21,7 @@ import {DetailsComponent} from './pages/DetailPage';
         {path: '', redirectTo: 'app/home', pathMatch: 'full'},
         {
           path: 'app', component: CommonLayoutComponent, children: [
-            {path: 'home', component: DashboardComponent, pathMatch: 'full'},
+            {path: 'home', component: HomePageComponent, pathMatch: 'full'},
             {path: 'search/professors', component: SearchProfessor, pathMatch: 'full'},
             {path: 'search/courses', component: SearchCourse, pathMatch: 'full'},
             {path: 'search/institutions', component: SearchInstitution, pathMatch: 'full'},
