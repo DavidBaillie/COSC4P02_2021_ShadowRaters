@@ -16,6 +16,7 @@ import {IProfessor} from './professor';
 export class Search extends UpgradableComponent implements OnInit{
   allHits:IProfessor[];
   hits:IProfessor[];
+  averages:any = {};
   @Input() target_type: string;
 
   constructor(private activatedroute: ActivatedRoute, private router: Router, private searchService: SearchService) {
@@ -30,6 +31,7 @@ export class Search extends UpgradableComponent implements OnInit{
     const hits = await this.searchService.getHits(this.target_type);
     this.hits = this.searchService.getRightHits(hits, this.target_type);
     this.allHits = this.hits;
+    this.getAverages();
   }
 
   public filterP() {
@@ -47,6 +49,15 @@ export class Search extends UpgradableComponent implements OnInit{
       return s1.toLowerCase().includes(s2);
     });
   }
+
+  // save averages of hits
+  public async getAverages() {
+    for(var i=0; i<this.allHits.length; i++) {
+      var id = this.searchService.getRightId(this.allHits[i], this.target_type,);
+      this.averages[id] = await this.searchService.getAverageScore(this.target_type, id);
+    }
+  }
+
 
   public goToHit(id:string) {
     const itemURL:string = `/app/details/${this.target_type}/${id}`;

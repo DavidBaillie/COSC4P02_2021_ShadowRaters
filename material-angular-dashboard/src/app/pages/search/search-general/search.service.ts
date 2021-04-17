@@ -51,4 +51,17 @@ export class SearchService {
     }
   }
 
+  public async getAverageScore(target_type, target_id) {
+    var data_comments = await this.getReviews(target_type, target_id);
+    data_comments = data_comments.reviews;
+
+    let temp:number = 0;
+    for (let i = 0; i < data_comments.length; i++) {
+      temp += data_comments[i].score;
+    }
+    var avg = temp / data_comments.length;
+    avg = Math.round(avg * 10) / 10;
+    return avg;
+  }
+
 }

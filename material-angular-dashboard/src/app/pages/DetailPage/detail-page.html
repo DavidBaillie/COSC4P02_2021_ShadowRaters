@@ -6,7 +6,7 @@
 
     <base-card-body>
       <div *ngFor="let item of avg_score;">
-        <span class="general_rating" style="margin-top: 10px;">Rating: {{ item.score }}</span>
+        <span class="general_rating" style="margin-top: 10px;">Rating: {{  item.score }}</span>
         <div class="Stars" style="font-size: 40px;" [style.--rating]=item.score aria-label="Rating of this product is 2.3 out of 5."></div>
       </div>
       <div class="base-card-body-middle" style="margin-top: 80px;">
@@ -31,7 +31,7 @@
       </button>
       <div style="clear: both;"></div>
 
-      <div style="height: 400px; overflow: auto;">
+      <div style="height: 400px; overflow: auto; padding: 0px 40px 0px 40px;">
         <div *ngFor="let item of data_comments;" class="base-card-body-bottom">
           <span class="userName">{{ item.username }}</span>
           <span class="userComment">{{ item.comment }}</span>

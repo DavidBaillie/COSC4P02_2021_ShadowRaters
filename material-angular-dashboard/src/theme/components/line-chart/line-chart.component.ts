@@ -10,6 +10,7 @@ import { max } from 'rxjs/operators';
 export abstract class LineChartComponent implements AfterViewInit {
   protected animatedData;
   protected rawData;
+  protected year_labels;
   protected xAxis;
   protected yAxis;
   protected maxX;
@@ -63,35 +64,6 @@ export abstract class LineChartComponent implements AfterViewInit {
     this.svgWidth = +svgWidth.slice(0, -2);
     this.svgHeight = +svgHeight.slice(0, -2) - this.margin;
   }
-
-  // private addAxisLabels() {
-  //   this.container.selectAll('svg .y-axis-label').remove();
-  //   this.container.select('svg')
-  //     .append('text')
-  //     .attr('class', 'y-axis-label')
-  //     .attr('x', -(70 + this.yAxis.length * 7))
-  //     .attr('y', '9')
-  //     .attr('transform', 'rotate(-90)')
-  //     .attr('style', 'font-size: 12px;')
-  //     .text(this.yAxis || '');
-
-  //   this.container.select('svg')
-  //     .append('text')
-  //     .attr('class', 'x-axis-label')
-  //     .text(this.xAxis || '');
-
-  //   // set y tick labels
-  //   var y_tick_lab = 55;
-  //   for(var i = 0; i<6; i++) {
-  //     this.container.select('svg')
-  //     .append('text')
-  //     .attr('x', '12')
-  //     .attr('y', y_tick_lab)
-  //     .attr('style', 'font-size: 14px;')
-  //     .text(5-i);
-  //     y_tick_lab += 33;
-  //   }
-  // }
 
   private buildBackground() {
     this.addSvgContainer();
@@ -162,13 +134,12 @@ export abstract class LineChartComponent implements AfterViewInit {
     // this.lineChart.tooltip.enabled(false);
     // this.lineChart.interactiveLayer.tooltip.enabled(false);
 
-    var y = ["2017", "2018", "2019", "2020","2021", "2022", "2023", "2024",]
     this.lineChart.xAxis
       .axisLabel(this.xAxis)
       .showMaxMin(false)
       .tickValues([0, 0.5, 1, 1.5, 2, 2.5, 3, 3.5, 4, 4.5, 5, 5.5, 6, 6.5, 7])
       .tickFormat((d)=>{
-        return y[d + d];
+        return this.year_labels[d + d];
       });
 
     this.lineChart.yAxis

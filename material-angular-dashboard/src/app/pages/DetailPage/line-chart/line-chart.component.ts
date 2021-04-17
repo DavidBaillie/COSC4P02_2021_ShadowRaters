@@ -25,7 +25,7 @@ export class LineChartComponent extends BaseLineChartComponent implements OnChan
 
     this.xAxis = 'YEAR';
     this.yAxis = 'AVERAGE RATING';
-    this.maxX = 10;
+    this.maxX = 0;
 
     this.afterConfigure();
   }
@@ -37,7 +37,8 @@ export class LineChartComponent extends BaseLineChartComponent implements OnChan
     this.rawData = [];
     for(var i=0; i<this.data.length; i++) {
       var years = Object.keys(this.data[i]);
-      this.maxX = (years.length - 1) / 2.0;
+      this.year_labels = years;
+      this.maxX = Math.max(this.maxX, (years.length - 1) / 2.0);
       this.animatedData.push(
         {
           values: [],
@@ -46,7 +47,7 @@ export class LineChartComponent extends BaseLineChartComponent implements OnChan
         }
       );
 
-      var rawD = this.lineChartService.getHuh.bind(this.lineChartService);
+      var rawD = this.lineChartService.getDataPoints.bind(this.lineChartService);
       rawD = [...rawD(0.5, this.data[i], years)]
       this.rawData.push(rawD);
     } 

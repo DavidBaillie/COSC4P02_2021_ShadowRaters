@@ -46,12 +46,12 @@ export class DetailsComponent extends UpgradableComponent implements OnInit {
       this.name = res.name;
     });
 
-    this.getReviews().then((res) => {
+    this.getReviews(this.target_type, this.target_id).then((res) => {
       this.data_comments = res;
       this.avg_year_scores = [this.getAvgYearScores(this.data_comments)];
       this.avg_score = [
         {
-          score: this.getAverageScore(),
+          score: this.getAverageScore(this.data_comments),
         }
       ];
     });
@@ -76,19 +76,22 @@ export class DetailsComponent extends UpgradableComponent implements OnInit {
     return this.target_hit;
   }
 
-  private async getReviews(){
+  private async getReviews(target_type, target_id){
     let reviews: IDetail[];
-    const temp = await this.searchService.getReviews(this.target_type, this.target_id);
+    const temp = await this.searchService.getReviews(target_type, target_id);
     reviews = temp.reviews;
     return reviews;
   }
 
-  private getAverageScore():number {
+  private getAverageScore(data_comments):number {
     let temp:number = 0;
-    for (let i = 0; i < this.data_comments.length; i++) {
-      temp += this.data_comments[i].score;
+    for (let i = 0; i < data_comments.length; i++) {
+      temp += data_comments[i].score;
     }
-    return (temp / this.data_comments.length);
+
+    var avg = temp / data_comments.length;
+    avg = Math.round(avg * 10) / 10;
+    return avg;
   }
 
   // get another target to compare it to the current ones in the line graph
