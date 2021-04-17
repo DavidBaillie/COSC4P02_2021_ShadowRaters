@@ -8,6 +8,7 @@ class Test(BASE):
     DEBUG = True
     SECRET_KEY = "wdxcas"
 
+
 class Product(BASE):
     DEBUG = False
     SECRET_KEY = "SDIAPCOACJC"

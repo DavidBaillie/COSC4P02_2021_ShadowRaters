@@ -1,21 +1,22 @@
-from flask import Blueprint,jsonify,request,current_app,session
-from . import db,user_table
+from flask import Blueprint,jsonify,request,current_app,url_for
+from . import db,user_table,mail
 import os,binascii
 import random, string
 from hashlib import sha256
 from itsdangerous import TimedJSONWebSignatureSerializer as Serializer
 from itsdangerous import BadSignature,SignatureExpired
+from flask_mail import Message
 
 user = Blueprint('user',__name__,url_prefix='/user')
 
-def generate_token(uuid):
-    expiration = 3600 * 24
+def generate_token(uuid,expires):
+    expiration = expires
     s = Serializer(current_app.config['SECRET_KEY'],expires_in=expiration)
     token = s.dumps({'uuid': uuid}).decode("ascii")
     return token
 
 def verify_auth_token(token):
-    s =Serializer(current_app.config['SECRET_KEY'])
+    s = Serializer(current_app.config['SECRET_KEY'])
     try:
         data = s.loads(token)
     except SignatureExpired:
@@ -23,6 +24,15 @@ def verify_auth_token(token):
     except BadSignature:
         return None
     return data['uuid']
+
+def send_email(token,email):
+    msg = Message("Request Password Reset",
+                  sender=current_app.config.get('MAIL_USERNAME'),
+                  recipients=[email])
+    link = url_for('user.confirm_reset_password',token=token,_external=True)
+    msg.body = 'Click the link if you want to reset your password: {}'.format(link)
+    mail.send(msg)
+    return None
 
 
 @user.route('/createAccount',methods=["POST"])
@@ -74,7 +84,7 @@ def login():
             if data:
                 salt = data.salt
                 if data.password == sha256(salt.encode()+password.encode()).hexdigest():
-                    new_token = generate_token(data.uuid)
+                    new_token = generate_token(data.uuid,3600*24)
                     return jsonify(uuid=data.uuid,msg="login success",token=new_token,username=data.username,email=data.email)
                 else:
                     return jsonify(msg="wrong password")
@@ -84,3 +94,58 @@ def login():
             print(e)
             db.session.rollback()
             return jsonify(msg="error")
+
+@user.route('/changePassword',methods=["POST"])
+def changePassword():
+    info = request.get_json()
+    newPassword = info.get('password')
+    token = info.get('token')
+    if token is None or verify_auth_token(token) is None:
+        return jsonify(msg="invalid or expired token")
+    uuid = verify_auth_token(token)
+    try:
+        user = db.session.query(user_table).filter_by(uuid=uuid).first()
+        if user is None:
+            return jsonify(msg="user not exist")
+        user.password = sha256(user.salt.encode()+newPassword.encode()).hexdigest()
+        db.session.merge(user)
+        db.session.commit()
+        return jsonify(msg="success")
+    except Exception as e:
+        print(e)
+        db.session.rollback()
+        return jsonify(msg="error")
+
+@user.route('/resetPassword',methods=["POST"])
+def resetPassword():
+    info = request.get_json()
+    username = info.get('username')
+    email = info.get('email')
+    if not all([username,email]):
+        return jsonify(msg="missing username or email")
+    try:
+        user = db.session.query(user_table).filter_by(username=username,email=email).first()
+        if user is None:
+            return jsonify(msg="username or email wrong")
+        uuid = user.uuid
+        token = generate_token(uuid,600)
+        send_email(token=token,email=email)
+        return jsonify(msg="success")
+    except Exception as e:
+        print(e)
+        db.session.rollback()
+        return jsonify(msg="error")
+
+@user.route('/confirm_reset_password/<token>',methods=['GET'])
+def confirm_reset_password(token):
+    try:
+        uuid = verify_auth_token(token)
+        user = db.session.query(user_table).filter_by(uuid=uuid).first()
+        newPassword = binascii.b2a_hex(os.urandom(10))
+        user.password = sha256(user.salt.encode()+newPassword.encode()).hexdigest()
+        db.session.merge(user)
+        db.session.commit()
+        return '<h2>Your new password is {}</h2>'.format(newPassword)
+    except Exception as e:
+        print(e)
+        return '<h1>The token is invalid or expired</h1>'
