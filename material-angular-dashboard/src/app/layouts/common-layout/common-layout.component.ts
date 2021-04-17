@@ -1,16 +1,23 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, ViewEncapsulation} from '@angular/core';
 import {Router} from '@angular/router';
-
 import {AuthService} from '@services/*';
 
 @Component({
   selector: 'app-common-layout',
   templateUrl: './common-layout.component.html',
+  styleUrls: ['./common-layout.scss'],
+  encapsulation: ViewEncapsulation.None,
+
 })
 export class CommonLayoutComponent implements OnInit {
 
   public user;
   public userSpace;
+
+  isBannerHidden:boolean = true;
+  isSignInHidden:boolean = true;
+
+  initial:string;
 
   constructor(private authService: AuthService,
               private router: Router) {
@@ -25,9 +32,9 @@ export class CommonLayoutComponent implements OnInit {
       token: user.token,
     });
     if (localStorage.getItem("uuid") == undefined) {
-      this.createSignIn();
+      this.showSignInButton();
     } else {
-      this.createUserIcon();
+      this.showUserBanner();
     }
   }
 
@@ -37,46 +44,29 @@ export class CommonLayoutComponent implements OnInit {
   };
 
   public logout() {
-    // this.authService.logout()
-    //   .subscribe(
-    //     res => {
-    //       const accountIcon = document.getElementById('icon');
-    //       accountIcon.remove();
-    //       this.createSignIn();
-    //     });
-    if(confirm("Are you sure you want to log out?")){
+    if (confirm("Are you sure you want to log out?")) {
       this.authService.logout();
       const accountIcon = document.getElementById('icon');
       accountIcon.remove();
-      this.createSignIn();
+      this.showSignInButton();
     }
   }
 
 
-  //Create user name and profile picture once logged in
-  private createUserIcon() {
-    const userIcon = document.createElement("div");
-    const span = document.createElement("span");
-    const imgTag = document.createElement("img");
-    userIcon.setAttribute("class", "avatar-dropdown");
-    userIcon.setAttribute("id", "icon");
-    span.innerText = this.user.username;
-    imgTag.setAttribute("src", "assets/images/Icon_header.png");
-    userIcon.append(span);
-    userIcon.append(imgTag);
-    this.userSpace.append(userIcon);
-  }
 
+  //Once user is logged in, display user banner
+  private showUserBanner() {
+    this.initial = localStorage.getItem("username").charAt(0).toUpperCase();
+    this.isBannerHidden = false;
+  }
 
   //If not logged in, show login button
-  private createSignIn() {
-    const signInUpTag = document.createElement("div");
-    const signIn = document.createElement("button");
-    signIn.className = "mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect";
-    // signIn.onclick = () => this.router.navigate(['/pages/login']);
-    signIn.onclick = () => this.router.navigateByUrl("/pages/login");
-    signIn.innerText = "Sign in";
-    signInUpTag.append(signIn);
-    this.userSpace.append(signInUpTag);
+  private showSignInButton() {
+    this.isSignInHidden = false;
   }
+
+  public signIn(){
+    this.router.navigateByUrl("/pages/login");
+  }
+
 }

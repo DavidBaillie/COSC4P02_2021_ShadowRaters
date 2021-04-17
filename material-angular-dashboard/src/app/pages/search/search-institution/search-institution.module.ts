@@ -3,7 +3,7 @@ import {NgModule} from '@angular/core';
 import {FormsModule} from '@angular/forms';
 import {MaterialAngularSelectModule} from 'material-angular-select';
 import {ThemeModule} from 'theme';
-import {DashboardModule} from '../../dashboard/dashboard.module';
+import {HomePageModule} from '../../homePage/homePage.module';
 import {RouterModule} from '@angular/router';
 import {SearchInstitution} from './search-institution.component';
 
@@ -12,7 +12,7 @@ import {SearchInstitution} from './search-institution.component';
     CommonModule,
     ThemeModule,
     FormsModule,
-    DashboardModule,
+    HomePageModule,
     MaterialAngularSelectModule,
     RouterModule,
   ],

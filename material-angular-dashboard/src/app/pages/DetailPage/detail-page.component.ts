@@ -4,8 +4,8 @@ import {UpgradableComponent} from 'theme/components/upgradable';
 import {SearchService} from '../search/search-general/search.service';
 import {IItem} from '../search/search-professor/professor';
 import {IDetail, IMyComment} from "./Reviews";
-import { AuthService } from '../../services/auth/auth.service';
-
+import {AuthService} from '@services/*';
+import {HttpClient} from '@angular/common/http';
 
 @Component({
   selector: 'app-details',
@@ -19,7 +19,7 @@ export class DetailsComponent extends UpgradableComponent implements OnInit {
   @HostBinding('class.ui-components') public readonly uiComponents = true;
 
 
-  constructor(private activatedRoute: ActivatedRoute, private searchService: SearchService, private authService:AuthService) {
+  constructor(private activatedRoute: ActivatedRoute, private searchService: SearchService, private authService: AuthService, private httpClient: HttpClient) {
     super();
   }
 
@@ -118,35 +118,48 @@ export class DetailsComponent extends UpgradableComponent implements OnInit {
     this.modal.style.display = 'block';
   }
 
+  //validating rating
+  public checkRating(rating):boolean {
+      return (rating>=0 && rating <=5);
+  }
+
+  //validating comment
+  public checkComment(comment){
+    return (comment.length > 10 && comment.length < 500);
+  }
+
+  //Check if the comment is proper before submission
   public submitRating(): void {
     const rating: number = this.getNumericalRating();
     const token = localStorage.getItem("token");
     const comment = this.modalTextArea.value;
-    this.data_myComment = {
-      score: rating,
-      comment: comment,
-      token:token
-    };
 
-    //Comment submission
-    this.authService.postComment(this.target_type,this.target_id,this.data_myComment).subscribe(
-      res => {
-        // console.log("testing rating message: " + res.msg);
-        if (res.msg == 'success')
-        {
-          alert("Comment is successful!");
-          window.location.reload();
+    if(!this.checkRating(rating)){
+      alert("Invalid rating! Please choose a score between 0 to 5!");
+    }else if(!this.checkComment(comment)){
+      alert("Comment must be between 10 to 500 words!");
+    }else{
+      this.data_myComment = {
+        score: rating,
+        comment: comment,
+        token: token
+      };
+
+      //Comment submission
+      this.authService.postComment(this.target_type, this.target_id, this.data_myComment).subscribe(
+        res => {
+          if (res.msg == 'success') {
+            alert("Comment posted successfully!");
+            window.location.reload();
+          } else {
+            alert(res.msg);
+          }
         }
-        else
-        {
-          alert(res.msg);
-        }
-      }
-    );
+      );
 
-
-    this.modalTextArea.value = ' ';
-    this.modal.style.display = 'none';
+      this.modalTextArea.value = ' ';
+      this.modal.style.display = 'none';
+    }
   }
 
   // get the rating from the star input by getting the star checked

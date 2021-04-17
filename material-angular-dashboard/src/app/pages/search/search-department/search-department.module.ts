@@ -3,7 +3,7 @@ import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { MaterialAngularSelectModule } from 'material-angular-select';
 import { ThemeModule } from 'theme';
-import { DashboardModule } from '../../dashboard/dashboard.module';
+import { HomePageModule } from '../../homePage/homePage.module';
 import { RouterModule } from '@angular/router';
 import { SearchDepartment } from './search-department.component';
 import {SearchModule} from '../search-general'
@@ -13,7 +13,7 @@ import {SearchModule} from '../search-general'
     CommonModule,
     ThemeModule,
     FormsModule,
-    DashboardModule,
+    HomePageModule,
     MaterialAngularSelectModule,
     RouterModule,
     SearchModule,

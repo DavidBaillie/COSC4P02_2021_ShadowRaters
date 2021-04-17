@@ -5,14 +5,13 @@ import { FormsModule } from '@angular/forms';
 import { ThemeModule } from 'theme';
 
 import { CotoneasterCardComponent } from './cotoneaster-card';
-import { DashboardComponent } from './dashboard.component';
+import { HomePageComponent } from './homePage.component';
 import { LineChartComponent } from './line-chart';
 import { PieChartComponent } from './pie-chart';
 import { RobotCardComponent } from './robot-card';
 import { TableCardComponent } from './table-card';
 import { TodoListComponent } from './todo-list';
 import { TrendingComponent } from './trending';
-import { WeatherComponent } from './weather';
 
 @NgModule({
   imports: [
@@ -21,10 +20,9 @@ import { WeatherComponent } from './weather';
     FormsModule,
   ],
   declarations: [
-    DashboardComponent,
+    HomePageComponent,
     LineChartComponent,
     PieChartComponent,
-    WeatherComponent,
     CotoneasterCardComponent,
     TableCardComponent,
     RobotCardComponent,
@@ -32,8 +30,7 @@ import { WeatherComponent } from './weather';
     TrendingComponent,
   ],
   exports: [
-    WeatherComponent,
     TrendingComponent,
   ],
 })
-export class DashboardModule { }
+export class HomePageModule { }
