@@ -135,3 +135,22 @@ def voteCouresReview_cancel(rcid):
         print(e)
         db.session.rollback()
         return jsonify(msg="error")
+
+@course.route('/getVotes',methods=['POST'])
+def getVotes():
+    info = request.get_json()
+    token = info.get('token')
+    if token is None or verify_auth_token(token) is None:
+        return jsonify(msg="invalid or expired token")
+    uuid = verify_auth_token(token)
+    try:
+        votes = db.session.query(vote_course_table).filter_by(uuid=uuid).all()
+        res = []
+        for i in votes:
+            content = {'rcid':i.rcid,'flag':i.flag}
+            res.append(content)
+        return jsonify(msg="success",votes=res)
+    except Exception as e:
+        print(e)
+        db.session.rollback()
+        return jsonify(msg="error")
