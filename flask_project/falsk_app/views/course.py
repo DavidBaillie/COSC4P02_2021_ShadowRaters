@@ -111,7 +111,7 @@ def voteCourseReview_disagree(rcid):
         db.session.rollback()
         return jsonify(msg="error")
 
-@course.route('/reviews/vote_cancle/<rcid>',methods=["POST"])
+@course.route('/reviews/vote_cancel/<rcid>',methods=["POST"])
 def voteCouresReview_cancel(rcid):
     vote = request.get_json()
     token = vote.get('token')

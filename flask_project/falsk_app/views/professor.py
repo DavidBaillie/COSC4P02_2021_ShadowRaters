@@ -110,7 +110,7 @@ def voteProfessorReview_disagree(rpid):
         db.session.rollback()
         return jsonify(msg="error")
 
-@professor.route('/reviews/vote_cancle/<rpid>',methods=["POST"])
+@professor.route('/reviews/vote_cancel/<rpid>',methods=["POST"])
 def voteProfessorReview_cancel(rpid):
     vote = request.get_json()
     token = vote.get('token')
