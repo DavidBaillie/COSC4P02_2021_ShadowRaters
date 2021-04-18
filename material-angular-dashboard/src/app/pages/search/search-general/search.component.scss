@@ -1,0 +1,30 @@
+:host {
+  app-map-advanced {
+    margin: 0 !important;
+
+    &.map-advanced {
+      min-height: 500px;
+
+      .map__window {
+        height: 500px;
+      }
+    }
+  }
+
+  /*
+  base-right-sidebar {
+    .mdl-card__title-text {
+      text-transform: uppercase;
+      font-size: 14px;
+      line-height: 16px;
+    }
+  }
+   */
+}
+
+input {
+  height: 33px;
+  width: 300px;
+  border-radius: 20px;
+  padding: 0px 10px 0px 10px;
+}

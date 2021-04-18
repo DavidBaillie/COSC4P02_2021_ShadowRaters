@@ -1,0 +1,23 @@
+@import '~theme/helpers';
+
+.mdl-card__title {
+  background-color: $card-title-background-color;
+    border-radius: 20px;
+}
+
+.mdl-card__supporting-text {
+  line-height: 22px;
+  width: calc(100% - #{$card-horizontal-padding*2});
+  overflow: visible;
+}
+
+.mdl-card__actions {
+  padding: 8px 16px;
+}
+
+.mdl-card {
+  height: 100%;
+  overflow: visible;
+  background-color: rgba(97, 97, 97, 0.6);
+  border-radius: 20px;
+}

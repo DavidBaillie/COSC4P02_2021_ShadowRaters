@@ -1,0 +1,62 @@
+<div class="mdl-card mdl-card__blank-layout-card mdl-shadow--2dp">
+  <div class="mdl-card__supporting-text">
+    <div class="mdl-grid">
+      <div class="mdl-cell mdl-cell--12-col mdl-cell--4-col-phone">
+        <span class="mdl-card__title-text text-color--white" routerLink="/app/home">Rate My Scholar</span>
+      </div>
+      <div class="mdl-cell mdl-cell--12-col mdl-cell--4-col-phone">
+        <span class="blank-layout-card-name text-color--white">Sign in</span>
+        <span class="blank-layout-card-secondary-text text-color--white">Enter your username and password to sign in</span>
+      </div>
+      <form class="login-form" [formGroup]="loginForm" (submit)="login()" autocomplete="off" novalidate>
+        <div class="mdl-cell mdl-cell--12-col mdl-cell--4-col-phone">
+          <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label full-size"
+               [class.is-invalid]="username.invalid && (username.dirty || username.touched)"
+               [class.is-valid]="username.valid && (username.dirty || username.touched)">
+            <input formControlName="username"
+                   pattern="{{usernamePattern}}"
+                   (change)="onInputChange($event)"
+                   class="mdl-textfield__input" type="text" id="username">
+            <label class="mdl-textfield__label" for="username">Username</label>
+
+            <div *ngIf="username.invalid && (username.dirty || username.touched)">
+              <span *ngIf="username.errors.required" class="mdl-textfield__error">
+                User name is required. <span class="color-text--orange"> Please provide valid user name.</span>
+              </span>
+              <span *ngIf="username.errors.pattern" class="mdl-textfield__error">
+                User name is invalid.
+              </span>
+            </div>
+          </div>
+
+          <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label full-size"
+               [class.is-invalid]="password.invalid && (password.dirty || password.touched)"
+               [class.is-valid]="password.valid && (password.dirty || password.touched)"
+               id="forPass">
+            <input formControlName="password"
+                   (change)="onInputChange($event)"
+                   class="mdl-textfield__input" type="password" id="password">
+            <label class="mdl-textfield__label" for="password">Password</label>
+            <div *ngIf="password.invalid && (password.dirty || password.touched)">
+              <span *ngIf="password.errors.required" class="mdl-textfield__error">
+                Password is required. <span class="color-text--orange"> Please, write any password.</span>
+              </span>
+            </div>
+          </div>
+
+          <div class="full-size color-text--red" *ngIf="error"> {{ error }}</div>
+
+          <a routerLink="/pages/forgot-password" class="blank-layout-card-link">Forgot password?</a>
+        </div>
+        <div class="mdl-cell mdl-cell--12-col mdl-cell--4-col-phone submit-cell">
+          <a routerLink="/pages/sign-up" class="blank-layout-card-link">Don't have account?</a>
+          <div class="mdl-layout-spacer"></div>
+          <button class="mdl-button mdl-js-button mdl-button--raised color--light-blue"
+                  type="submit" [disabled]="loginForm.invalid">
+            SIGN IN
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
