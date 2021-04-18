@@ -59,13 +59,6 @@ export class DetailsComponent extends UpgradableComponent implements OnInit {
     this.modal = document.getElementById('myModal');
     this.modalTextArea = document.getElementById('modalTextArea') as HTMLTextAreaElement;
 
-    // When the user clicks anywhere outside of the modal, close it
-    window.onclick = (event) => {
-      if (event.target === this.modal) {
-        this.modal.style.display = 'none';
-      }
-    };
-
   }
 
   // Get the name of an object by id

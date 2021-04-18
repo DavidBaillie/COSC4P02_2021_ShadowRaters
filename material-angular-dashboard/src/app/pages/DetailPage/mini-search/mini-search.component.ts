@@ -12,15 +12,18 @@ export class MiniSearchComponent implements OnInit {
   @Output() selectIdEvent = new EventEmitter<string>();
   allHits:any[];
   hits:any[];
+  modal
 
   constructor(private searchService: SearchService) {}
 
   ngOnInit() {
     this.getHits();
 
-    // empty suggestions when the user clicks outside of the mini search bar
+    this.modal = document.getElementById('myModal'); 
     window.onclick = (event) => {
-      this.hits = [];
+      this.hits = []; // empty suggestions when the user clicks outside of the mini search bar
+      if (event.target === this.modal)  // AND when the user clicks anywhere outside of the modal, close it
+        this.modal.style.display = 'none';
     };
   }
 

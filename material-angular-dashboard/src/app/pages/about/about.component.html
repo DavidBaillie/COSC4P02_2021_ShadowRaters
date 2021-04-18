@@ -5,12 +5,11 @@
   </div>
 
   <div class="aboutBottom">
-    <h1 style="margin: 0px;">HELLO! WE ARE cool</h1>
-    <p> {{ aboutUs }} </p>
+    <h1 style="margin: 0px;">This is our mission</h1>
+    <p style="padding: 0px 40px 0px 40px;"> {{ aboutUs }} </p>
     <h3 style="color: black; margin-bottom: 2px;">The Team</h3>
     <hr style="background-color: rgba(0, 0, 0, 0.151); width: 80%; margin: auto;">
-
-    <div style="display: flex; margin-top: 20px;">
+    <div style="display: flex; margin-top: 20px; margin: 20px 200px 0px 200px;">
       <team-member *ngFor="let name of members" [memberName]="name"></team-member>
     </div>
   </div>
