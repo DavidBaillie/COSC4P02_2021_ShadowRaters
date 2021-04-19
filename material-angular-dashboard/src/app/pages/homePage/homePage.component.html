@@ -3,13 +3,19 @@
   <div class="home-header">
       <h3 class="text-header" style="font-family: 'Orelega One'; font-size: 45px;"> 
         Search. Compare. Share your experience.</h3>
+
     <div class="grid-mystery-box">
-      <span style="padding: 10px 0px 0px 600px; color: black; font-family: 'Permanent Marker'; font-size: 20px;">Pull one out of the bag:</span>  
-      <div (mouseenter)="setEmojiInterval()"(mouseleave) ="clearEmojiInterval()" 
-          (click)="getRandomHit()" class="mystery-box mystery-box-hover">
-        <span id="mystery-emoji"  class="mystery-box-text"> <b>🎓</b> </span>
+      <div style="padding-top: 10px; text-align: right;">
+        <span style=" color: black; font-family: 'Permanent Marker'; font-size: 20px;">Pull one out of the bag:</span>  
+      </div>
+      <div>
+        <div (mouseenter)="setEmojiInterval()"(mouseleave) ="clearEmojiInterval()" 
+        (click)="getRandomHit()" class="mystery-box mystery-box-hover">
+          <span id="mystery-emoji"  class="mystery-box-text"> <b>🎓</b> </span>
+        </div>
       </div>
     </div>
+
   </div>
 
 
