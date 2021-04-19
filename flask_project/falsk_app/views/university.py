@@ -72,7 +72,7 @@ def voteUniversityReview_agree(ruid):
         data = db.session.query(vote_university_table).filter_by(uuid=uuid, ruid=ruid).first()
         if data is not None:
             return jsonify(msg="already vote")
-        vote = vote_university_table(vpid=vuid,uuid=uuid,ruid=ruid,flag=0)
+        vote = vote_university_table(vuid=vuid,uuid=uuid,ruid=ruid,flag=0)
         db.session.add(vote)
         review = db.session.query(rating_university_table).filter_by(ruid=ruid).first()
         review.num_agree += 1
