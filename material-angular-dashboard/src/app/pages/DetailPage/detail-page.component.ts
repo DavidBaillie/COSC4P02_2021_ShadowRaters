@@ -35,7 +35,7 @@ export class DetailsComponent extends UpgradableComponent implements OnInit {
   avg_year_scores: any[]; //Average score per year
   modal: HTMLElement;
   modalTextArea: HTMLTextAreaElement;
-  data_comments: IDetail[]; //Data of comments GET from API
+  data_comments: IDetail[] = []; //Data of comments GET from API
   data_myComment: IMyComment; //Data of comment to be posted
 
 
@@ -105,8 +105,6 @@ export class DetailsComponent extends UpgradableComponent implements OnInit {
         return item.rcid;
     }
   }
-
-
 
   //Get vote information for the current user
   private showUserThumbStatus() {
@@ -256,6 +254,7 @@ export class DetailsComponent extends UpgradableComponent implements OnInit {
     return rating;
   }
 
+  //Data for graphs
   public getAvgYearScores(data_comments) {
     var yearRatings = {};
     var numYearRatings = {};
@@ -273,21 +272,17 @@ export class DetailsComponent extends UpgradableComponent implements OnInit {
         numYearRatings[year] = 1;
       }
     }
-
     for (var key in yearRatings) {
       yearRatings[key] /= numYearRatings[key];
     }
-
     return yearRatings;
   }
-
-
 
   //Function post a positive vote for a comment as a logged in user.
   public thumbUp(item: IDetail) {
     if (localStorage.getItem('uuid') == undefined) {
       alert("Voting requires login!");
-    } else {
+    } else if(item.flag == undefined || item.flag != 0){
       let rid: string;
       switch (this.target_type) {
         case 'professor':
@@ -315,12 +310,11 @@ export class DetailsComponent extends UpgradableComponent implements OnInit {
     }
   }
 
-
   //Function post a negative vote for a comment as a logged in user.
   public thumbDown(item: IDetail) {
     if (localStorage.getItem('uuid') == undefined) {
       alert("Voting requires login!");
-    } else {
+    } else if(item.flag == undefined || item.flag != 1){
       let rid: string;
       switch (this.target_type) {
         case 'professor':
