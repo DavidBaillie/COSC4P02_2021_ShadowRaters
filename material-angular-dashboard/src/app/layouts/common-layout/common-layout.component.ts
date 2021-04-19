@@ -49,6 +49,7 @@ export class CommonLayoutComponent implements OnInit {
       const accountIcon = document.getElementById('icon');
       accountIcon.remove();
       this.showSignInButton();
+      window.location.reload();
     }
   }
 
