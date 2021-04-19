@@ -44,6 +44,12 @@ export class DetailsComponent extends UpgradableComponent implements OnInit {
   //Data of comment to be posted
   data_myComment: IMyComment;
 
+  //Show user the thumb up/down that they have voted for
+  voteStatus: any;
+
+
+
+
   // Get the name of an object by id
   private async getAHit() {
     const temp = await this.searchService.getHits(this.target_type);
@@ -59,6 +65,41 @@ export class DetailsComponent extends UpgradableComponent implements OnInit {
     return reviews;
   }
 
+  //return the correct rid
+  public getItemRid(item: any) {
+    switch (this.target_type) {
+      case 'professor':
+        return item.rpid;
+      case 'university':
+        return item.ruid;
+      case 'department':
+        return item.rdid;
+      case 'course':
+        return item.rcid;
+    }
+  }
+
+
+
+  //Get vote information for the current user
+  private showUserThumbStatus() {
+    if (localStorage.getItem('uuid')) {
+      this.authService.getVotes(this.target_type).subscribe(
+        res => {
+          for (let i = 0; i < res.length; i++) {
+            for (let j = 0; j < this.data_comments.length; j++) {
+              if (this.getItemRid(res[i]) == this.getItemRid(this.data_comments[j])) {
+                this.data_comments[j].flag = res[i].flag;
+                // console.log(res[i].flag);
+              }
+            }
+          }
+        }
+      );
+
+    }
+  }
+
   private getAverageScore(): number {
     let temp: number = 0;
     for (let i = 0; i < this.data_comments.length; i++) {
@@ -67,9 +108,7 @@ export class DetailsComponent extends UpgradableComponent implements OnInit {
     return (temp / this.data_comments.length);
   }
 
-
   ngOnInit() {
-
     //Get page item's name
     this.getAHit().then((res) => {
       this.data = [
@@ -86,11 +125,13 @@ export class DetailsComponent extends UpgradableComponent implements OnInit {
           score: this.getAverageScore(),
         }
       ];
-    });
+    }).then(() =>
+      this.showUserThumbStatus()
+    );
 
+    //Initializing comment box
     this.modal = document.getElementById('myModal');
     this.modalTextArea = document.getElementById('modalTextArea') as HTMLTextAreaElement;
-
     // When the user clicks anywhere outside of the modal, close it
     window.onclick = (event) => {
       if (event.target === this.modal) {
@@ -99,17 +140,22 @@ export class DetailsComponent extends UpgradableComponent implements OnInit {
     };
   }
 
+  //Display data sort by given attribute
+  public sortBy(prop: string) {
+    return this.data_comments.sort((a, b) => a[prop] > b[prop] ? 1 : a[prop] === b[prop] ? 0 : -1);
+  }
+
   public openModal(): void {
     this.modal.style.display = 'block';
   }
 
   //validating rating
-  public checkRating(rating):boolean {
-      return (rating>=0 && rating <=5);
+  public checkRating(rating): boolean {
+    return (rating >= 0 && rating <= 5);
   }
 
   //validating comment
-  public checkComment(comment){
+  public checkComment(comment) {
     return (comment.length > 10 && comment.length < 500);
   }
 
@@ -119,11 +165,11 @@ export class DetailsComponent extends UpgradableComponent implements OnInit {
     const token = localStorage.getItem("token");
     const comment = this.modalTextArea.value;
 
-    if(!this.checkRating(rating)){
+    if (!this.checkRating(rating)) {
       alert("Invalid rating! Please choose a score between 0 to 5!");
-    }else if(!this.checkComment(comment)){
+    } else if (!this.checkComment(comment)) {
       alert("Comment must be between 10 to 500 words!");
-    }else{
+    } else {
       this.data_myComment = {
         score: rating,
         comment: comment,
@@ -151,7 +197,6 @@ export class DetailsComponent extends UpgradableComponent implements OnInit {
     const stars: HTMLElement = document.getElementById('star-radios');
     const children: any = stars.children;
     let rating = 0;
-
     // iterate over the stars and get the one checked
     for (let i = 0; i < stars.children.length; i++) {
       if (children[i].checked) {
@@ -160,5 +205,72 @@ export class DetailsComponent extends UpgradableComponent implements OnInit {
     }
     return rating;
   }
+
+
+  //Function post a positive vote for a comment as a logged in user.
+  public thumbUp(item: IDetail) {
+    if (localStorage.getItem('uuid') == undefined) {
+      alert("Voting requires login!");
+    } else {
+      let rid: string;
+      switch (this.target_type) {
+        case 'professor':
+          rid = item.rpid;
+          break;
+        case 'university':
+          rid = item.ruid;
+          break;
+        case 'department':
+          rid = item.rdid;
+          break;
+        case 'course':
+          rid = item.rcid;
+      }
+      this.authService.cancelThumb(this.target_type, rid).then(() =>
+        this.authService.thumbUp(this.target_type, rid).subscribe(
+          res => {
+            if (res.msg == 'success') {
+              alert("Vote is successfully!");
+              window.location.reload();
+            } else alert(res.msg);
+          }
+        )
+      ).catch(error => console.log(error));
+    }
+  }
+
+
+  //Function post a negative vote for a comment as a logged in user.
+  public thumbDown(item: IDetail) {
+    if (localStorage.getItem('uuid') == undefined) {
+      alert("Voting requires login!");
+    } else {
+      let rid: string;
+      switch (this.target_type) {
+        case 'professor':
+          rid = item.rpid;
+          break;
+        case 'university':
+          rid = item.ruid;
+          break;
+        case 'department':
+          rid = item.rdid;
+          break;
+        case 'course':
+          rid = item.rcid;
+      }
+      this.authService.cancelThumb(this.target_type, rid).then(() =>
+        this.authService.thumbDown(this.target_type, rid).subscribe(
+          res => {
+            if (res.msg == 'success') {
+              alert("Vote is successfully!");
+              window.location.reload();
+            } else alert(res.msg);
+          }
+        )
+      ).catch(error => console.log(error));
+    }
+  }
+
 
 }

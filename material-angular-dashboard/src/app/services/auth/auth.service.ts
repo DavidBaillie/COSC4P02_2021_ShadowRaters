@@ -12,7 +12,6 @@ const tokenName = 'token';
 })
 export class AuthService {
 
-
   //Environment url link
   private url = `${environment.apiBaseUrl}/user`;
 
@@ -23,7 +22,6 @@ export class AuthService {
   constructor(private http: HttpClient) {
 
   }
-
 
   //This function sends post request with username and password
   public login(data): Observable<any> {
@@ -46,10 +44,72 @@ export class AuthService {
 
   //Post the comment and return a message
   public postComment(type: string, id: string, myComment) {
-    return this.http.post(`http://database.ratemyscholar.ca/${type}/reviews/${id}`, myComment, {withCredentials: true})
+    let url = `${environment.apiBaseUrl}/${type}/reviews/${id}`;
+    return this.http.post(url, myComment, {withCredentials: true})
       .pipe(
         map((res: { msg: string }) => {
           return res;
+        }));
+  }
+
+  public thumbUp(type:string,id:string){
+    let token = {
+      token: localStorage.getItem('token')
+    }
+    let url = `${environment.apiBaseUrl}/${type}/reviews/vote_agree/${id}`;
+    // console.log(url);
+    return this.http.post(url,token)
+      .pipe(
+        map((res: { msg: string }) => {
+          return res;
+        }));
+
+  }
+
+  // async getReviews(type: string, id: string) {
+  //   this.reviewUrl = `http://database.ratemyscholar.ca/${type}/reviews/${id}`;
+  //   const res = await this.http.get<any>(
+  //     this.reviewUrl,{ withCredentials: true }).toPromise();
+  //   return res;
+  // }
+
+
+  public thumbDown(type:string,id:string){
+    let token = {
+      token: localStorage.getItem('token')
+    }
+    let url = `${environment.apiBaseUrl}/${type}/reviews/vote_disagree/${id}`;
+    return this.http.post(url,token)
+      .pipe(
+        map((res: { msg: string }) => {
+          return res;
+        }));
+  }
+
+  //Cancel a thumb up/down of a comment from a user
+  async cancelThumb(type:string,id:string){
+    let token = {
+      token: localStorage.getItem('token')
+    }
+    let url = `${environment.apiBaseUrl}/${type}/reviews/vote_cancel/${id}`;
+    return this.http.post(url, token)
+      .pipe(
+        map((res: { msg: string }) => {
+          console.log(res.msg);
+          return res;
+        })).toPromise();
+  }
+
+  //Get voting information of the current user, which should be reflected on the thumb up/down icon.
+  public getVotes(type:string){
+    let token = {
+      token: localStorage.getItem('token')
+    }
+    let url = `${environment.apiBaseUrl}/${type}/getVotes`;
+    return this.http.post(url,token)
+      .pipe(
+        map((res: { msg: string,votes:any }) => {
+          return res.votes;
         }));
   }
 
