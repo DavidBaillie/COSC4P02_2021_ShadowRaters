@@ -26,7 +26,7 @@ export class DetailsComponent extends UpgradableComponent implements OnInit {
   //Parameters retrieved from search page
   target_type: string = this.activatedRoute.snapshot.paramMap.get('type');
   target_id: string = this.activatedRoute.snapshot.paramMap.get('id');
-  
+
   hits: IItem[]; //Data of the item to be reviewed (a prof/course/department/university)
   target_hit: IItem;
   target_name: string[];
@@ -51,15 +51,23 @@ export class DetailsComponent extends UpgradableComponent implements OnInit {
       this.avg_year_scores = [this.getAvgYearScores(this.data_comments)];
       this.avg_score = [
         {
-          score: this.getAverageScore(this.data_comments),
+          score: this.getAverageScore(),
         }
       ];
-    });
-   
+    }).then(() =>
+      this.showUserThumbStatus()
+    );
+
     this.modal = document.getElementById('myModal');
     this.modalTextArea = document.getElementById('modalTextArea') as HTMLTextAreaElement;
-
+    // When the user clicks anywhere outside of the modal, close it
+    window.onclick = (event) => {
+      if (event.target === this.modal) {
+        this.modal.style.display = 'none';
+      }
+    }
   }
+
 
   // Get the name of an object by id
   private async getAHit() {
@@ -76,13 +84,55 @@ export class DetailsComponent extends UpgradableComponent implements OnInit {
     return reviews;
   }
 
-  private getAverageScore(data_comments):number {
-    let temp:number = 0;
-    for (let i = 0; i < data_comments.length; i++) {
-      temp += data_comments[i].score;
-    }
 
-    var avg = temp / data_comments.length;
+  // private getAverageScore(data_comments):number {
+  //   let temp: number = 0;
+  //   for (let i = 0; i < data_comments.length; i++) {
+  //     temp += data_comments[i].score;
+  //   }
+  // }
+
+  //return the correct rid
+  public getItemRid(item: any) {
+    switch (this.target_type) {
+      case 'professor':
+        return item.rpid;
+      case 'university':
+        return item.ruid;
+      case 'department':
+        return item.rdid;
+      case 'course':
+        return item.rcid;
+    }
+  }
+
+
+
+  //Get vote information for the current user
+  private showUserThumbStatus() {
+    if (localStorage.getItem('uuid')) {
+      this.authService.getVotes(this.target_type).subscribe(
+        res => {
+          for (let i = 0; i < res.length; i++) {
+            for (let j = 0; j < this.data_comments.length; j++) {
+              if (this.getItemRid(res[i]) == this.getItemRid(this.data_comments[j])) {
+                this.data_comments[j].flag = res[i].flag;
+                // console.log(res[i].flag);
+              }
+            }
+          }
+        }
+      );
+
+    }
+  }
+
+  private getAverageScore(): number {
+    let temp: number = 0;
+    for (let i = 0; i < this.data_comments.length; i++) {
+      temp += this.data_comments[i].score;
+    }
+    var avg = temp / this.data_comments.length;
     avg = Math.round(avg * 10) / 10;
     return avg;
   }
@@ -104,7 +154,45 @@ export class DetailsComponent extends UpgradableComponent implements OnInit {
     // needed to change assign a new value to these
     // to trigger a ngOnChange from the line graphs
     this.avg_year_scores = avg_years_copy;
-    this.target_name = t_name_copy; 
+    this.target_name = t_name_copy;
+
+// =======
+//   ngOnInit() {
+//     //Get page item's name
+//     this.getAHit().then((res) => {
+//       this.data = [
+//         {
+//           name: res.name,
+//         },
+//       ];
+//     });
+//
+//     this.getReviews().then((res) => {
+//       this.data_comments = res;
+//       this.avg_score = [
+//         {
+//           score: this.getAverageScore(),
+//         }
+//       ];
+//     }).then(() =>
+//       this.showUserThumbStatus()
+//     );
+//
+//     //Initializing comment box
+//     this.modal = document.getElementById('myModal');
+//     this.modalTextArea = document.getElementById('modalTextArea') as HTMLTextAreaElement;
+//     // When the user clicks anywhere outside of the modal, close it
+//     window.onclick = (event) => {
+//       if (event.target === this.modal) {
+//         this.modal.style.display = 'none';
+//       }
+//     };
+// >>>>>>> frontend_Tianci
+  }
+
+  //Display data sort by given attribute
+  public sortBy(prop: string) {
+    return this.data_comments.sort((a, b) => a[prop] > b[prop] ? 1 : a[prop] === b[prop] ? 0 : -1);
   }
 
   public openModal(): void {
@@ -112,12 +200,12 @@ export class DetailsComponent extends UpgradableComponent implements OnInit {
   }
 
   //validating rating
-  public checkRating(rating):boolean {
-      return (rating>=0 && rating <=5);
+  public checkRating(rating): boolean {
+    return (rating >= 0 && rating <= 5);
   }
 
   //validating comment
-  public checkComment(comment){
+  public checkComment(comment) {
     return (comment.length > 10 && comment.length < 500);
   }
 
@@ -127,11 +215,11 @@ export class DetailsComponent extends UpgradableComponent implements OnInit {
     const token = localStorage.getItem("token");
     const comment = this.modalTextArea.value;
 
-    if(!this.checkRating(rating)){
+    if (!this.checkRating(rating)) {
       alert("Invalid rating! Please choose a score between 0 to 5!");
-    }else if(!this.checkComment(comment)){
+    } else if (!this.checkComment(comment)) {
       alert("Comment must be between 10 to 500 words!");
-    }else{
+    } else {
       this.data_myComment = {
         score: rating,
         comment: comment,
@@ -160,7 +248,6 @@ export class DetailsComponent extends UpgradableComponent implements OnInit {
     const stars: HTMLElement = document.getElementById('star-radios');
     const children: any = stars.children;
     let rating = 0;
-
     for (let i = 0; i < stars.children.length; i++) {
       if (children[i].checked) {
         rating = parseFloat(children[i].id);
@@ -178,7 +265,7 @@ export class DetailsComponent extends UpgradableComponent implements OnInit {
       var score:number = comment.score;
 
       if (year in yearRatings) {
-        yearRatings[year] += score; 
+        yearRatings[year] += score;
         numYearRatings[year] += 1;
       }
       else {
@@ -192,6 +279,73 @@ export class DetailsComponent extends UpgradableComponent implements OnInit {
     }
 
     return yearRatings;
+  }
+
+
+
+  //Function post a positive vote for a comment as a logged in user.
+  public thumbUp(item: IDetail) {
+    if (localStorage.getItem('uuid') == undefined) {
+      alert("Voting requires login!");
+    } else {
+      let rid: string;
+      switch (this.target_type) {
+        case 'professor':
+          rid = item.rpid;
+          break;
+        case 'university':
+          rid = item.ruid;
+          break;
+        case 'department':
+          rid = item.rdid;
+          break;
+        case 'course':
+          rid = item.rcid;
+      }
+      this.authService.cancelThumb(this.target_type, rid).then(() =>
+        this.authService.thumbUp(this.target_type, rid).subscribe(
+          res => {
+            if (res.msg == 'success') {
+              alert("Vote is successfully!");
+              window.location.reload();
+            } else alert(res.msg);
+          }
+        )
+      ).catch(error => console.log(error));
+    }
+  }
+
+
+  //Function post a negative vote for a comment as a logged in user.
+  public thumbDown(item: IDetail) {
+    if (localStorage.getItem('uuid') == undefined) {
+      alert("Voting requires login!");
+    } else {
+      let rid: string;
+      switch (this.target_type) {
+        case 'professor':
+          rid = item.rpid;
+          break;
+        case 'university':
+          rid = item.ruid;
+          break;
+        case 'department':
+          rid = item.rdid;
+          break;
+        case 'course':
+          rid = item.rcid;
+      }
+      this.authService.cancelThumb(this.target_type, rid).then(() =>
+        this.authService.thumbDown(this.target_type, rid).subscribe(
+          res => {
+            if (res.msg == 'success') {
+              alert("Vote is successfully!");
+              window.location.reload();
+            } else alert(res.msg);
+          }
+        )
+      ).catch(error => console.log(error));
+    }
   }
 
 }

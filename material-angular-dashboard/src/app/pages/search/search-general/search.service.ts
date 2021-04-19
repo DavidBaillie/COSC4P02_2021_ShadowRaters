@@ -17,7 +17,7 @@ export class SearchService {
       /** GET reviews by id */
   async getReviews(type: string, id: string) {
     this.reviewUrl = `http://database.ratemyscholar.ca/${type}/reviews/${id}`;
-    const res = await this.http.get<any>(    // console.log('testing reviews');
+    const res = await this.http.get<any>(
       this.reviewUrl,{ withCredentials: true }).toPromise();
     return res;
   }
