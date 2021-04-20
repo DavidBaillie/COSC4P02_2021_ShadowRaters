@@ -41,7 +41,6 @@ export class AuthService {
         ));
   }
 
-
   //Post the comment and return a message
   public postComment(type: string, id: string, myComment) {
     let url = `${environment.apiBaseUrl}/${type}/reviews/${id}`;
@@ -52,28 +51,14 @@ export class AuthService {
         }));
   }
 
-  public thumbUp(type:string,id:string){
+  public thumb(thumb_flag: number, type: string, id: string) {
+    console.log(thumb_flag);
     let token = {
       token: localStorage.getItem('token')
     }
-    let url = `${environment.apiBaseUrl}/${type}/reviews/vote_agree/${id}`;
+    let url = (thumb_flag == 0) ? `${environment.apiBaseUrl}/${type}/reviews/vote_agree/${id}` : `${environment.apiBaseUrl}/${type}/reviews/vote_disagree/${id}`;
     // console.log(url);
-    return this.http.post(url,token)
-      .pipe(
-        map((res: { msg: string }) => {
-          return res;
-        }));
-
-  }
-
-
-
-  public thumbDown(type:string,id:string){
-    let token = {
-      token: localStorage.getItem('token')
-    }
-    let url = `${environment.apiBaseUrl}/${type}/reviews/vote_disagree/${id}`;
-    return this.http.post(url,token)
+    return this.http.post(url, token)
       .pipe(
         map((res: { msg: string }) => {
           return res;
@@ -81,7 +66,7 @@ export class AuthService {
   }
 
   //Cancel a thumb up/down of a comment from a user
-  async cancelThumb(type:string,id:string){
+  async cancelThumb(type: string, id: string) {
     let token = {
       token: localStorage.getItem('token')
     }
@@ -89,20 +74,20 @@ export class AuthService {
     return this.http.post(url, token)
       .pipe(
         map((res: { msg: string }) => {
-          console.log(res.msg);
+          // console.log(res.msg);
           return res;
         })).toPromise();
   }
 
   //Get voting information of the current user, which should be reflected on the thumb up/down icon.
-  public getVotes(type:string){
+  public getVotes(type: string) {
     let token = {
       token: localStorage.getItem('token')
     }
     let url = `${environment.apiBaseUrl}/${type}/getVotes`;
-    return this.http.post(url,token)
+    return this.http.post(url, token)
       .pipe(
-        map((res: { msg: string,votes:any }) => {
+        map((res: { msg: string, votes: any }) => {
           return res.votes;
         }));
   }

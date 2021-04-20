@@ -68,7 +68,6 @@ export class DetailsComponent extends UpgradableComponent implements OnInit {
     }
   }
 
-
   // Get the name of an object by id
   private async getAHit() {
     const temp = await this.searchService.getHits(this.target_type);
@@ -77,20 +76,12 @@ export class DetailsComponent extends UpgradableComponent implements OnInit {
     return this.target_hit;
   }
 
-  private async getReviews(target_type, target_id){
+  private async getReviews(target_type, target_id) {
     let reviews: IDetail[];
     const temp = await this.searchService.getReviews(target_type, target_id);
     reviews = temp.reviews;
     return reviews;
   }
-
-
-  // private getAverageScore(data_comments):number {
-  //   let temp: number = 0;
-  //   for (let i = 0; i < data_comments.length; i++) {
-  //     temp += data_comments[i].score;
-  //   }
-  // }
 
   //return the correct rid
   public getItemRid(item: any) {
@@ -259,15 +250,14 @@ export class DetailsComponent extends UpgradableComponent implements OnInit {
     var yearRatings = {};
     var numYearRatings = {};
     for (var i = 0; i < data_comments.length; i++) {
-      var comment:any = data_comments[i];
-      var year:string = comment.date.split(" ")[3];
-      var score:number = comment.score;
+      var comment: any = data_comments[i];
+      var year: string = comment.date.split(" ")[3];
+      var score: number = comment.score;
 
       if (year in yearRatings) {
         yearRatings[year] += score;
         numYearRatings[year] += 1;
-      }
-      else {
+      } else {
         yearRatings[year] = score;
         numYearRatings[year] = 1;
       }
@@ -279,10 +269,11 @@ export class DetailsComponent extends UpgradableComponent implements OnInit {
   }
 
   //Function post a positive vote for a comment as a logged in user.
-  public thumbUp(item: IDetail) {
+  public thumb(thumb_flag: number, item: IDetail) {
+    console.log(item.flag);
     if (localStorage.getItem('uuid') == undefined) {
       alert("Voting requires login!");
-    } else if(item.flag == undefined || item.flag != 0){
+    } else if (item.flag == undefined || item.flag != thumb_flag) {
       let rid: string;
       switch (this.target_type) {
         case 'professor':
@@ -298,11 +289,12 @@ export class DetailsComponent extends UpgradableComponent implements OnInit {
           rid = item.rcid;
       }
       this.authService.cancelThumb(this.target_type, rid).then(() =>
-        this.authService.thumbUp(this.target_type, rid).subscribe(
+        this.authService.thumb(thumb_flag, this.target_type, rid).subscribe(
           res => {
             if (res.msg == 'success') {
               alert("Vote is successfully!");
-              window.location.reload();
+              // this.reloadThumbs(item);
+              document.location.reload();
             } else alert(res.msg);
           }
         )
@@ -310,36 +302,19 @@ export class DetailsComponent extends UpgradableComponent implements OnInit {
     }
   }
 
-  //Function post a negative vote for a comment as a logged in user.
-  public thumbDown(item: IDetail) {
-    if (localStorage.getItem('uuid') == undefined) {
-      alert("Voting requires login!");
-    } else if(item.flag == undefined || item.flag != 1){
-      let rid: string;
-      switch (this.target_type) {
-        case 'professor':
-          rid = item.rpid;
-          break;
-        case 'university':
-          rid = item.ruid;
-          break;
-        case 'department':
-          rid = item.rdid;
-          break;
-        case 'course':
-          rid = item.rcid;
-      }
-      this.authService.cancelThumb(this.target_type, rid).then(() =>
-        this.authService.thumbDown(this.target_type, rid).subscribe(
-          res => {
-            if (res.msg == 'success') {
-              alert("Vote is successfully!");
-              window.location.reload();
-            } else alert(res.msg);
-          }
-        )
-      ).catch(error => console.log(error));
-    }
-  }
+  // public reloadThumbs(item:IDetail){
+  //   for (let i = 0; i < this.data_comments.length; i++) {
+  //       if (this.data_comments[i].username == item.username){
+  //         (item.flag==0)?(this.data_comments[i].flag = 1):(this.data_comments[i].flag = 0);
+  //       }
+  //   }
+  //   let container = document.getElementById("comment_div");
+  //   let temp = container.innerText;
+  //   container.innerText = "";
+  //   container.append(temp);
+  //   console.log("Refreshed");
+  //
+  // }
+
 
 }

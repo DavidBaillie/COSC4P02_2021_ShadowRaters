@@ -33,7 +33,8 @@
       </button>
       <div style="clear: both;"></div>
 
-      <div style="height: 400px; overflow: auto;">
+
+      <div style="height: 400px; overflow: auto;" id="comment_div">
         <div *ngFor="let item of sortBy('username');" class="base-card-body-bottom">
           <span class="userName">{{ item.username }}</span>
           <span class="userComment">{{ item.comment }}</span>
@@ -42,12 +43,12 @@
           <div>
             <button class="mdl-button mdl-js-button mdl-button--raised:hover" style="width: 10px; padding: 0;"
                     [ngStyle]="{'background-color': (item.flag == 0) ? 'rgba(255, 255, 255, 0.1)' : 'rgba(255, 255, 255, 0)'}"
-                    (click)="thumbUp(item); ">
+                    (click)="thumb(0,item); ">
               <i class="material-icons" style="font-size: 1em;">thumb_up </i>{{item.num_agree}}
             </button>
             <button class="mdl-button mdl-js-button mdl-button--fab:hover" style="width: 10px; padding: 0;"
                     [ngStyle]="{'background-color': (item.flag == 1) ? 'rgba(255, 255, 255, 0.1)' : 'rgba(255, 255, 255, 0)'}"
-                    (click)="thumbDown(item);">
+                    (click)="thumb(1,item);">
               <i class="material-icons" style="font-size: 1em;">thumb_down</i>{{item.num_disagree}}
             </button>
           </div>
