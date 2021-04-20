@@ -145,38 +145,6 @@ export class DetailsComponent extends UpgradableComponent implements OnInit {
     this.avg_year_scores = avg_years_copy;
     this.target_name = t_name_copy;
 
-// =======
-//   ngOnInit() {
-//     //Get page item's name
-//     this.getAHit().then((res) => {
-//       this.data = [
-//         {
-//           name: res.name,
-//         },
-//       ];
-//     });
-//
-//     this.getReviews().then((res) => {
-//       this.data_comments = res;
-//       this.avg_score = [
-//         {
-//           score: this.getAverageScore(),
-//         }
-//       ];
-//     }).then(() =>
-//       this.showUserThumbStatus()
-//     );
-//
-//     //Initializing comment box
-//     this.modal = document.getElementById('myModal');
-//     this.modalTextArea = document.getElementById('modalTextArea') as HTMLTextAreaElement;
-//     // When the user clicks anywhere outside of the modal, close it
-//     window.onclick = (event) => {
-//       if (event.target === this.modal) {
-//         this.modal.style.display = 'none';
-//       }
-//     };
-// >>>>>>> frontend_Tianci
   }
 
   //Display data sort by given attribute
