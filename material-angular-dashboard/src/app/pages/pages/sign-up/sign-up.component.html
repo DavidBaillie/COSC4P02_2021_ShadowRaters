@@ -9,6 +9,7 @@
       </div>
       <form class="login-form" [formGroup]="signupForm" (submit)="register()" novalidate autocomplete="off">
         <div class="mdl-cell mdl-cell--12-col mdl-cell--4-col-phone">
+
           <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label full-size"
                [class.is-invalid]="username.invalid && (username.dirty || username.touched)"
                [class.is-valid]="username.valid && (username.dirty || username.touched)">
@@ -16,13 +17,13 @@
                    (change)="onInputChange($event)"
                    class="mdl-textfield__input" type="text" id="username">
             <label class="mdl-textfield__label" for="username">Name</label>
-
             <div *ngIf="username.invalid && (username.dirty || username.touched)">
               <span *ngIf="username.errors.required" class="mdl-textfield__error">
                 Name is required. <span class="color-text--orange"> Please, write any name.</span>
               </span>
             </div>
           </div>
+
           <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label full-size"
                [class.is-invalid]="password.invalid && (password.dirty || password.touched)"
                [class.is-valid]="password.valid && (password.dirty || password.touched)" id="forRass">
@@ -36,6 +37,7 @@
               </span>
             </div>
           </div>
+
           <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label full-size"
                [class.is-invalid]="email.invalid && (email.dirty || email.touched)"
                [class.is-valid]="email.valid && (email.dirty || email.touched)">

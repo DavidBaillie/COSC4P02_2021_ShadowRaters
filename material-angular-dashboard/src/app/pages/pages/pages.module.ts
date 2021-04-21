@@ -10,6 +10,7 @@ import { ForgotPasswordComponent } from './forgot-password';
 import { LoginComponent } from './login';
 import { PagesRoutingModule } from './pages-routing.module';
 import { SignUpComponent } from './sign-up';
+import {PasswordChangeComponent} from "./changePassword";
 
 @NgModule({
   imports: [
@@ -25,6 +26,7 @@ import { SignUpComponent } from './sign-up';
     LoginComponent,
     SignUpComponent,
     ForgotPasswordComponent,
+    PasswordChangeComponent
   ],
 })
 export class PagesModule { }

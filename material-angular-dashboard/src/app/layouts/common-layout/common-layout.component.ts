@@ -40,7 +40,7 @@ export class CommonLayoutComponent implements OnInit {
 
 
   route_account_management = function () {
-    this.router.navigateByUrl('/app/account');
+    this.router.navigateByUrl('/pages/change_password');
   };
 
   public logout() {
@@ -49,10 +49,14 @@ export class CommonLayoutComponent implements OnInit {
       const accountIcon = document.getElementById('icon');
       accountIcon.remove();
       this.showSignInButton();
-      window.location.reload();
+      // window.location.reload();
+      this.returnHome();
     }
   }
 
+  public returnHome() {
+    this.router.navigate(['/app/home']);
+  }
 
 
   //Once user is logged in, display user banner
