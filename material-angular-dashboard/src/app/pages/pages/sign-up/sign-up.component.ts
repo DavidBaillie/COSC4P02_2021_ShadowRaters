@@ -1,10 +1,9 @@
-import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
+import {Component, OnInit} from '@angular/core';
+import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
+import {Router} from '@angular/router';
+import {AuthService} from '@services/*';
 
-import { AuthService } from '@services/*';
-
-import { BlankLayoutCardComponent } from 'app/components/blank-layout-card';
+import {BlankLayoutCardComponent} from 'app/components/blank-layout-card';
 
 @Component({
   selector: 'app-sign-up',
@@ -51,14 +50,13 @@ export class SignUpComponent extends BlankLayoutCardComponent implements OnInit 
     if (this.signupForm.valid) {
       this.authService.register(this.signupForm.getRawValue())
         .subscribe(res => {
-          if(res.msg!="success"){
+          if (res.msg != "success") {
             alert("Registration failed. Please try again!");
-          }
-          else{
+          } else {
             alert("Registration success! Redirecting to login page!");
             this.router.navigate(['/pages/login']);
           }
-          });
+        });
     }
   }
 

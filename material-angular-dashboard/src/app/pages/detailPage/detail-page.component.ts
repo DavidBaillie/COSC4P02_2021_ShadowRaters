@@ -1,5 +1,5 @@
 import {Component, HostBinding, OnInit} from '@angular/core';
-import {ActivatedRoute} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import {UpgradableComponent} from 'theme/components/upgradable';
 import {SearchService} from '../search/search-general/search.service';
 import {IItem} from '../search/search-professor/professor';
@@ -19,7 +19,7 @@ export class DetailsComponent extends UpgradableComponent implements OnInit {
   @HostBinding('class.ui-components') public readonly uiComponents = true;
 
 
-  constructor(private activatedRoute: ActivatedRoute, private searchService: SearchService, private authService: AuthService, private httpClient: HttpClient) {
+  constructor(private activatedRoute: ActivatedRoute, private searchService: SearchService, private authService: AuthService, private router: Router) {
     super();
   }
 
@@ -153,7 +153,12 @@ export class DetailsComponent extends UpgradableComponent implements OnInit {
   }
 
   public openModal(): void {
-    this.modal.style.display = 'block';
+    if(localStorage.getItem("username")){
+      this.modal.style.display = 'block';
+    }else {
+      alert("Login is required!");
+      this.goToLogin();
+    }
   }
 
   //validating rating
@@ -241,6 +246,7 @@ export class DetailsComponent extends UpgradableComponent implements OnInit {
     console.log(item.flag);
     if (localStorage.getItem('uuid') == undefined) {
       alert("Voting requires login!");
+      this.goToLogin();
     } else if (item.flag == undefined || item.flag != thumb_flag) {
       let rid: string;
       switch (this.target_type) {
@@ -268,6 +274,10 @@ export class DetailsComponent extends UpgradableComponent implements OnInit {
         )
       ).catch(error => console.log(error));
     }
+  }
+
+  public goToLogin(){
+    this.router.navigate(['/pages/login']);
   }
 
   // public reloadThumbs(item:IDetail){

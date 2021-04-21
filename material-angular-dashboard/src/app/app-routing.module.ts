@@ -4,7 +4,7 @@ import {RouterModule} from '@angular/router';
 import {LayoutsModule} from './layouts';
 import {CommonLayoutComponent} from './layouts/common-layout';
 import {HomePageComponent} from './pages/homePage';
-import {FormsComponent} from "./pages/forms";
+import {ChangePasswordComponent} from "./pages/pages/changePassword";
 import { Search } from './pages/search/search-general';
 
 import { SearchInstitution } from './pages/search/search-institution';
@@ -12,7 +12,7 @@ import { SearchDepartment } from './pages/search/search-department';
 import { SearchProfessor } from './pages/search/search-professor';
 import { SearchCourse } from './pages/search/search-course';
 import { AboutComponent } from './pages/about';
-import {DetailsComponent} from './pages/DetailPage';
+import {DetailsComponent} from './pages/detailPage';
 
 @NgModule({
   imports: [
@@ -28,7 +28,7 @@ import {DetailsComponent} from './pages/DetailPage';
             {path: 'search/departments', component: SearchDepartment, pathMatch: 'full'},
             {path: 'details/:type/:id', component: DetailsComponent, pathMatch: 'full' },
             {path: 'about', component: AboutComponent, pathMatch: 'full'},
-            {path: 'account', component: FormsComponent, pathMatch: 'full'},
+            {path: 'change_password', component: ChangePasswordComponent, pathMatch: 'full'},
 
             {path: '**', redirectTo: '/ypages/404'},
           ]

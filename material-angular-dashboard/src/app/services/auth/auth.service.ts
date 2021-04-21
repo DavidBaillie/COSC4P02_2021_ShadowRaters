@@ -68,7 +68,7 @@ export class AuthService {
   //Cancel a thumb up/down of a comment from a user
   async cancelThumb(type: string, id: string) {
     let token = {
-      token: localStorage.getItem('token')
+      token: this.authToken
     }
     let url = `${environment.apiBaseUrl}/${type}/reviews/vote_cancel/${id}`;
     return this.http.post(url, token)
@@ -82,7 +82,7 @@ export class AuthService {
   //Get voting information of the current user, which should be reflected on the thumb up/down icon.
   public getVotes(type: string) {
     let token = {
-      token: localStorage.getItem('token')
+      token: this.authToken
     }
     let url = `${environment.apiBaseUrl}/${type}/getVotes`;
     return this.http.post(url, token)
@@ -97,16 +97,16 @@ export class AuthService {
   }
 
   //Try to register a new account
-  public register(data) {
+  public register(form) {
     this.user_reg = {
       admin: false,
-      username: data.username,
-      password: data.password,
-      email: data.email,
+      username: form.username,
+      password: form.password,
+      email: form.email,
       school: null,
       program: null
     };
-    console.log(data.username);
+    console.log(form.username);
     return this.http.post(`${this.url}/createAccount`, this.user_reg)
       .pipe(
         map((res: { msg: string }) => {
@@ -114,6 +114,21 @@ export class AuthService {
         }));
   }
 
+
+  public changePassword(form) {
+    let url = `${this.url}/changePassword`;
+    let data = {
+      password: form.password,
+      token: this.authToken
+    }
+    return this.http.post(url, data)
+      .pipe(
+        map((res: { msg: string }) => {
+          return res;
+        }));
+  }
+
+  //function returns token value
   public get authToken(): string {
     return localStorage.getItem(tokenName);
   }
