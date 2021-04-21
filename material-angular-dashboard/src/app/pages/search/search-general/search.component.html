@@ -14,7 +14,13 @@
         <base-card-body expanded>
           {{ hit.info }}
           <br><br>
-          <b *ngIf="target_type !='university'">Institution:</b> {{ hit.university }}
+
+          <div *ngIf="target_type !='university'"><b>Institution:</b> {{ hit.university }}</div>
+          <div *ngIf="target_type =='university'">
+            <b>Website: </b> <a href='https://{{hit.website}}' target="_blank">{{ hit.website }}</a>
+            <div><b>address: </b> {{hit.address}}</div>    
+          </div>
+          
           <br>
           <b>Average Rating</b> {{this.averages[searchService.getRightId(hit, this.target_type)]}}  / 5
         </base-card-body>
