@@ -12,8 +12,9 @@
 }
 
 .first_div {
-    // background-color: #a8a8a8;
-    background: linear-gradient(124deg,#8f8e8e,#a8a8a8,)
+    // background-color: #039fb4e0;
+    background-color: #77868877;
+    color: #3440a5;
   }
   
 .second_div {
@@ -33,10 +34,10 @@
     grid-template-columns: 1fr 1.9fr;
     cursor: pointer;
         .first_div {
-            color: black;
+            color: rgb(49, 51, 128);
         } 
         .second_div {
-            background-color: black;
+            background-color: rgba(0, 0, 0, 0.644);
             display: block;
         }
 }

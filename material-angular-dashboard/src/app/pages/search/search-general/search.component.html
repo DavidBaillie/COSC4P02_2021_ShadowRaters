@@ -1,7 +1,8 @@
 
 <div style="margin: 20px;">
   <div id="search-bar-place" style="text-align: center; margin-bottom: 20px;">
-    <input id="search-bar" type="text" placeholder="{{target_type}} Name" (input)="filterP()"> at <input type="text" placeholder="School Name">
+    <input id="search-bar" type="text" placeholder="{{target_type}} Name" (input)="filterP()">
+    <span *ngIf="target_type !='university'">at <input type="text" placeholder="School Name"></span>
   </div>
   <!-- div for professor cards -->
   <div class="mdl-grid">

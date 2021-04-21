@@ -1,8 +1,20 @@
 <div style="align-items: center;">
-  <input id="mini-search-bar" type="text" (input)="filterP()" placeholder="Compare with other {{target_type}}s">
+
+  <div *ngIf="target_type!='university'">
+    <input id="mini-search-bar" type="text" (input)="filterP()" placeholder="Compare with other {{target_type}}s">
+  </div>
+  <div *ngIf="target_type=='university'">
+    <input id="mini-search-bar" type="text" (input)="filterP()" placeholder="Compare with other universities">
+  </div>
+
   <div *ngFor="let hit of hits">
-    <div class="mini-hits-hover mini-hits" (click)="emitId(searchService.getRightId(hit, target_type), hit.name + ' at ' + hit.university)">
-      {{hit.name}} <span style="color: rgb(138, 139, 139);">at {{hit.university}}</span>
+    <div class="mini-hits-hover mini-hits"
+     (click)="emitId(searchService.getRightId(hit, target_type), hit.university?hit.name + ' at ' + hit.university:hit.name)">
+      <div *ngIf=hit.university;else just_name>
+        {{hit.name}} <span style="color: rgb(138, 139, 139);">at {{hit.university}}</span>
+      </div>
+      <div #just_name> {{hit.name}} </div>
     </div>
   </div>
+
 </div>
