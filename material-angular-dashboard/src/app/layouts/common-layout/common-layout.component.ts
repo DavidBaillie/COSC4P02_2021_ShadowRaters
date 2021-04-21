@@ -40,7 +40,7 @@ export class CommonLayoutComponent implements OnInit {
 
 
   route_account_management = function () {
-    this.router.navigateByUrl('/app/change_password');
+    this.router.navigateByUrl('/pages/change_password');
   };
 
   public logout() {

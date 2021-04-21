@@ -4,14 +4,12 @@ import {RouterModule} from '@angular/router';
 import {LayoutsModule} from './layouts';
 import {CommonLayoutComponent} from './layouts/common-layout';
 import {HomePageComponent} from './pages/homePage';
-import {ChangePasswordComponent} from "./pages/pages/changePassword";
-import { Search } from './pages/search/search-general';
-
-import { SearchInstitution } from './pages/search/search-institution';
-import { SearchDepartment } from './pages/search/search-department';
-import { SearchProfessor } from './pages/search/search-professor';
-import { SearchCourse } from './pages/search/search-course';
-import { AboutComponent } from './pages/about';
+import {PasswordChangeComponent} from "./pages/pages/changePassword";
+import {SearchInstitution} from './pages/search/search-institution';
+import {SearchDepartment} from './pages/search/search-department';
+import {SearchProfessor} from './pages/search/search-professor';
+import {SearchCourse} from './pages/search/search-course';
+import {AboutComponent} from './pages/about';
 import {DetailsComponent} from './pages/detailPage';
 
 @NgModule({
@@ -26,10 +24,8 @@ import {DetailsComponent} from './pages/detailPage';
             {path: 'search/courses', component: SearchCourse, pathMatch: 'full'},
             {path: 'search/institutions', component: SearchInstitution, pathMatch: 'full'},
             {path: 'search/departments', component: SearchDepartment, pathMatch: 'full'},
-            {path: 'details/:type/:id', component: DetailsComponent, pathMatch: 'full' },
+            {path: 'details/:type/:id', component: DetailsComponent, pathMatch: 'full'},
             {path: 'about', component: AboutComponent, pathMatch: 'full'},
-            {path: 'change_password', component: ChangePasswordComponent, pathMatch: 'full'},
-
             {path: '**', redirectTo: '/ypages/404'},
           ]
         }, // add 'canActivate: AuthGuard' for catching unauth users

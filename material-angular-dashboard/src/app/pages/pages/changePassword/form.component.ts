@@ -1,20 +1,16 @@
 import {Component, OnInit} from '@angular/core';
-import {
-  FormBuilder,
-  FormControl,
-  FormGroup,
-  Validators
-} from '@angular/forms';
+import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {Router} from "@angular/router";
+import {BlankLayoutCardComponent} from 'app/components/blank-layout-card';
 import {AuthService} from "@services/*";
 
 @Component({
-  selector: 'app-change-password-form',
-  styleUrls: ['./form.component.scss'],
-  templateUrl: 'form.component.html',
+  selector: 'app-change-password',
+  styleUrls: ['../../../components/blank-layout-card/blank-layout-card.component.scss'],
+  templateUrl: './form.component.html',
 })
 
-export class PasswordFormComponent implements OnInit {
+export class PasswordChangeComponent extends BlankLayoutCardComponent  implements OnInit {
   public changePasswordForm: FormGroup;
   public password;
   public re_password;
@@ -23,7 +19,7 @@ export class PasswordFormComponent implements OnInit {
   public passPattern = '(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[$@$!%*?&])[A-Za-z\d$@$!%*?&].{6,12}';
 
   constructor(public authService: AuthService, public fb: FormBuilder, public router: Router) {
-
+    super();
     this.changePasswordForm = this.fb.group({
         password: new FormControl(null, [Validators.required]),
         re_password: new FormControl(null, [Validators.required])

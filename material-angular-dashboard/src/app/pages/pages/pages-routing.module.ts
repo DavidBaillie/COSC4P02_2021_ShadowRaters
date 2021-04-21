@@ -6,6 +6,7 @@ import { BlankLayoutComponent } from 'app/layouts/blank-layout';
 import { ErrorComponent } from './error';
 import { ForgotPasswordComponent } from './forgot-password';
 import { LoginComponent } from './login';
+import {PasswordChangeComponent} from "./changePassword";
 import { SignUpComponent } from './sign-up';
 
 @NgModule({
@@ -19,6 +20,7 @@ import { SignUpComponent } from './sign-up';
           { path: 'login', component: LoginComponent, pathMatch: 'full' },
           { path: 'sign-up', component: SignUpComponent, pathMatch: 'full' },
           { path: 'forgot-password', component: ForgotPasswordComponent, pathMatch: 'full' },
+          { path: 'change_password', component: PasswordChangeComponent, pathMatch: 'full' },
           { path: '**', redirectTo: '404' },
         ],
       },

@@ -1,0 +1,69 @@
+<div class="mdl-card mdl-card__blank-layout-card mdl-shadow--2dp">
+  <div class="mdl-card__supporting-text">
+    <div class="mdl-grid">
+      <div class="mdl-cell mdl-cell--12-col mdl-cell--4-col-phone">
+        <span class="mdl-card__title-text text-color--white" routerLink="/app/home">Rate My Scholar</span>
+      </div>
+      <div class="mdl-cell mdl-cell--12-col mdl-cell--4-col-phone">
+        <span class="blank-layout-card-name text-color--white">Change password</span>
+        <span class="blank-layout-card-secondary-text text-color--white">Enter your new password and confirm it</span>
+      </div>
+
+      <form class="login-form" [formGroup]="changePasswordForm" (submit)="changePassword()" novalidate
+            autocomplete="off">
+        <div class="mdl-cell mdl-cell--12-col mdl-cell--4-col-phone">
+
+          <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label full-size"
+               [class.is-invalid]="password.invalid && (password.dirty || password.touched)"
+               [class.is-valid]="password.valid && (password.dirty || password.touched)">
+            <input formControlName="password" id="password"
+                   pattern="{{passPattern}}"
+                   (input)="onInputChange($event)"
+                   class="mdl-textfield__input" type="password">
+            <label class="mdl-textfield__label" for="password">Password</label>
+            <div *ngIf="password.invalid && (password.dirty || password.touched)">
+              <span *ngIf="password.errors.required" class="mdl-textfield__error">
+                Password is required. <span class="color-text--orange"> Please enter a new password!</span>
+              </span>
+              <span *ngIf="password.errors.pattern" class="mdl-textfield__error">
+                Must be 6-12 characters with at least one number, one uppercase and lowercase letter.
+              </span>
+            </div>
+          </div>
+
+          <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label full-size"
+               [class.is-invalid]="re_password.invalid && (re_password.dirty || re_password.touched) && re_password.errors"
+               [class.is-valid]="re_password.valid && (re_password.dirty || re_password.touched) && re_password.errors">
+            <input formControlName="re_password" id="re_password"
+                   (input)="onInputChange($event)"
+                   class="mdl-textfield__input" type="password">
+            <label class="mdl-textfield__label" for="re_password">Confirm Password</label>
+            <div *ngIf="re_password.invalid && (re_password.dirty || re_password.touched)">
+              <span *ngIf="re_password.errors.mustMatch" class="mdl-textfield__error">
+                Re-entered password is different! <span
+                class="color-text--orange"> Pleas enter the same password!</span>
+              </span>
+              <span *ngIf="re_password.errors.required" class="mdl-textfield__error">
+                Confirm is required. <span class="color-text--orange"> Please, confirm password.</span>
+              </span>
+
+            </div>
+          </div>
+
+
+        </div>
+        <div class="mdl-cell mdl-cell--12-col mdl-cell--4-col-phone submit-cell">
+          <button class="mdl-button mdl-js-button mdl-button--raised color--light-blue" id="submit_btn"
+                  type="submit" [disabled]="changePasswordForm.invalid">
+            Change
+          </button>
+          <button class="mdl-button mdl-js-button mdl-button--raised color--red" id="cancel_btn"
+                  type="button" (click)="returnHome();">
+            Cancel
+          </button>
+        </div>
+      </form>
+
+    </div>
+  </div>
+</div>

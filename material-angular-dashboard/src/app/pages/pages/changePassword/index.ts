@@ -1,2 +1,1 @@
-export { ChangePasswordComponent } from './change-password.component';
-export { FormsModule } from './change-password.module';
+export { PasswordChangeComponent } from './form.component';
