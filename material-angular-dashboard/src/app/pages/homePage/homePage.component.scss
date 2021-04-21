@@ -1,6 +1,6 @@
 .home-header {
     margin: 0px;
-    padding: 90px 0px 90px 0px;
+    padding: 90px 0px 70px 0px;
     background-color: #fafafa;
     text-align: center;
 }
@@ -51,6 +51,7 @@
 .grid-mystery-box {
     display: grid;
     grid-template-columns: 1.3fr 1fr;
+    margin-top: 50px;
 }
 
 .mystery-box-text {
