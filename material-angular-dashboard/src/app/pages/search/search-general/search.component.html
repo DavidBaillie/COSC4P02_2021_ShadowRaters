@@ -1,8 +1,8 @@
 
 <div style="margin: 20px;">
   <div id="search-bar-place" style="text-align: center; margin-bottom: 20px;">
-    <input id="search-bar" type="text" placeholder="{{target_type}} Name" (input)="filterP()">
-    <span *ngIf="target_type !='university'">at <input type="text" placeholder="School Name"></span>
+    <input id="search-bar" type="text" placeholder="{{target_type}} Name" (input)="filterNameAndSchool()">
+    <span *ngIf="target_type !='university'"> at <input id="search-school" (input)="filterNameAndSchool()" type="text" placeholder="School Name"></span>
   </div>
   <!-- div for professor cards -->
   <div class="mdl-grid">
@@ -12,11 +12,22 @@
           <h2 class="mdl-card__title-text">{{ hit.name }}</h2>
         </base-card-title>
         <base-card-body expanded>
-          {{ hit.info }}
-          <br><br>
-          <b *ngIf="target_type !='university'">Institution:</b> {{ hit.university }}
-          <br>
-          <b>Average Rating</b> {{this.averages[searchService.getRightId(hit, this.target_type)]}}  / 5
+          <!-- {{ hit.info }} -->
+          <!-- <br><br> -->
+
+          <div *ngIf="target_type !='university'"><b>Institution:</b> {{ hit.university }}</div>
+          <div *ngIf="target_type =='university'">
+            <b>Website: </b> <a href='https://{{hit.website}}' target="_blank">{{ hit.website }}</a>
+            <div><b>address: </b> {{hit.address}}</div>    
+          </div>
+          
+          <div>
+            <b>Average Rating:</b> 
+            {{
+              this.averages[searchService.getRightId(hit, this.target_type)]?
+              this.averages[searchService.getRightId(hit, this.target_type)] + " / 5" : "no ratings yet :("
+            }}  
+          </div>
         </base-card-body>
         <base-card-actions>
           <span (click)="goToHit(searchService.getRightId(hit, target_type))" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect button--colored-orange pull-right">

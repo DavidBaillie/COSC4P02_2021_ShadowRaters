@@ -34,20 +34,30 @@ export class Search extends UpgradableComponent implements OnInit{
     this.getAverages();
   }
 
-  public filterP() {
-    const profName:string = (<HTMLInputElement> document.getElementById("search-bar")).value;
+
+  public filterNameAndSchool() {
+    this.filterP("search-bar", "name", this.allHits);
+    this.filterP("search-school", "university", this.hits);
+  }
+
+  public filterP(elementId:string, searchTarget:string, searchHits:IProfessor[]) {
+    const searchElement:HTMLInputElement = <HTMLInputElement> document.getElementById(elementId);
+    if (!searchElement) return;
+
+    const searchInput:string = searchElement.value;
     var s1:string;
-    var s2:string = profName.toLowerCase().replace(/\s/g, "");
+    var s2:string = searchInput.toLowerCase().replace(/\s/g, "");
 
     if (s2 == "") {
-      this.hits = this.allHits;
+      this.hits = searchHits;
       return;
     }
 
-    this.hits = this.allHits.filter( (prof:any) => {
-      s1 = prof.name.toLowerCase().replace(/\s/g, "");
+    this.hits = searchHits.filter( (h:any) => {
+      s1 = h[searchTarget].toLowerCase().replace(/\s/g, "");
       return s1.toLowerCase().includes(s2);
     });
+
   }
 
   // save averages of hits
