@@ -33,16 +33,21 @@
 
           <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label full-size"
                [class.is-invalid]="re_password.invalid && (re_password.dirty || re_password.touched) && re_password.errors"
-               [class.is-valid]="re_password.valid && (re_password.dirty || re_password.touched) && re_password.errors">
+               [class.is-valid]="re_password.valid && (re_password.dirty || re_password.touched) && re_password.errors"
+               >
+               
             <input formControlName="re_password" id="re_password"
-                   (input)="onInputChange($event)"
-                   class="mdl-textfield__input" type="password">
+                  pattern="^{{password.value}}$"
+                  (input)="onInputChange($event)"
+                  class="mdl-textfield__input" type="password">
             <label class="mdl-textfield__label" for="re_password">Confirm Password</label>
             <div *ngIf="re_password.invalid && (re_password.dirty || re_password.touched)">
-              <span *ngIf="re_password.errors.mustMatch" class="mdl-textfield__error">
+              
+              <span *ngIf="!re_password.errors.required" class="mdl-textfield__error"> 
                 Re-entered password is different! <span
-                class="color-text--orange"> Pleas enter the same password!</span>
+                class="color-text--orange"> Please enter the same password!</span>
               </span>
+
               <span *ngIf="re_password.errors.required" class="mdl-textfield__error">
                 Confirm is required. <span class="color-text--orange"> Please, confirm password.</span>
               </span>
