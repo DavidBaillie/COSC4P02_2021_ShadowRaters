@@ -6,7 +6,7 @@
 
     <base-card-body>
       <div *ngFor="let item of avg_score;">
-        <span class="general_rating" style="margin-top: 10px;">Rating: {{  item.score }}</span>
+        <span class="general_rating" style="margin-top: 10px;">Rating: {{  item.score || "no ratings yet :(" }}</span>
         <div class="Stars" style="font-size: 40px;" [style.--rating]=item.score
              aria-label="Rating of this product is 2.3 out of 5."></div>
       </div>
