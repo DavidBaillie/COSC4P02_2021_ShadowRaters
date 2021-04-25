@@ -18,7 +18,7 @@
                [class.is-valid]="password.valid && (password.dirty || password.touched)">
             <input formControlName="password" id="password"
                    pattern="{{passPattern}}"
-                   (input)="onInputChange($event)"
+                   (input)="onInputChange($event);"
                    class="mdl-textfield__input" type="password">
             <label class="mdl-textfield__label" for="password">Password</label>
             <div *ngIf="password.invalid && (password.dirty || password.touched)">
@@ -35,7 +35,7 @@
                [class.is-invalid]="re_password.invalid && (re_password.dirty || re_password.touched) && re_password.errors"
                [class.is-valid]="re_password.valid && (re_password.dirty || re_password.touched) && re_password.errors">
             <input formControlName="re_password" id="re_password"
-                   (input)="onInputChange($event)"
+                   (input)="onInputChange($event);"
                    class="mdl-textfield__input" type="password">
             <label class="mdl-textfield__label" for="re_password">Confirm Password</label>
             <div *ngIf="re_password.invalid && (re_password.dirty || re_password.touched)">
