@@ -192,7 +192,7 @@ export class DetailsComponent extends UpgradableComponent implements OnInit {
       this.authService.postComment(this.target_type, this.target_id, this.data_myComment).subscribe(
         res => {
           if (res.msg == 'success') {
-            alert("Comment posted successfully!");
+            // alert("Comment posted successfully!");
             window.location.reload();
           } else {
             alert(res.msg);
@@ -266,7 +266,7 @@ export class DetailsComponent extends UpgradableComponent implements OnInit {
         this.authService.thumb(thumb_flag, this.target_type, rid).subscribe(
           res => {
             if (res.msg == 'success') {
-              alert("Vote is successfully!");
+              // alert("Vote is successfully!");
               // this.reloadThumbs(item);
               document.location.reload();
             } else alert(res.msg);
