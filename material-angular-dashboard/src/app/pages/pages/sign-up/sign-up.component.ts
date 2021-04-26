@@ -27,11 +27,8 @@ export class SignUpComponent extends BlankLayoutCardComponent implements OnInit 
     this.signupForm = this.fb.group({
       password: new FormControl('', Validators.required),
       email: new FormControl('', [
-        Validators.required,
-        Validators.pattern(this.emailPattern),
-        Validators.maxLength(20),
-      ]),
-      username: new FormControl('', [Validators.required, Validators.maxLength(10)]),
+        Validators.required]),
+      username: new FormControl('', [Validators.required, Validators.maxLength(15)]),
     });
     this.email = this.signupForm.get('email');
     this.password = this.signupForm.get('password');
