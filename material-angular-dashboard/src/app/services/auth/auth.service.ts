@@ -51,6 +51,10 @@ export class AuthService {
         }));
   }
 
+
+
+
+
   public thumb(thumb_flag: number, type: string, id: string) {
     console.log(thumb_flag);
     let token = {
@@ -122,6 +126,17 @@ export class AuthService {
       token: this.authToken
     }
     return this.http.post(url, data)
+      .pipe(
+        map((res: { msg: string }) => {
+          return res;
+        }));
+  }
+
+
+  //Post the comment and return a message
+  public sendRecoverEmail(data) {
+    let url = `${this.url}/resetPassword`;
+    return this.http.post(url, data, {withCredentials: true})
       .pipe(
         map((res: { msg: string }) => {
           return res;

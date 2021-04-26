@@ -7,7 +7,7 @@ import {AuthService} from "@services/*";
 @Component({
   selector: 'app-change-password',
   styleUrls: ['../../../components/blank-layout-card/blank-layout-card.component.scss'],
-  templateUrl: './form.component.html',
+  templateUrl: './change-password.component.html',
 })
 
 export class PasswordChangeComponent extends BlankLayoutCardComponent  implements OnInit {
