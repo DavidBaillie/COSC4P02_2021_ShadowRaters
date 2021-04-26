@@ -6,13 +6,15 @@
 
     <base-card-body>
       <div *ngFor="let item of avg_score;">
-        <span class="general_rating" style="margin-top: 10px;">Rating: {{  item.score }}</span>
-        <div class="Stars" style="font-size: 40px;" [style.--rating]=item.score aria-label="Rating of this product is 2.3 out of 5."></div>
+        <span class="general_rating" style="margin-top: 10px;">Rating: {{  item.score || "no ratings yet :(" }}</span>
+        <div class="Stars" style="font-size: 40px;" [style.--rating]=item.score
+             aria-label="Rating of this product is 2.3 out of 5."></div>
       </div>
       <div class="base-card-body-middle" style="margin-top: 80px;">
         <!-- <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect button--colored-light-blue"
                 style="float: right; margin-bottom: 10px;">Compare to other {{ target_type }}s</button> -->
-        <mini-search [target_type]=target_type (selectIdEvent)="addTargetComparison($event)" style="float: right;"></mini-search>
+        <mini-search [target_type]=target_type (selectIdEvent)="addTargetComparison($event)"
+                     style="float: right;"></mini-search>
         <div style="clear: both;"></div>
 
         <!-- *ngIf is a param to wait for an async call to finish -->
@@ -31,20 +33,23 @@
       </button>
       <div style="clear: both;"></div>
 
-      <div style="height: 400px; overflow: auto; padding: 0px 40px 0px 40px;">
-        <div *ngFor="let item of data_comments;" class="base-card-body-bottom">
+
+      <div style="height: 400px; overflow: auto;" id="comment_div">
+        <div *ngFor="let item of sortBy('username');" class="base-card-body-bottom">
           <span class="userName">{{ item.username }}</span>
           <span class="userComment">{{ item.comment }}</span>
           <span class="userRating">Rating score: {{ item.score }}</span>
-          <span class="userThumbAgree">Agree: {{ item.num_agree }}</span>
-          <span class="userThumbDisagree">Disagree: {{ item.num_disagree }}</span>
           <span class="userCommentDate">{{ item.date }}</span>
           <div>
-            <button class="mdl-button mdl-js-button mdl-button--raised:hover" style="width: 10px; padding: 0;">
-              <i class="material-icons" style="font-size: 1em;">thumb_up</i>
+            <button class="mdl-button mdl-js-button mdl-button--raised:hover" style="width: 10px; padding: 0;"
+                    [ngStyle]="{'background-color': (item.flag == 0) ? 'rgba(255, 255, 255, 0.1)' : 'rgba(255, 255, 255, 0)'}"
+                    (click)="thumb(0,item); ">
+              <i class="material-icons" style="font-size: 1em;">thumb_up </i>{{item.num_agree}}
             </button>
-            <button class="mdl-button mdl-js-button mdl-button--fab:hover">
-              <i class="material-icons" style="font-size: 1em;">thumb_down</i>
+            <button class="mdl-button mdl-js-button mdl-button--fab:hover" style="width: 10px; padding: 0;"
+                    [ngStyle]="{'background-color': (item.flag == 1) ? 'rgba(255, 255, 255, 0.1)' : 'rgba(255, 255, 255, 0)'}"
+                    (click)="thumb(1,item);">
+              <i class="material-icons" style="font-size: 1em;">thumb_down</i>{{item.num_disagree}}
             </button>
           </div>
         </div>
@@ -54,24 +59,20 @@
 
   <!-- modal to submit rating -->
   <div id="myModal" class="modal">
-    <!-- Modal content -->
     <div class="modal-content container">
-      <h3 class="mdl-card__title-text" style="color: rgba(0, 0, 0, 0.418);">Leave a rating</h3>
-      <!-- <textarea name="Text1" cols="40" rows="5"></textarea> -->
+      <h3 class="mdl-card__title-text" style="color: rgba(0, 0, 0, 0.418);">Leave a comment and score!</h3>
       <div class="mdl-textfield mdl-js-textfield">
-        <textarea class="mdl-textfield__input modal_inp" id="modalTextArea" type="text" rows="15" cols="80"></textarea>
-        <label class="mdl-textfield__label" for="sample5">Leave a rating...</label>
+        <textarea class="mdl-textfield__input modal_inp" id="modalTextArea" rows="15" cols="80"></textarea>
+        <label class="mdl-textfield__label" for="modalTextArea">Leave a comment...</label>
       </div>
-
       <div>
         <star-rating></star-rating>
       </div>
-
-
       <button (click)="submitRating()" style="width: 150px;"
               class="button--colored-light-blue mdl-button mdl-button--raised mdl-js-button mdl-js-ripple-effect inline-bttn">
         Submit
       </button>
     </div>
   </div>
+
 </div>

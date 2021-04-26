@@ -1,9 +1,8 @@
-import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
-
-import { BlankLayoutCardComponent } from 'app/components/blank-layout-card';
-import { AuthService } from '../../../services/auth';
+import {Component, OnInit} from '@angular/core';
+import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
+import {Router} from '@angular/router';
+import {BlankLayoutCardComponent} from 'app/components/blank-layout-card';
+import {AuthService} from '../../../services/auth';
 
 @Component({
   selector: 'app-login',
@@ -46,16 +45,13 @@ export class LoginComponent extends BlankLayoutCardComponent implements OnInit {
     this.error = null;
     if (this.loginForm.valid) {
       this.authService.login(this.loginForm.getRawValue())
-        .subscribe(res =>
-        {
-          if(res.msg == 'login success')
-          {
-            alert("Login success! Redirecting to home page!");
-            this.router.navigate(['/app/home']);
-          }
-          else this.error = res.msg;
-        },
-            error => this.error = error.message
+        .subscribe(res => {
+            if (res.msg == 'login success') {
+              alert("Login success! Redirecting to home page!");
+              this.router.navigate(['/app/home']);
+            } else this.error = res.msg;
+          },
+          error => this.error = error.message
         );
     }
   }

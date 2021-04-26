@@ -7,7 +7,6 @@ import { AuthInterceptor, AuthService } from '@services/*';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HomePageModule } from './pages/homePage';
-import { FormsModule } from './pages/forms';
 
 @NgModule({
   declarations: [AppComponent],
@@ -15,7 +14,6 @@ import { FormsModule } from './pages/forms';
     BrowserModule,
     AppRoutingModule,
     HomePageModule,
-    FormsModule,
     HttpClientModule,
   ],
   providers: [

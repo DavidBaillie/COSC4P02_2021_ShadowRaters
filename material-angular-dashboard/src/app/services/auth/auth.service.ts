@@ -12,7 +12,6 @@ const tokenName = 'token';
 })
 export class AuthService {
 
-
   //Environment url link
   private url = `${environment.apiBaseUrl}/user`;
 
@@ -23,7 +22,6 @@ export class AuthService {
   constructor(private http: HttpClient) {
 
   }
-
 
   //This function sends post request with username and password
   public login(data): Observable<any> {
@@ -43,13 +41,58 @@ export class AuthService {
         ));
   }
 
-
   //Post the comment and return a message
   public postComment(type: string, id: string, myComment) {
-    return this.http.post(`http://database.ratemyscholar.ca/${type}/reviews/${id}`, myComment, {withCredentials: true})
+    let url = `${environment.apiBaseUrl}/${type}/reviews/${id}`;
+    return this.http.post(url, myComment, {withCredentials: true})
       .pipe(
         map((res: { msg: string }) => {
           return res;
+        }));
+  }
+
+
+
+
+
+  public thumb(thumb_flag: number, type: string, id: string) {
+    console.log(thumb_flag);
+    let token = {
+      token: localStorage.getItem('token')
+    }
+    let url = (thumb_flag == 0) ? `${environment.apiBaseUrl}/${type}/reviews/vote_agree/${id}` : `${environment.apiBaseUrl}/${type}/reviews/vote_disagree/${id}`;
+    // console.log(url);
+    return this.http.post(url, token)
+      .pipe(
+        map((res: { msg: string }) => {
+          return res;
+        }));
+  }
+
+  //Cancel a thumb up/down of a comment from a user
+  async cancelThumb(type: string, id: string) {
+    let token = {
+      token: this.authToken
+    }
+    let url = `${environment.apiBaseUrl}/${type}/reviews/vote_cancel/${id}`;
+    return this.http.post(url, token)
+      .pipe(
+        map((res: { msg: string }) => {
+          // console.log(res.msg);
+          return res;
+        })).toPromise();
+  }
+
+  //Get voting information of the current user, which should be reflected on the thumb up/down icon.
+  public getVotes(type: string) {
+    let token = {
+      token: this.authToken
+    }
+    let url = `${environment.apiBaseUrl}/${type}/getVotes`;
+    return this.http.post(url, token)
+      .pipe(
+        map((res: { msg: string, votes: any }) => {
+          return res.votes;
         }));
   }
 
@@ -58,16 +101,16 @@ export class AuthService {
   }
 
   //Try to register a new account
-  public register(data) {
+  public register(form) {
     this.user_reg = {
       admin: false,
-      username: data.username,
-      password: data.password,
-      email: data.email,
+      username: form.username,
+      password: form.password,
+      email: form.email,
       school: null,
       program: null
     };
-    console.log(data.username);
+    console.log(form.username);
     return this.http.post(`${this.url}/createAccount`, this.user_reg)
       .pipe(
         map((res: { msg: string }) => {
@@ -75,6 +118,32 @@ export class AuthService {
         }));
   }
 
+
+  public changePassword(form) {
+    let url = `${this.url}/changePassword`;
+    let data = {
+      password: form.password,
+      token: this.authToken
+    }
+    return this.http.post(url, data)
+      .pipe(
+        map((res: { msg: string }) => {
+          return res;
+        }));
+  }
+
+
+  //Post the comment and return a message
+  public sendRecoverEmail(data) {
+    let url = `${this.url}/resetPassword`;
+    return this.http.post(url, data, {withCredentials: true})
+      .pipe(
+        map((res: { msg: string }) => {
+          return res;
+        }));
+  }
+
+  //function returns token value
   public get authToken(): string {
     return localStorage.getItem(tokenName);
   }

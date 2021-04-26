@@ -1,8 +1,10 @@
 .avatar-dropdown {
-  height: 100px;
+  height: 80px;
+  line-height: 42px !important;
 }
 
 .profile_pic_div {
+  font-family: 'Material Icons' !important;
   display: block;
   float: left;
   width: 45px;
@@ -20,7 +22,7 @@
   display: block;
   float: left;
   font-size: 20px;
-  margin-top: 17px;
+  margin-top: 25px;
 }
 
 #avatar_2 {
@@ -35,3 +37,4 @@
   text-align: center;
   margin-right: 15px;
 }
+
