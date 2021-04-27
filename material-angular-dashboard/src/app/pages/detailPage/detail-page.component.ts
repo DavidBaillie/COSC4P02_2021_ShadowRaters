@@ -48,6 +48,9 @@ export class DetailsComponent extends UpgradableComponent implements OnInit {
 
     this.getReviews(this.target_type, this.target_id).then((res) => {
       this.data_comments = res;
+      for(var i=0;i<this.data_comments.length;i++){
+        this.data_comments[i].date = this.data_comments[i].date.substring(0,16);
+      }
       this.avg_year_scores = [this.getAvgYearScores(this.data_comments)];
       this.avg_score = [
         {
