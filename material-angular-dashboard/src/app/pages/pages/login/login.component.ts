@@ -47,7 +47,6 @@ export class LoginComponent extends BlankLayoutCardComponent implements OnInit {
       this.authService.login(this.loginForm.getRawValue())
         .subscribe(res => {
             if (res.msg == 'login success') {
-              alert("Login success! Redirecting to home page!");
               this.router.navigate(['/app/home']);
             } else this.error = res.msg;
           },

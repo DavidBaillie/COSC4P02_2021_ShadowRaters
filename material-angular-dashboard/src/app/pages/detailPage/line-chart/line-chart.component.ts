@@ -35,9 +35,17 @@ export class LineChartComponent extends BaseLineChartComponent implements OnChan
   ngOnChanges() { 
     this.animatedData = [];
     this.rawData = [];
+    var firstYear = Number.POSITIVE_INFINITY;
+    var lastYear = 0;
     for(var i=0; i<this.data.length; i++) {
+
       var years = Object.keys(this.data[i]);
-      this.year_labels = years;
+      if (firstYear > parseInt(years[0]))
+        firstYear = parseInt(years[0]);
+
+      if (lastYear < parseInt(years[years.length - 1]))
+        lastYear = parseInt(years[years.length - 1]);        
+
       this.maxX = Math.max(this.maxX, (years.length - 1) / 2.0);
       this.animatedData.push(
         {
@@ -51,6 +59,11 @@ export class LineChartComponent extends BaseLineChartComponent implements OnChan
       rawD = [...rawD(0.5, this.data[i], years)]
       this.rawData.push(rawD);
     } 
+
+    this.year_labels = [];
+    for (var y = firstYear; y <= lastYear; y++)
+      this.year_labels.push(y);
+  
     this.refesh();
   }
 
